@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SCPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="NhanViens">
+          <Key>
+            <PropertyRef Name="MaNhanVien" />
+          </Key>
+          <Property Name="MaNhanVien" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="MatKhau" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="HoTen" Type="nvarchar" MaxLength="50" />
+          <Property Name="NgaySinh" Type="datetime" />
+          <Property Name="CMND" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="150" />
+          <Property Name="ContactNo" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Function Name="show_data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="V_Year" Type="varchar" Mode="In" />
+          <Parameter Name="V_month" Type="varchar" Mode="In" />
+          <Parameter Name="V_venderName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="show_data_category" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="V_Year" Type="varchar" Mode="In" />
+          <Parameter Name="V_month" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="SCPModelStoreContainer">
+          <EntitySet Name="NhanViens" EntityType="Self.NhanViens" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SCPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="NhanVien">
+          <Key>
+            <PropertyRef Name="MaNhanVien" />
+          </Key>
+          <Property Name="MaNhanVien" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MatKhau" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HoTen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NgaySinh" Type="DateTime" Precision="3" />
+          <Property Name="CMND" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContactNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="SCPEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="NhanViens" EntityType="Self.NhanVien" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <FunctionImport Name="show_data" ReturnType="Collection(SCPModel.show_data_Result)">
+            <Parameter Name="V_Year" Mode="In" Type="String" />
+            <Parameter Name="V_month" Mode="In" Type="String" />
+            <Parameter Name="V_venderName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="show_data_category" ReturnType="Collection(SCPModel.show_data_category_Result)">
+            <Parameter Name="V_Year" Mode="In" Type="String" />
+            <Parameter Name="V_month" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="show_data_Result">
+          <Property Type="String" Name="Year" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Month" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Material_Shipped_From_Country" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="Order_Quantity" Nullable="true" />
+          <Property Type="Double" Name="Shipped_Quantity" Nullable="true" />
+          <Property Type="Double" Name="RFT" Nullable="true" />
+          <Property Type="Double" Name="SDP" Nullable="true" />
+          <Property Type="Double" Name="MDP" Nullable="true" />
+          <Property Type="Double" Name="SDPs" Nullable="true" />
+          <Property Type="Double" Name="SCP" Nullable="true" />
+          <Property Type="Int32" Name="od" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="show_data_category_Result">
+          <Property Type="String" Name="Year" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="MONTH" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="CATOGERY" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Material_Shipped_From_Country" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="Order_Quantity" Nullable="true" />
+          <Property Type="Double" Name="Shipped_Quantity" Nullable="true" />
+          <Property Type="Double" Name="Reject_Quantity" Nullable="true" />
+          <Property Type="Double" Name="RFT" Nullable="true" />
+          <Property Type="Double" Name="SDP" Nullable="true" />
+          <Property Type="Double" Name="MDP" Nullable="true" />
+          <Property Type="Double" Name="C0_PML__7" Nullable="true" />
+          <Property Type="Double" Name="C7_PML__14" Nullable="true" />
+          <Property Type="Double" Name="C14_PML__23" Nullable="true" />
+          <Property Type="Double" Name="C23_PML__30" Nullable="true" />
+          <Property Type="Double" Name="C30_PML__45" Nullable="true" />
+          <Property Type="Double" Name="C45_PML" Nullable="true" />
+          <Property Type="String" Name="C__PML__7" Nullable="true" MaxLength="32" />
+          <Property Type="String" Name="C__PML__14" Nullable="true" MaxLength="32" />
+          <Property Type="String" Name="C__PML__23" Nullable="true" MaxLength="32" />
+          <Property Type="String" Name="C__PML__30" Nullable="true" MaxLength="32" />
+          <Property Type="String" Name="C__PML__45" Nullable="true" MaxLength="32" />
+          <Property Type="String" Name="C__PML_45" Nullable="true" MaxLength="32" />
+          <Property Type="Double" Name="SCP" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SCPModelStoreContainer" CdmEntityContainer="SCPEntities">
+          <EntitySetMapping Name="NhanViens">
+            <EntityTypeMapping TypeName="SCPModel.NhanVien">
+              <MappingFragment StoreEntitySet="NhanViens">
+                <ScalarProperty Name="MaNhanVien" ColumnName="MaNhanVien" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+                <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
+                <ScalarProperty Name="CMND" ColumnName="CMND" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SCPModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="show_data" FunctionName="SCPModel.Store.show_data">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SCPModel.show_data_Result">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Material_Shipped_From_Country" ColumnName="Material Shipped From Country" />
+                <ScalarProperty Name="Order_Quantity" ColumnName="Order Quantity" />
+                <ScalarProperty Name="Shipped_Quantity" ColumnName="Shipped Quantity" />
+                <ScalarProperty Name="RFT" ColumnName="RFT" />
+                <ScalarProperty Name="SDP" ColumnName="SDP" />
+                <ScalarProperty Name="MDP" ColumnName="MDP" />
+                <ScalarProperty Name="SDPs" ColumnName="SDPs" />
+                <ScalarProperty Name="SCP" ColumnName="SCP" />
+                <ScalarProperty Name="od" ColumnName="od" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="show_data_category" FunctionName="SCPModel.Store.show_data_category">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SCPModel.show_data_category_Result">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="MONTH" ColumnName="MONTH" />
+                <ScalarProperty Name="CATOGERY" ColumnName="CATOGERY" />
+                <ScalarProperty Name="Material_Shipped_From_Country" ColumnName="Material Shipped From Country" />
+                <ScalarProperty Name="Order_Quantity" ColumnName="Order Quantity" />
+                <ScalarProperty Name="Shipped_Quantity" ColumnName="Shipped Quantity" />
+                <ScalarProperty Name="Reject_Quantity" ColumnName="Reject Quantity" />
+                <ScalarProperty Name="RFT" ColumnName="RFT" />
+                <ScalarProperty Name="SDP" ColumnName="SDP" />
+                <ScalarProperty Name="MDP" ColumnName="MDP" />
+                <ScalarProperty Name="C0_PML__7" ColumnName="0&lt;PML&lt;=7" />
+                <ScalarProperty Name="C7_PML__14" ColumnName="7&lt;PML&lt;=14" />
+                <ScalarProperty Name="C14_PML__23" ColumnName="14&lt;PML&lt;=23" />
+                <ScalarProperty Name="C23_PML__30" ColumnName="23&lt;PML&lt;=30" />
+                <ScalarProperty Name="C30_PML__45" ColumnName="30&lt;PML&lt;=45" />
+                <ScalarProperty Name="C45_PML" ColumnName="45&lt;PML" />
+                <ScalarProperty Name="C__PML__7" ColumnName="% PML&lt;=7" />
+                <ScalarProperty Name="C__PML__14" ColumnName="% PML&lt;=14" />
+                <ScalarProperty Name="C__PML__23" ColumnName="% PML&lt;=23" />
+                <ScalarProperty Name="C__PML__30" ColumnName="% PML&lt;=30" />
+                <ScalarProperty Name="C__PML__45" ColumnName="% PML&lt;=45" />
+                <ScalarProperty Name="C__PML_45" ColumnName="% PML&gt;45" />
+                <ScalarProperty Name="SCP" ColumnName="SCP" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,114 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+
+    string strUserID = mFunction.ToString(ViewBag.strUserID);
+    string strDeptID = mFunction.ToString(ViewBag.strDeptID);
+    var lstDepartment = (List<FramasVietNam.Models.HumanResource.MaBoPhan>)ViewBag.lstDepartment;
+
+    string strOCDN = mFunction.ToString(ViewBag.OcDnInput);
+    string strOCDNHC = mFunction.ToString(ViewBag.OcDnInputHC);
+    string strOCDNSample = mFunction.ToString(ViewBag.OcDnInputSample);
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+    window.onload = function () {
+        alert("@Html.Raw(ViewBag.Message)");
+        window.close();
+    };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            @Language.label("BarcodeSales")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("BarcodePPIC")</a></li>
+            <li class="active">@Language.label("BarcodeSales")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    @*<h2 class="page-header"> </h2>*@
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- Custom Tabs -->
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#tab_1" data-toggle="tab">  Sales Outsole  </a></li>
+                                    <li><a href="#tab_2" data-toggle="tab">  Sales Heel counter  </a></li>
+                                    <li><a href="#tab_3" data-toggle="tab">Sales Samples</a></li>
+
+                                    <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
+                                </ul>
+                                <div class="tab-content">
+
+                                    <div class="tab-pane active" id="tab_1">
+                                        @using (Html.BeginForm("BarcodePPICVNT_OS", "BarcodePPICVNT", FormMethod.Post))
+                                        {
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="OcDnInput" id="OcDnInput" value="@strOCDN" placeholder="Enter OC, DN">
+                                            </div>
+                                            <input class="btn btn-primary btn" formtarget="_blank" type="submit" name="command" value="Print Outsole" />
+
+                                        }
+                                    </div>
+
+                                    <!-- /.tab-pane -->
+                                    <div class="tab-pane" id="tab_2">
+                                        @using (Html.BeginForm("BarcodeSalesVNT_HC", "BarcodePPICVNT", FormMethod.Post))
+                                        {
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="OcDnInputHC" id="OcDnInputHC" value="@strOCDNHC" placeholder="Enter OC, DN">
+                                            </div>
+                                            <input class="btn btn-primary btn" formtarget="_blank" type="submit" name="command" value="Print HC" />
+                                            <input class="btn btn-primary btn" formtarget="_blank" type="submit" name="command" value="Print HC (L/R)" />
+                                        }
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                    <div class="tab-pane" id="tab_3">
+                                        @using (Html.BeginForm("BarcodeSalesVNT_HCSample", "BarcodePPICVNT", FormMethod.Post))
+                                        {
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="OcDnInputSample" id="OcDnInputSample" value="@strOCDNSample" placeholder="Enter OC, DN">
+                                            </div>
+                                            <input class="btn btn-primary btn" formtarget="_blank" type="submit" name="command" value="Print Sample" />
+                                        }
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                </div>
+                                <!-- /.tab-content -->
+                            </div>
+                            <!-- nav-tabs-custom -->
+                        </div>
+                        <!-- /.col -->
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                    <!-- END CUSTOM TABS -->
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- START CUSTOM TABS -->

@@ -1,0 +1,230 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var lstGrpToFn = (List<FramasVietNam.Models.Menu.GroupToFunction>)ViewBag.lstGrpToFn;
+    var lstGrp = (List<FramasVietNam.Models.Menu.Group>)ViewBag.lstGrp;
+    var lstFn = (List<FramasVietNam.Models.Menu.Function>)ViewBag.lstFn;
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            @Language.label("GroupToFunction")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Administrator")</a></li>
+            <li class="active">@Language.label("GroupToFunction")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <div style="margin-bottom:10px">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">@Language.label("Add")</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="ion ion-clipboard"></i>
+                    <h3 class="box-title">@Language.label("List") @Language.label("GroupToFunction")</h3>
+                    <div class="box-tools pull-right">
+                        <ul class="pagination pagination-sm inline"></ul>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <table id="GrpToFn" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th style="width:27px;">@Language.label("Num")</th>
+                                <th>@Language.label("Code") @Language.label("Group")</th>
+                                <th>@Language.label("Code") @Language.label("Function")</th>
+                                <th>@Language.label("Change")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (lstGrp != null)
+                            {
+                                int num = 1;
+                                foreach (var item in lstGrp)
+                                {
+
+                                    if (lstGrpToFn != null)
+                                    {
+                                        foreach (var itemChild in lstGrpToFn.Where(i => i.GroupID == item.ID).ToList())
+                                        {
+                                            <tr>
+                                                <td class="text">@num</td>
+                                                <td class="text">@item.Code</td>
+                                                <td class="text">@mFunction.ToString(lstFn.SingleOrDefault(m => m.ID == itemChild.FunctionalID).Code)</td>
+                                                <td>
+                                                    @*@Html.ActionLinkRole("Edit", " ", "GrpToFnEdit", "Administrator", new { grpid = item.ID, fnid = itemChild.FunctionalID },new { @class = "fa fa-edit label-primary btn-sm" })*@
+                                                    @Html.ActionLinkRole("Delete", "GrpToFn", "Administrator", " ", "GrpToFnDel", "Administrator", new { grpid = item.ID, fnid = itemChild.FunctionalID }, new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                                </td>
+                                            </tr>
+                                            num++;
+                                        }
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                    <br />
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+
+@*Popup add*@
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("GrpToFnSave", "Administrator", FormMethod.Post))
+            {
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">Default Modal</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        @Language.label("Code")
+                        @Language.label("Group") <code>(*)</code>
+                        <select class="form-control select2" style="width: 100%;" data-placeholder="Select a Group" id="Group" name="Group">
+                            <option value="">Select a Group</option>
+                            @foreach (var item in lstGrp)
+                            {
+                            <option value="@item.Code" id="@item.ID">@item.Code</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        @Language.label("Code")
+                        @Language.label("Function") <code>(*)</code>
+                        <select class="form-control select2" style="width: 100%;" data-placeholder="Select a Function" id="Function1" name="Function1">
+                            <option value="">Select a Function</option>
+                            @foreach (var item in lstFn)
+                            {
+                            <option value="@item.Code" id="@item.ID">@item.Code</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    @Html.ButtonRoles("Save", "GrpToFn", "Administrator", Language.label("Save"), new { @class = "btn btn-success" })
+                </div>
+                <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                @*<ul class="todo-list">
+                    <li style="background-color:azure">
+                        <h2>@Language.label("Add")</h2>
+                        <br />
+                        @Language.label("Code")
+                        @Language.label("Group") (*)
+                        <div>
+                            <input id="Group" list="Groupelse" name="Group" class="form-control">
+                            <datalist id="Groupelse">
+                                @foreach (var item in lstGrp)
+                                {
+                                    <option value="@item.Code" id="@item.ID"></option>
+                                }
+                            </datalist>
+                        </div>
+
+                        @Language.label("Code")
+                        @Language.label("Function") (*)
+                        <div>
+                            <input id="Function1" list="Function1else" name="Function1" class="form-control">
+                            <datalist id="Function1else">
+                                @foreach (var item1 in lstFn)
+                                {
+                                    <option value="@item1.Code" id="@item1.ID"></option>
+                                }
+                            </datalist>
+                        </div>
+                        <br />
+                        @Html.ButtonRoles("Save", "GrpToFn", "Administrator", Language.label("Save"), new { @class = "btn btn-success btn-sm" })
+                    </li>
+                </ul>*@
+            }
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+            $(document).ready(function () {
+
+            $(".select2").select2();
+
+                $('#GrpToFn thead tr').clone(true).appendTo('#GrpToFn thead');
+                $('#GrpToFn thead tr:eq(1) th').each(function (i) {
+                   if (i > 0) {
+                        var title = $(this).text();
+                        if (title != "Change" && title != "OEE" && title != "Status") {
+                            $(this).html('<input type="text"/>');
+
+                            $('input', this).on('keyup change', function () {
+                                if (table.column(i).search() !== this.value) {
+                                    table
+                                        .column(i)
+                                        .search(this.value)
+                                        .draw();
+                                }
+                            });
+                        }
+                        else {
+                            $(this).html('');
+                        }
+                    }
+                });
+
+                var table = $('#GrpToFn').DataTable({
+                    "displayLength": 25,
+                    orderCellsTop: true,
+                    fixedHeader: true,
+                     'paging'      : true,
+                   'lengthChange': false,
+                   'searching'   : true,
+                   'ordering'    : true,
+                   'info'        : true,
+                   'autoWidth'   : false
+                });
+
+                table.on('order.dt search.dt', function () {
+                    table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                    });
+                }).draw();
+            });
+    </script>
+}

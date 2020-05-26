@@ -1,0 +1,33 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            @* Message box *@
+            <div style="margin-left:auto; margin-right:auto; margin-top:auto; margin-bottom:auto; width:80vw; background-color:white; border-radius:10px">
+                <div style="margin-left:auto; margin-right:auto;">
+                    <h3 style="background-color:aliceblue;text-align:center">@Language.label("OrderMealsSuccessfully")</h3>
+                </div>
+
+                <div class="box-body">
+                    <table class="table table-bordered text-center">
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("Index","Function")" class="btn btn-block btn-primary btn-lg" style="width:100px; margin-left:auto">@Language.label("Home")</a>
+                            </td>
+                            <td>
+                                <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-block btn-primary btn-lg" style="width:100px; margin-right:auto">@Language.label("Logoff")</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            </div>
+    </section>
+    <!-- /.content -->
+</div>

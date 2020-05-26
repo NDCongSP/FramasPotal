@@ -1,0 +1,92 @@
+﻿@using FramasVietNam.Common
+@model FramasVietNam.Models.Meal.Material
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var lstMaterialTypes = (List<FramasVietNam.Models.Meal.MaterialType>)ViewBag.lstMaterialTypes;
+    var strMaterialTypes = mFunction.ToString(ViewBag.strMaterialTypes);
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+    window.onload = function () {
+        alert("@Html.Raw(ViewBag.Message)");
+    };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Material","MealControlCanteen")"></a>
+            @Language.label("Edit")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Material")</a></li>
+            <li class="active">@Language.label("Edit")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    @using (Html.BeginForm("MaterialEdit", "MealControlCanteen", FormMethod.Post))
+                    {
+                        <ul class="todo-list">
+                            <li>
+                                @Language.label("Code")
+                                @Html.TextBox("Code", Model.Code, new { @class = "form-control", @placeholder = "Code", @readonly = "true" })
+                            </li>
+                            <li>
+                                @Language.label("Name") (*)
+                                @Html.TextBox("Name", Model.Name, new { @class = "form-control", @placeholder = "Name" })
+                            </li>
+                            <li>
+                                @Language.label("Description")
+                                @Html.TextBox("Description", Model.Description, new { @class = "form-control", @placeholder = "Description" })
+                            </li>
+                            <li>
+                                @Language.label("MaterialType") (*)
+                                <br />
+                                <select class="form-control" name="MaterialType" id="MaterialType">
+                                    @if (lstMaterialTypes != null)
+                                    {
+                                        foreach (var item in lstMaterialTypes)
+                                        {
+                                            if (strMaterialTypes == item.Name)
+                                            {
+                                                <option selected value="@item.Name" id="@item.Name">@item.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Name" id="@item.Name">@item.Name</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </li>
+                            <li>
+                                @Html.ButtonRoles("Save", "Material", "MealControlCanteen", Language.label("Save"), new { @class = "btn btn-success btn-sm" })
+                            </li>
+                        </ul>
+                    }
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('#MaterialType').select2()
+    })
+</script>

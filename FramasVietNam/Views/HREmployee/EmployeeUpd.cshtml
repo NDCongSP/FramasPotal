@@ -1,0 +1,192 @@
+﻿@using FramasVietNam.Common
+@model FramasVietNam.Models.HumanResource.sp_Employee_Get_Result
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var lstDepartment = (List<FramasVietNam.Models.HumanResource.MaBoPhan>)ViewBag.lstDepartment;
+    var lstNationality = (List<FramasVietNam.Models.HumanResource.MaQuocGia>)ViewBag.lstNationality;
+    var lstReligion = (List<FramasVietNam.Models.HumanResource.MaTonGiao>)ViewBag.lstReligion;
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+    window.onload = function () {
+        alert("@Html.Raw(ViewBag.Message)");
+    };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Employee","HREmployee")"></a>
+            @Language.label("Update")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Employee")</a></li>
+            <li class="active">@Language.label("Update")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    @using (Html.BeginForm("EmployeeUpd", "HREmployee", FormMethod.Post))
+                    {
+                        <ul class="todo-list">
+                            <li>
+                                @Language.label("User") (*)
+                                @Html.TextBox("User", Model.MaSoNhanVien, new { @class = "form-control", @placeholder = @Language.label("User"), @readonly = "true" })
+                            </li>
+                            <li>
+                                @Language.label("FirstName") (*)
+                                @Html.TextBox("FirstName", Model.TenNhanVien, new { @class = "form-control", @placeholder = @Language.label("FirstName") })
+                            </li>
+                            <li>
+                                @Language.label("LastName") (*)
+                                @Html.TextBox("LastName", Model.HoNhanVien, new { @class = "form-control", @placeholder = @Language.label("LastName") })
+                            </li>
+                            <li>
+                                @Language.label("Sex") (*)
+                                <select name="Sex" id="Sex" class="form-control" placeholder="@Language.label("Sex")">
+                                    @if (Model.GioiTinh == true)
+                                    {
+                                        <option value="0">@Language.label("Female")</option>
+                                        <option selected value="1">@Language.label("Male")</option>
+                                        <option value="2">@Language.label("Other")</option>
+                                    }
+                                    else
+                                    {
+                                        <option selected value="0">@Language.label("Female")</option>
+                                        <option value="1">@Language.label("Male")</option>
+                                        <option value="2">@Language.label("Other")</option>
+                                    }
+                                </select>
+                            </li>
+                            <li>
+                                @Language.label("DateOfBirth") (*)
+                                <input name="DateOfBirth" type='text' class="form-control" id='DateOfBirth' placeholder="@Language.label("DateOfBirth")" value="@Model.NgaySinh" />
+                            </li>
+                            <li>
+                                @Language.label("PlaceOfBirth")
+                                @Html.TextBox("PlaceOfBirth", Model.NoiSinh, new { @class = "form-control", @placeholder = @Language.label("PlaceOfBirth") })
+                            </li>
+                            <li>
+                                @Language.label("Address")
+                                @Html.TextBox("Address", Model.DiaChi, new { @class = "form-control", @placeholder = @Language.label("Address") })
+                            </li>
+                            <li>
+                                @Language.label("MobilePhone") (*)
+                                @Html.TextBox("MobilePhone", Model.DienThoaiNR, new { @class = "form-control", @placeholder = @Language.label("MobilePhone") })
+                            </li>
+                            <li>
+                                @Language.label("Nationality")
+                                <select name="Nationality" id="Nationality" class="form-control select2" data-placeholder="Select a nationality">
+                                    <option value=""></option>
+                                    @if (lstNationality != null)
+                                    {
+                                        foreach (var item in lstNationality)
+                                        {
+                                            if (Model.MaQuocTich.ToString() == item.MaSo.ToString())
+                                            {
+                                                <option selected value="@item.MaSo">@item.NoiDung</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.MaSo">@item.NoiDung</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </li>
+                            <li>
+                                @Language.label("Religion")
+                                <select name="Religion" id="Religion" class="form-control">
+                                    @if (lstReligion != null)
+                                    {
+                                        foreach (var item in lstReligion)
+                                        {
+                                            if (Model.MaTonGiao.ToString() == item.MaSo.ToString())
+                                            {
+                                                <option selected value="@item.MaSo">@item.NoiDung</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.MaSo">@item.NoiDung</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </li>
+                            <li>
+                                @Language.label("Department") (*)
+                                <select name="Department" id="Department" class="form-control select2" data-placeholder="Select a department">
+                                    <option value=""></option>
+                                    @if (lstDepartment != null)
+                                    {
+                                        foreach (var item in lstDepartment)
+                                        {
+                                            if (Model.MaBoPhan.ToString() == item.MaBoPhan1.ToString())
+                                            {
+                                                <option selected value="@item.MaBoPhan1">@item.TenBoPhanA</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.MaBoPhan1">@item.TenBoPhanA</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </li>
+                            <li>
+                                @Language.label("Shift") (*)
+                                <select name="isOfficeHours" id="isOfficeHours" class="form-control">
+                                    @if (Model.HC == true)
+                                    {
+                                        <option value="0">@Language.label("WorkingByShift")</option>
+                                        <option selected value="1">@Language.label("WorkingByOfficeHours")</option>
+                                    }
+                                    else
+                                    {
+                                        <option selected value="0">@Language.label("WorkingByShift")</option>
+                                        <option value="1">@Language.label("WorkingByOfficeHours")</option>
+                                    }
+                                </select>
+                            </li>
+                            <li>
+                                @*<button class="btn btn-success btn-sm">@Language.label("Save")</button>*@
+                                @Html.ButtonRoles("Save", "Employee", "HREmployee", Language.label("Save"), new { @class = "btn btn-success btn-sm" })
+                            </li>
+                        </ul>
+                    }
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $(".select2").select2();
+        
+        $('#DateOfBirth').datetimepicker({
+            format: 'MM/DD/YYYY',
+        });
+    });
+</script>

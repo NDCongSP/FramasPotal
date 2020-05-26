@@ -1,0 +1,177 @@
+﻿@using FramasVietNam.Models.Menu;
+@model  PagedList.IPagedList<Document>
+@using FramasVietNam.Common;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Document";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+}
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+<div class="content-wrapper">
+    <div class="box box-primary">
+        <!-- .box-header -->
+        <div class="box-header">
+            <i class="fa fa-newspaper-o"></i>
+            <h3 class="box-title">@Language.label("News")</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- .box-body -->
+        <div class="box-body">
+            <div class="box-header clearfix no-border">
+                @Html.ButtonRoles("Add", "Document", "Home", Language.label("Add"), new { @class = "btn btn-primary", data_toggle = "modal", data_target = "#documentAdd" })
+            </div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>@Language.label("Num")</th>
+                        <th>@Language.label("Title")</th>
+                        <th>@Language.label("Url")</th>
+                        <th>@Language.label("Change")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        int i = 1;
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text">@i</td>
+                                <td class="text">@item.DocName</td>
+                                <td class="text">@item.FileUrl</td>
+                                <!-- General tools such as edit or delete-->
+                                <td>
+                                    @Html.ButtonRoles("Edit", "Document", "Home", "", new { @class = "fa fa-edit btn btn-sm btn-primary", @onclick = "openModalEdit(" + item.ID + ")" })
+                                    @Html.ActionLinkRole("Delete", "Document", "Home", " ", "DocumentDel/" + item.ID, "Home", new { @type = "submit", @class = "fa fa-trash btn btn-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <!-- #region Modal Add New Document -->
+        @Html.Partial("_DocumentAdd")
+        <!-- #endregion -->
+        <!-- #region Document Viewer -->
+        <div id='modal-document-edit' class='modal'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='ContentEdit'></div>
+                </div>
+            </div>
+        </div>
+        <!-- #endregion -->
+    </div>
+</div>
+@section styles {
+    <style type="text/css">
+        /*#region Swich */
+        label.switch {
+            width: 50px;
+            height: calc(50px / 2);
+            border-radius: 60px;
+            background-color: #4ed164;
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+
+            label.switch > span {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+
+            label.switch > input[type="checkbox"] {
+                opacity: 0;
+                position: absolute;
+            }
+
+            label.switch > span:before, label.switch > span:after {
+                content: "";
+                cursor: pointer;
+                position: absolute;
+            }
+
+            label.switch > input[type="checkbox"]:focus ~ span {
+                box-shadow: 0 0 0 4px #43b556;
+            }
+
+            label.switch > input[type="checkbox"]:checked:focus ~ span {
+                box-shadow: 0 0 0 4px #fff;
+            }
+
+            label.switch > span {
+                border-radius: 60px;
+            }
+
+                label.switch > span:before {
+                    width: 100%;
+                    height: 100%;
+                    box-sizing: border-box;
+                    background-color: #f1f1f1;
+                    border-radius: 60px;
+                    transition: opacity .2s ease-out .1s, transform .2s ease-out .1s;
+                    transform: scale(1);
+                    opacity: 1;
+                }
+
+                label.switch > span:after {
+                    top: 50%;
+                    z-index: 3;
+                    transition: transform .4s cubic-bezier(0.44,-0.12, 0.07, 1.15);
+                    width: calc(50px / 2);
+                    height: calc(50px / 2);
+                    transform: translate3d(0, -50%, 0);
+                    background-color: #fff;
+                    border-radius: 100%;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
+                }
+            /*Animate the switch when checked.*/
+            label.switch > input[type="checkbox"]:checked ~ span:before {
+                transform: scale(0);
+                opacity: .7;
+            }
+
+            label.switch > input[type="checkbox"]:checked ~ span:after {
+                transform: translate3d(100%, -50%, 0);
+            }
+        /*#endregion */
+    </style>
+}
+
+@section scripts {
+    <script type="text/javascript">
+
+         var openModalEdit = function (Id) {
+                var url = '/Home/DocumentEdit/' + Id;
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (data) {
+                    $('#ContentEdit').html(data);
+                    $('#modal-document-edit').modal(options);
+                    $('#modal-document-edit').modal('show');
+                },
+                error: function (e) {
+                    alert('@Language.label("OopsSomethingWentWrong")');
+                    return false;
+                }
+            });
+        }
+    </script>
+
+}
+

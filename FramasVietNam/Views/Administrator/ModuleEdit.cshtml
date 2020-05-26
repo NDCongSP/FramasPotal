@@ -1,0 +1,82 @@
+﻿@using FramasVietNam.Common
+@model FramasVietNam.Models.Menu.Module
+@{
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var lstModule = (List<FramasVietNam.Models.Menu.Module>)ViewBag.lstModule;
+    var lstLanguageModule = (List<FramasVietNam.Models.Menu.sys_Translation>)ViewBag.lstLanguageModule;
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Module","Administrator")"></a>
+            @Language.label("Edit")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Module")</a></li>
+            <li class="active">@Language.label("Edit")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    @using (Html.BeginForm("ModuleEdit", "Administrator", FormMethod.Post))
+                    {
+                        <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                        <ul class="todo-list">
+                            +@Language.label("Add")
+                            <li>
+                                @Language.label("Code")
+                                @Html.TextBox("Code", Model.Code, new { @class = "form-control", @placeholder = Language.label("Code"), @readonly = "true" })
+                            </li>
+                            <li>
+                                @Language.label("Title") - @Language.label("English") (*)
+                                @Html.TextBox("Title-EG", mFunction.ToString(lstLanguageModule.SingleOrDefault(m => m.LanguageID == 1).Title), new { @class = "form-control", @placeholder = Language.label("Title") + "-EG" })
+                            </li>
+                            <li>
+                                @Language.label("Description") - @Language.label("English")
+                                @Html.TextBox("Description-EG", mFunction.ToString(lstLanguageModule.SingleOrDefault(m => m.LanguageID == 1).Description), new { @class = "form-control", @placeholder = Language.label("Description") + "-EG" })
+                            </li>
+                            <li>
+                                @Language.label("Title") - @Language.label("VietNam") (*)
+                                @Html.TextBox("Title-VN", mFunction.ToString(lstLanguageModule.SingleOrDefault(m => m.LanguageID == 2).Title), new { @class = "form-control", @placeholder = Language.label("Title") + "-VN" })
+                            </li>
+                            <li>
+                                @Language.label("Description") - @Language.label("VietNam")
+                                @Html.TextBox("Description-VN", mFunction.ToString(lstLanguageModule.SingleOrDefault(m => m.LanguageID == 2).Description), new { @class = "form-control", @placeholder = Language.label("Description") + "-VN" })
+                            </li>
+                            <li>
+                                @Language.label("Title") - @Language.label("Germany") (*)
+                                @Html.TextBox("Title-GR", mFunction.ToString(lstLanguageModule.SingleOrDefault(m => m.LanguageID == 3).Title), new { @class = "form-control", @placeholder = Language.label("Title") + "-GR" })
+                            </li>
+                            <li>
+                                @Language.label("Description") - @Language.label("Germany")
+                                @Html.TextBox("Description-GR", mFunction.ToString(lstLanguageModule.SingleOrDefault(m => m.LanguageID == 3).Description), new { @class = "form-control", @placeholder = Language.label("Description") + "-GR" })
+                            </li>
+                            <li>
+                                @Html.ButtonRoles("Save", "Module", "Administrator", Language.label("Save"), new { @class = "btn btn-success btn-sm" })
+                            </li>
+                        </ul>
+                    }
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>

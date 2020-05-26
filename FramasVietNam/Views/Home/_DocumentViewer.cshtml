@@ -1,0 +1,17 @@
+﻿@using FramasVietNam.Common
+
+@if (Model != null)
+{
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title">Preview @Model.DocName</h4>
+        </div>
+        <div class="modal-body">
+            <iframe src="@Model.FileUrl" frameborder="0" height="900" width="100%"></iframe>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,218 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var lstOrder = (List<FramasVietNam.Models.Meal.sp_MealOrderException_Search_Result>)ViewBag.lstOrder;
+
+    //check time limit change
+    var timeHC = (TimeSpan)ViewBag.timeHC;
+    var timeOT = (TimeSpan)ViewBag.timeOT;
+    var time1 = (TimeSpan)ViewBag.time1;
+    var time2 = (TimeSpan)ViewBag.time2;
+    var time3 = (TimeSpan)ViewBag.time3;
+
+    var strDateSearch = mFunction.ToDateTime(ViewBag.strDateSearch);
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            @Language.label("OrderedMeal")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">@Language.label("OrderedMeal")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <div style="margin-bottom:10px">
+                        @Html.ActionLinkRole("Add", "MealOrderException", "MealControlCanteen", Language.label("Add"), "MealOrderExceptionAdd", "MealControlCanteen", new { @class = "btn btn-primary" })
+                    </div>
+                </div>
+            </div>
+
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">@Language.label("List")</h3>
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    @using (Html.BeginForm("MealOrderException", "MealControlCanteen", FormMethod.Post))
+                    {
+                        <div class="row" style="margin-bottom:5px;">
+                        <div class="col-xs-2">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input name="dateSearch" type='text' id='dateSearch' class="form-control" value="@strDateSearch" />
+                            </div>
+                        </div>
+                        <div class="col-xs-1">
+                            @Html.ButtonRoles("Search", "MealOrderException", "MealControlCanteen", Language.label("Search"), new { @class = "btn btn-primary" })
+                        </div>
+                    </div>
+                    }
+
+                    @using (Html.BeginForm("MealOrderException", "MealControlCanteen", FormMethod.Post))
+                    {
+                        <div style="overflow-x:auto;">
+                            <table id="MealOrderException" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="width:27px">@Language.label("Num")</th>
+                                        <th>@Language.label("Code")</th>
+                                        <th>@Language.label("Day")</th>
+                                        <th>@Language.label("Shift")</th>
+                                        <th>@Language.label("Meal")</th>
+                                        <th>@Language.label("Department")</th>
+                                        <th>@Language.label("UserRequest")</th>
+                                        <th>@Language.label("Name")</th>
+                                        <th>@Language.label("Change")</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (lstOrder != null)
+                                    {
+                                        int i = 1;
+                                        foreach (var item in lstOrder)
+                                        {
+                                            <tr>
+                                                <td class="text">@i</td>
+                                                <td class="text">@item.Day-@item.ID</td>
+                                                <td class="text">@item.Day</td>
+                                                <td class="text">@item.ShiftWorkName</td>
+                                                <td class="text">@item.MenuMealName</td>
+                                                <td class="text">@item.DepartmentName</td>
+                                                <td class="text">@item.UserNameRequest</td>
+                                                <td class="text">@item.FullName</td>
+                                                <!-- General tools such as edit or delete-->
+                                                <td>
+                                                    @if (mFunction.ToInt(item.Day) >= mFunction.ToInt(DateTime.Now.ToString("yyyyMMdd")))
+                                                    {
+                                                        if (item.ShiftWorkID == 1)
+                                                        {
+                                                            if (timeHC > DateTime.Now.TimeOfDay)
+                                                            {
+                                                                @Html.ActionLinkRole("Edit", "MealOrderException", "MealControlCanteen", " ", "MealOrderExceptionEdit/" + item.ID, "MealControlCanteen", new { @class = "fa fa-edit label-primary btn-sm" })
+                                                                @Html.ActionLinkRole("Delete", "MealOrderException", "MealControlCanteen", " ", "MealOrderExceptionDel/" + item.ID, "MealControlCanteen", new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                                            }
+                                                        }
+                                                        if (item.ShiftWorkID == 2)
+                                                        {
+                                                            if (timeOT > DateTime.Now.TimeOfDay)
+                                                            {
+                                                                @Html.ActionLinkRole("Edit", "MealOrderException", "MealControlCanteen", " ", "MealOrderExceptionEdit/" + item.ID, "MealControlCanteen", new { @class = "fa fa-edit label-primary btn-sm" })
+                                                                @Html.ActionLinkRole("Delete", "MealOrderException", "MealControlCanteen", " ", "MealOrderExceptionDel/" + item.ID, "MealControlCanteen", new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                                            }
+                                                        }
+                                                        if (item.ShiftWorkID == 3)
+                                                        {
+                                                            if (time1 > DateTime.Now.TimeOfDay)
+                                                            {
+                                                                @Html.ActionLinkRole("Edit", "MealOrderException", "MealControlCanteen", " ", "MealOrderExceptionEdit/" + item.ID, "MealControlCanteen", new { @class = "fa fa-edit label-primary btn-sm" })
+                                                                @Html.ActionLinkRole("Delete", "MealOrderException", "MealControlCanteen", " ", "MealOrderExceptionDel/" + item.ID, "MealControlCanteen", new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                                            }
+                                                        }
+                                                        if (item.ShiftWorkID == 4)
+                                                        {
+                                                            if (time2 > DateTime.Now.TimeOfDay)
+                                                            {
+                                                                @Html.ActionLinkRole("Edit", "MealOrderException", "MealControlCanteen", " ", "MealOrderExceptionEdit/" + item.ID, "MealControlCanteen", new { @class = "fa fa-edit label-primary btn-sm" })
+                                                                @Html.ActionLinkRole("Delete", "MealOrderException", "MealControlCanteen", " ", "MealOrderExceptionDel/" + item.ID, "MealControlCanteen", new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                                            }
+                                                        }
+                                                        if (item.ShiftWorkID == 5)
+                                                        {
+                                                            if (time3 > DateTime.Now.TimeOfDay)
+                                                            {
+                                                                @Html.ActionLinkRole("Edit", "MealOrderException", "MealControlCanteen", " ", "MealOrderExceptionEdit/" + item.ID, "MealControlCanteen", new { @class = "fa fa-edit label-primary btn-sm" })
+                                                                @Html.ActionLinkRole("Delete", "MealOrderException", "MealControlCanteen", " ", "MealOrderExceptionDel/" + item.ID, "MealControlCanteen", new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                                            }
+                                                        }
+                                                    }
+                                                </td>
+                                            </tr>
+                                            i++;
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+@section Scripts{
+    <script type="text/javascript">
+    $(function () {
+        $('#dateSearch').datetimepicker({
+            format: 'MM/DD/YYYY',
+        });
+
+        $('#MealOrderException thead tr').clone(true).appendTo('#MealOrderException thead');
+        $('#MealOrderException thead tr:eq(1) th').each(function (i) {
+            if (i > 0) {
+                var title = $(this).text();
+                if (title != "Change" && title != "OEE" && title != "Status") {
+                    $(this).html('<input type="text"/>');
+
+                    $('input', this).on('keyup change', function () {
+                        if (table.column(i).search() !== this.value) {
+                            table
+                                .column(i)
+                                .search(this.value)
+                                .draw();
+                        }
+                    });
+                }
+                else {
+                    $(this).html('');
+                }
+            }
+        });
+
+        var table = $('#MealOrderException').DataTable({
+            "displayLength": 25,
+            orderCellsTop: true,
+            fixedHeader: true,
+            'paging': true,
+            'lengthChange': false,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        });
+
+        table.on('order.dt search.dt', function () {
+            table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1;
+            });
+        }).draw();
+    });
+    </script>
+}
+
+

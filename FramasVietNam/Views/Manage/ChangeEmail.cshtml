@@ -1,0 +1,54 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewBag.Title = "Manage Language";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    string email = mFunction.ToString(ViewBag.email);
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+    window.onload = function () {
+        alert("@Html.Raw(ViewBag.Message)");
+    };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Manage")"></a>
+            @Language.label("Update") @Language.label("Email")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Home")</a></li>
+            <li class="active">@Language.label("Email")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    @using (Html.BeginForm("ChangeEmail", "Manage", FormMethod.Post))
+                    {
+                        <ul class="todo-list">
+                            <li>
+                                @Language.label("Email") (*)
+                                @Html.TextBox("txtEmail", email, new { @class = "form-control", @placeholder = @Language.label("Content") })
+
+                            </li>
+                            <li>
+                                <input type="submit" value=@Language.label("Save") class="btn btn-block btn-primary btn-sm" style="max-width:100px" />
+                            </li>
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>

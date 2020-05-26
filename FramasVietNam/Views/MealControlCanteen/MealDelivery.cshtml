@@ -1,0 +1,125 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            @Language.label("MealDelivery")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">@Language.label("MealDelivery")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="notification-icon" style="margin-top:10px">
+                        <span class="fa fa-television" style="font-size:25px"></span>
+                        <span class="badge" id="ntCnt"></span>
+                    </div>
+                    <br />
+                    <div id="divNotificaion">
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+
+@section scripts{
+    @Scripts.Render("~/Scripts/jquery.signalR-2.2.2.min.js")
+    <script src="~/signalr/Hubs/"></script>
+}
+
+<script>
+    $(document).ready(function () {
+        debugger
+        // Proxy created on the fly
+        var hub = $.connection.myHub;
+
+        // Declare a function on the hub hub so the server can invoke it
+        hub.client.displayStatus = function () {
+            debugger
+            getData();
+        };
+
+        // Start the connection
+        $.connection.hub.start();
+        getData();
+
+        function getData() {
+            var divNotificaion = $('#divNotificaion');
+            $.ajax({
+                url: '/MealControlCanteen/GetNotificationDelivery',
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+                    debugger
+                    data = $.parseJSON(data);
+                    if (data.length > 0) {
+                        divNotificaion.empty();
+                        //// set Count
+                        $('#ntCnt').text(data.length);
+
+                        ///Make notification html
+                        for (var i = 0; i < data.length; i++) {
+                            var num = data.length - i;
+                            if (data[i].MenuMealID != 0 && data[i].isCheck == true) {
+                                var notification = '<div class="alert alert-success alert-dismissable">' +
+                                    '<small class="text pull-right" style="color:white; font-size: 15px;">' + data[i].DateTimeFinger + '</small>' +
+                                    '<text style="color:white; font-size: 20px;">' +
+                                    num + '  -  ' + data[i].IndRegID + ': ' + data[i].TenNhanVien + 
+                                    '</text > ' +
+                                    '<br />' +
+                                    '<text style="color:white; font-size: 20px;">' +
+                                    data[i].ShiftWorkName + ' - ' + data[i].MenuMealName + ' - ' + data[i].MsgCheck +
+                                    '</text> ' +
+                                //'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                                '</div>'
+                                divNotificaion.append(notification);
+                            }
+                            else {
+                                var notification = '<div class="alert alert-danger alert-dismissable">' +
+                                    '<small class="text pull-right" style="color:white; font-size: 15px;">' + data[i].DateTimeFinger + '</small>' +
+                                    '<text style="color:white; font-size: 20px;">' +
+                                    num + '  -  ' + data[i].IndRegID + ': ' + data[i].TenNhanVien +
+                                    '</text > ' +
+                                    '<br />' +
+                                    '<text style="color:white; font-size: 20px;">' +
+                                    data[i].ShiftWorkName + ' - ' + data[i].MenuMealName + ' - ' + data[i].MsgCheck +
+                                    '</text> ' + 
+                                //'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                                '</div>'
+                                divNotificaion.append(notification);
+                            }
+                        }
+                    }
+                }, error: function (r, e, w) {
+                }
+            });
+        }
+    })
+</script>

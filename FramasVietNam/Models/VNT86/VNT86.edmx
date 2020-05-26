@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="VNT86Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'VNT86.dbo.STOCKIN_WS_NEW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="STOCKIN_WS_NEW">
+          <Key>
+            <PropertyRef Name="MESOKEY" />
+            <PropertyRef Name="C409" />
+          </Key>
+          <Property Name="MESOKEY" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="C400" Type="varchar" MaxLength="30" />
+          <Property Name="C401" Type="float" />
+          <Property Name="C402" Type="float" />
+          <Property Name="C403" Type="float" />
+          <Property Name="C404" Type="datetime" />
+          <Property Name="C405" Type="varchar" MaxLength="2" />
+          <Property Name="C406" Type="varchar" MaxLength="30" />
+          <Property Name="C409" Type="int" Nullable="false" />
+          <Property Name="C412" Type="varchar" MaxLength="30" />
+          <Property Name="C417" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <Function Name="sp_FinanceDAByProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProductCode" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_FinanceDAGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="VNT86ModelStoreContainer">
+          <EntitySet Name="STOCKIN_WS_NEW" EntityType="Self.STOCKIN_WS_NEW" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [STOCKIN_WS_NEW].[MESOKEY] AS [MESOKEY], 
+    [STOCKIN_WS_NEW].[C400] AS [C400], 
+    [STOCKIN_WS_NEW].[C401] AS [C401], 
+    [STOCKIN_WS_NEW].[C402] AS [C402], 
+    [STOCKIN_WS_NEW].[C403] AS [C403], 
+    [STOCKIN_WS_NEW].[C404] AS [C404], 
+    [STOCKIN_WS_NEW].[C405] AS [C405], 
+    [STOCKIN_WS_NEW].[C406] AS [C406], 
+    [STOCKIN_WS_NEW].[C409] AS [C409], 
+    [STOCKIN_WS_NEW].[C412] AS [C412], 
+    [STOCKIN_WS_NEW].[C417] AS [C417]
+    FROM [dbo].[STOCKIN_WS_NEW] AS [STOCKIN_WS_NEW]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VNT86Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="STOCKIN_WS_NEW">
+          <Key>
+            <PropertyRef Name="MESOKEY" />
+            <PropertyRef Name="C409" />
+          </Key>
+          <Property Name="MESOKEY" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C400" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="C401" Type="Double" />
+          <Property Name="C402" Type="Double" />
+          <Property Name="C403" Type="Double" />
+          <Property Name="C404" Type="DateTime" Precision="3" />
+          <Property Name="C405" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="C406" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="C409" Type="Int32" Nullable="false" />
+          <Property Name="C412" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="C417" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="VNT86Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="STOCKIN_WS_NEW" EntityType="Self.STOCKIN_WS_NEW" />
+          <FunctionImport Name="sp_FinanceDAByProduct" ReturnType="Collection(VNT86Model.sp_FinanceDAByProduct_Result)">
+          <Parameter Name="ProductCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_FinanceDAGet" ReturnType="Collection(VNT86Model.sp_FinanceDAGet_Result)" />
+          
+        </EntityContainer>
+        <ComplexType Name="sp_FinanceDAByProduct_Result">
+          <Property Type="String" Name="C032" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="ProductCode" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="Qty" Nullable="true" />
+          <Property Type="Decimal" Name="AmoQty" Nullable="false" Precision="18" Scale="3" />
+        </ComplexType>
+        <ComplexType Name="sp_FinanceDAGet_Result">
+          <Property Type="String" Name="Brand" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ProductCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="AmoQty" Nullable="false" Precision="18" Scale="3" />
+          <Property Type="Double" Name="Qty" Nullable="true" />
+          <Property Type="Decimal" Name="Percent" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
+        
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VNT86ModelStoreContainer" CdmEntityContainer="VNT86Entities">
+          <EntitySetMapping Name="STOCKIN_WS_NEW">
+            <EntityTypeMapping TypeName="VNT86Model.STOCKIN_WS_NEW">
+              <MappingFragment StoreEntitySet="STOCKIN_WS_NEW">
+                <ScalarProperty Name="MESOKEY" ColumnName="MESOKEY" />
+                <ScalarProperty Name="C400" ColumnName="C400" />
+                <ScalarProperty Name="C401" ColumnName="C401" />
+                <ScalarProperty Name="C402" ColumnName="C402" />
+                <ScalarProperty Name="C403" ColumnName="C403" />
+                <ScalarProperty Name="C404" ColumnName="C404" />
+                <ScalarProperty Name="C405" ColumnName="C405" />
+                <ScalarProperty Name="C406" ColumnName="C406" />
+                <ScalarProperty Name="C409" ColumnName="C409" />
+                <ScalarProperty Name="C412" ColumnName="C412" />
+                <ScalarProperty Name="C417" ColumnName="C417" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_FinanceDAByProduct" FunctionName="VNT86Model.Store.sp_FinanceDAByProduct">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VNT86Model.sp_FinanceDAByProduct_Result">
+                <ScalarProperty Name="C032" ColumnName="C032" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="AmoQty" ColumnName="AmoQty" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_FinanceDAGet" FunctionName="VNT86Model.Store.sp_FinanceDAGet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VNT86Model.sp_FinanceDAGet_Result">
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="AmoQty" ColumnName="AmoQty" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="Percent" ColumnName="Percent" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

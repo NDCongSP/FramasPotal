@@ -1,0 +1,71 @@
+﻿
+@using FramasVietNam.Common
+<div class="modal fade" id="modal-add-part-code">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">@Language.label("AddPartCode")</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    @Language.label("PartCode")<code>(*)</code>
+                    <input type="text" class="form-control" id="part-code" placeholder="@Language.label("PleaseEnterThePartCode")">
+                </div>
+                <div class="form-group">
+                    @Language.label("PartName")<code>(*)</code>
+                    <input type="text" class="form-control" id="part-name-vn" placeholder="@Language.label("PleaseEnterThePartName")">
+                </div>
+                <div class="form-group">
+                    @Language.label("PartNameEn")<code>(*)</code>
+                    <input type="text" class="form-control" id="part-name-en" placeholder="@Language.label("PleaseEnterThePartNameEn")">
+                </div>
+                <div class="form-group">
+                    @Language.label("DepartmentCode")<code>(*)</code>
+                    <input type="text" class="form-control" id="department-code" placeholder="@Language.label("PleaseEnterTheDepartmentCode")">
+                </div>
+                <div class="form-group">
+                    <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                        <input type="checkbox" class="custom-control-input" id="swiftActive">
+                        <label class="custom-control-label" for="customSwitch3">@Language.label("SaturdayOff")</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-success" onclick="SavePartCode()">@Language.label("Save")</button>*@
+                @Html.ButtonRoles("Save", "ListPartCode", "HREmployee", @Language.label("Save"), new { @class = "btn btn-success", @onclick = "SavePartCode()" })
+
+            </div>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="~/Content/adminlte/plugins/iCheck/square/blue.css">
+<style type="text/css">
+    .alert {
+        padding: 8px 35px !important;
+        margin-bottom: 0px !important;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    .error {
+        background-color: #fbff00;
+        border-color: #ff0000;
+    }
+</style>
+
+<script src="~/Content/adminlte/plugins/iCheck/icheck.min.js"></script>
+
+<script type="text/javascript">
+     $(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' /* optional */
+        });
+    });
+
+</script>

@@ -1,0 +1,52 @@
+﻿
+@using FramasVietNam.Common
+@if (Model != null)
+{
+    using (Html.BeginForm("DocumentEdit", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">@Language.label("Edit")</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    @Language.label("DocumentName")<code>(*)</code>
+                    <input type="text" class="form-control" id="DocName"
+                           name="DocName" placeholder="@Language.label("DocumentName")"
+                           value="@(Model.DocName != null? Model.DocName: string.Empty)" />
+                </div>
+                <div class="form-group">
+                    @Language.label("Icon")<code>(*)</code>
+                    <input type="text" class="form-control" id="Icon"
+                           name="Icon" placeholder="@Language.label("Icon")"
+                           value="@(Model.Icon != null? Model.Icon: string.Empty)" />
+                </div>
+                <div class="form-group">
+                    @Language.label("File")<code>(*)</code>
+                    <input class="btn btn-primary btn-sm" type="file" name="file"
+                           value="@(Model.FileUrl != null? Model.FileUrl : string.Empty)" />
+                </div>
+                <div class="form-group">
+                    @Language.label("Description")
+                    <textarea class="form-control" id="Description"
+                              name="Description" placeholder="@Language.label("Description")">@(Model.Description != null? Model.Description : string.Empty)</textarea>
+                </div>
+                <div class="form-group">
+                    @Language.label("Active")
+                    <label class="switch">
+                        <input type="checkbox" id="IsActive" name="IsActive" value="true" @(Model.IsActive==true?"checked":"")/>
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                @Html.ButtonRoles("Save", "Document", "Home", Language.label("Save"), new { @class = "btn btn-success", @type = "submit" })
+            </div>
+        </div>
+    }
+
+}

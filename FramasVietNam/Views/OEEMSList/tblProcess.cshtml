@@ -1,0 +1,173 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var _lsttblProcess = (List<FramasVietNam.Models.OEEMS.tblProcess>)ViewBag.lsttblProcess;
+    string _Key = mFunction.ToString(ViewBag._Key);
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            Process List
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">Process List</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <div style="margin-bottom:10px">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="ion ion-clipboard"></i>
+                    <h3 class="box-title">@Language.label("List")</h3>
+                    <div class="box-tools pull-right">
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>@Language.label("Num")</th>
+                                <th>@Language.label("Code")</th>
+                                <th>@Language.label("Name")</th>
+                                <th>End of Process</th>
+                                <th>@Language.label("Change")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (_lsttblProcess != null)
+                            {
+                                int i = 1;
+                                foreach (var item in _lsttblProcess)
+                                {
+                                    <tr>
+                                        <td class="text">@i</td>
+                                        <td class="text">@item.ProcessID</td>
+                                        <td class="text">@item.ProcessName</td>
+                                        <td class="text">@Html.CheckBox(i.ToString(), Convert.ToBoolean(@item.EndofProcess), new { @class = "flat-red" })</td>
+                                        <!-- General tools such as edit or delete-->
+                                        <td>
+                                            @Html.ActionLinkRole("Edit", "TblProcess", "OEEMSList", " ", "TblProcessEdit/" + item.ProcessID, "OEEMSList", new { @class = "fa fa-edit label-primary btn-sm" })
+                                            @Html.ActionLinkRole("Delete", "TblProcess", "OEEMSList", " ", "TblProcessDel/" + item.ProcessID, "OEEMSList", new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+@*Popup add*@
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("TblProcessSave", "OEEMSList", FormMethod.Post))
+            {
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">@Language.label("Add")</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        @Language.label("Code") <code>(*)</code>
+                        @Html.TextBox("txtProcessID", _Key, new { @class = "form-control", @placeholder = Language.label("Code"), @readonly = "true" })
+                    </div>
+                    <div class="form-group">
+                        @Language.label("Name") (*)
+                        @Html.TextBox("txtProcessName", null, new { @class = "form-control", @placeholder = "Name" })
+                    </div>
+                    <div class="form-group">
+                        Actice
+                        @Html.CheckBox("txtEndofProcess", false, new { @class = "flat-red" })
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    @Html.ButtonRoles("Save", "TblProcess", "OEEMSList", Language.label("Save"), new { @class = "btn btn-success" })
+                </div>
+                <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                @*<ul class="todo-list">
+                        <li style="background-color:azure">
+                            <h2>@Language.label("Add")</h2>
+                            <br />
+                            @Language.label("Code") (*)
+                            @Html.TextBox("txtProcessID", _Key, new { @class = "form-control", @placeholder = Language.label("Code"), @readonly = "true" })
+
+                            @Language.label("Name") (*)
+                            @Html.TextBox("txtProcessName", null, new { @class = "form-control", @placeholder = "Name" })
+
+                            <br />
+                            Actice
+                            @Html.CheckBox("txtEndofProcess", false, new { @class = "flat-red" })
+                            <br />
+                            <br />
+                            @Html.ButtonRoles("Save", "TblProcess", "OEEMSList", Language.label("Save"), new { @class = "btn btn-success btn-sm" })
+                        </li>
+                    </ul>*@
+            }
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section Scripts{
+    <script src="~/Content/adminlte/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red').iCheck({
+        checkboxClass: 'icheckbox_flat-green'
+    });
+
+    $(function () {
+        $('#approve-btn').click(function () {
+            debugger;
+            $('#modal-container').modal('hide');
+        });
+    });
+
+    $("#btnPopup").click(function () {
+        var count = $('input[type="checkbox"].flat-red:checked').length;
+        $('#txt_TotalBarcode').val(count);
+    });
+
+    </script>
+
+}
+

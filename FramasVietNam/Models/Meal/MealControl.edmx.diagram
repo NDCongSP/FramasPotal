@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2a2ac3d6de26439787aea9d571ed3c74" Name="Diagram1">
+        <EntityTypeShape EntityType="MealControlModel.Feedback" Width="1.5" PointX="5.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="MealControlModel.Feedback_Reply" Width="1.5" PointX="8" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="MealControlModel.Material" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="MealControlModel.MaterialType" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MealControlModel.MealDelivery" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MealControlModel.MealOrderException" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MealControlModel.MealSchedule" Width="1.5" PointX="5.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MealControlModel.MenuMeal" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="MealControlModel.MenuMealDetail" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MealControlModel.OrderMeal" Width="1.5" PointX="7.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MealControlModel.ShiftWork" Width="1.5" PointX="9.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MealControlModel.TimeLimitOrder" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
+        <AssociationConnector Association="MealControlModel.FK_Feedback_Reply_Feedback" ManuallyRouted="false" />
+        <AssociationConnector Association="MealControlModel.FK_Material_MaterialType" ManuallyRouted="false" />
+        <AssociationConnector Association="MealControlModel.FK_MenuMealDetail_Material" ManuallyRouted="false" />
+        <AssociationConnector Association="MealControlModel.FK_MenuMealDetail_MenuMeal" ManuallyRouted="false" />
+        <AssociationConnector Association="MealControlModel.FK_MealSchedule_MenuMeal" />
+        <AssociationConnector Association="MealControlModel.FK_MealSchedule_ShiftWork" />
+        <AssociationConnector Association="MealControlModel.FK_OrderMeal_MenuMeal" />
+        <AssociationConnector Association="MealControlModel.FK_OrderMeal_ShiftWork" />
+        <AssociationConnector Association="MealControlModel.FK_MealDelivery_MenuMeal" />
+        <AssociationConnector Association="MealControlModel.FK_MealDelivery_ShiftWork" />
+        <AssociationConnector Association="MealControlModel.FK_MealOrderException_MenuMeal" />
+        <AssociationConnector Association="MealControlModel.FK_MealOrderException_ShiftWork" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,103 @@
+﻿@using FramasVietNam.Common
+@model FramasVietNam.Models.OEEMS.tblComp
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    bool _chkb_Activate = mFunction.ToBool(ViewBag.chkb_Activate);
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("TblComp","OEEMSList")"></a>
+            @Language.label("Edit")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Component</a></li>
+            <li class="active">@Language.label("Edit")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    @using (Html.BeginForm("TblCompEdit", "OEEMSList", FormMethod.Post))
+                    {
+                        <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                        <ul class="todo-list">
+                            +@Language.label("Edit")
+                            <li>
+                                @Language.label("Code")
+                                @Html.TextBoxFor(m => Model.CompID, new { @class = "form-control", @placeholder = Language.label("Code"), @readonly = "true" })
+                            </li>
+
+                            <li>
+                                @Language.label("Name")
+                                @Html.TextBoxFor(m => Model.CompName, new { @class = "form-control", @placeholder = "Name" })
+                            </li>
+
+                            <li>
+                                Main
+                                @Html.TextBoxFor(m => Model.MainComp, new { @class = "form-control", @placeholder = "Main", type = "number" })
+                            </li>
+
+                            <li>
+                                Actice
+                                <br />
+                                @Html.CheckBox("txtActice", _chkb_Activate, new { @class = "flat-red" })
+                            </li>
+
+                            <li>
+                                Sort
+                                @Html.TextBoxFor(m => Model.Sort, new { @class = "form-control", @placeholder = "Sort", type = "number" })
+                            </li>
+
+                            <li>
+                                @Html.ButtonRoles("Save", "TblComp", "OEEMSList", Language.label("Save"), new { @class = "btn btn-success btn-sm" })
+                            </li>
+                        </ul>
+                    }
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+<script src="~/Content/adminlte/plugins/iCheck/icheck.min.js"></script>
+
+<script type="text/javascript">
+
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red').iCheck({
+        checkboxClass: 'icheckbox_flat-green'
+    });
+
+    $(function () {
+        $('#approve-btn').click(function () {
+            debugger;
+            $('#modal-container').modal('hide');
+        });
+    });
+
+    $("#btnPopup").click(function () {
+        var count = $('input[type="checkbox"].flat-red:checked').length;
+        $('#txt_TotalBarcode').val(count);
+    });
+
+</script>

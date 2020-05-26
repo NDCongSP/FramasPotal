@@ -1,0 +1,1390 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MealControlModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" />
+          <Property Name="TextContain" Type="nvarchar(max)" />
+          <Property Name="Status" Type="int" />
+          <Property Name="UserAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Feedback_Reply">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConversationsID" Type="int" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" />
+          <Property Name="TextContain" Type="nvarchar(max)" />
+          <Property Name="Status" Type="int" />
+          <Property Name="UserAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="MaterialTypeID" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="Image" Type="varchar" MaxLength="100" />
+          <Property Name="Status" Type="int" />
+          <Property Name="PCIDAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+          <Property Name="PCIDUpd" Type="varchar" MaxLength="25" />
+          <Property Name="DateUpd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MaterialType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="PCIDAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+          <Property Name="PCIDUpd" Type="varchar" MaxLength="25" />
+          <Property Name="DateUpd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MealDelivery">
+          <Key>
+            <PropertyRef Name="DateAdd" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="int" Nullable="false" />
+          <Property Name="DateAdd" Type="datetime" Nullable="false" />
+          <Property Name="MachineNumberID" Type="int" />
+          <Property Name="ShiftWorkID" Type="int" />
+          <Property Name="MenuMealID" Type="int" />
+        </EntityType>
+        <EntityType Name="MealOrderException">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Day" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="ShiftWorkID" Type="int" Nullable="false" />
+          <Property Name="MenuMealID" Type="int" Nullable="false" />
+          <Property Name="DepartmentID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="UserNameRequest" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsTakeMeal" Type="bit" />
+          <Property Name="UserAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MealSchedule">
+          <Key>
+            <PropertyRef Name="Day" />
+            <PropertyRef Name="ShiftWorkID" />
+            <PropertyRef Name="MenuMealID" />
+          </Key>
+          <Property Name="Day" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="ShiftWorkID" Type="int" Nullable="false" />
+          <Property Name="ShiftWorkCode" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="MenuMealID" Type="int" Nullable="false" />
+          <Property Name="MenuMealCode" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="UserAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+          <Property Name="UserUpd" Type="varchar" MaxLength="25" />
+          <Property Name="DateUpd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MenuMeal">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="Price" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="Image" Type="varchar" MaxLength="100" />
+          <Property Name="Status" Type="int" />
+          <Property Name="PCIDAdd" Type="varchar" MaxLength="25" />
+          <Property Name="UserAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+          <Property Name="PCIDUpd" Type="varchar" MaxLength="25" />
+          <Property Name="UserUpd" Type="varchar" MaxLength="25" />
+          <Property Name="DateUpd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MenuMealDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="MaterialID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="MaterialID" Type="int" Nullable="false" />
+          <Property Name="MaterialCode" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="MaterialName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderMeal">
+          <Key>
+            <PropertyRef Name="Day" />
+            <PropertyRef Name="ShiftWorkID" />
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Day" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="ShiftWorkID" Type="int" Nullable="false" />
+          <Property Name="ShiftWorkCode" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="MenuMealID" Type="int" Nullable="false" />
+          <Property Name="MenuMealCode" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IsTakeMeal" Type="bit" />
+          <Property Name="UserAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+          <Property Name="UserUpd" Type="varchar" MaxLength="25" />
+          <Property Name="DateUpd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ShiftWork">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="UserAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+          <Property Name="UserUpd" Type="varchar" MaxLength="25" />
+          <Property Name="DateUpd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TimeLimitOrder">
+          <Key>
+            <PropertyRef Name="ShiftWorkID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ShiftWorkID" Type="int" Nullable="false" />
+          <Property Name="ShiftWorkCode" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="TimeLimit" Type="time" Precision="7" Nullable="false" />
+          <Property Name="IsOffice" Type="bit" />
+          <Property Name="BeginTime" Type="time" Precision="7" />
+          <Property Name="EndTime" Type="time" Precision="7" />
+          <Property Name="UserAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+          <Property Name="UserUpd" Type="varchar" MaxLength="25" />
+          <Property Name="DateUpd" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Feedback_Reply_Feedback">
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="0..1" />
+          <End Role="Feedback_Reply" Type="Self.Feedback_Reply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Feedback">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Feedback_Reply">
+              <PropertyRef Name="ConversationsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Material_MaterialType">
+          <End Role="MaterialType" Type="Self.MaterialType" Multiplicity="1" />
+          <End Role="Material" Type="Self.Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="MaterialTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MealDelivery_MenuMeal">
+          <End Role="MenuMeal" Type="Self.MenuMeal" Multiplicity="0..1" />
+          <End Role="MealDelivery" Type="Self.MealDelivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MenuMeal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MealDelivery">
+              <PropertyRef Name="MenuMealID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MealDelivery_ShiftWork">
+          <End Role="ShiftWork" Type="Self.ShiftWork" Multiplicity="0..1" />
+          <End Role="MealDelivery" Type="Self.MealDelivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShiftWork">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MealDelivery">
+              <PropertyRef Name="ShiftWorkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MealOrderException_MenuMeal">
+          <End Role="MenuMeal" Type="Self.MenuMeal" Multiplicity="1" />
+          <End Role="MealOrderException" Type="Self.MealOrderException" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MenuMeal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MealOrderException">
+              <PropertyRef Name="MenuMealID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MealOrderException_ShiftWork">
+          <End Role="ShiftWork" Type="Self.ShiftWork" Multiplicity="1" />
+          <End Role="MealOrderException" Type="Self.MealOrderException" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShiftWork">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MealOrderException">
+              <PropertyRef Name="ShiftWorkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MealSchedule_MenuMeal">
+          <End Role="MenuMeal" Type="Self.MenuMeal" Multiplicity="1" />
+          <End Role="MealSchedule" Type="Self.MealSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MenuMeal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MealSchedule">
+              <PropertyRef Name="MenuMealID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MealSchedule_ShiftWork">
+          <End Role="ShiftWork" Type="Self.ShiftWork" Multiplicity="1" />
+          <End Role="MealSchedule" Type="Self.MealSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShiftWork">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MealSchedule">
+              <PropertyRef Name="ShiftWorkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuMealDetail_Material">
+          <End Role="Material" Type="Self.Material" Multiplicity="1" />
+          <End Role="MenuMealDetail" Type="Self.MenuMealDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MenuMealDetail">
+              <PropertyRef Name="MaterialID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuMealDetail_MenuMeal">
+          <End Role="MenuMeal" Type="Self.MenuMeal" Multiplicity="1" />
+          <End Role="MenuMealDetail" Type="Self.MenuMealDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MenuMeal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MenuMealDetail">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderMeal_MenuMeal">
+          <End Role="MenuMeal" Type="Self.MenuMeal" Multiplicity="1" />
+          <End Role="OrderMeal" Type="Self.OrderMeal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MenuMeal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderMeal">
+              <PropertyRef Name="MenuMealID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderMeal_ShiftWork">
+          <End Role="ShiftWork" Type="Self.ShiftWork" Multiplicity="1" />
+          <End Role="OrderMeal" Type="Self.OrderMeal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShiftWork">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderMeal">
+              <PropertyRef Name="ShiftWorkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_ActionLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ActionName" Type="varchar" Mode="In" />
+          <Parameter Name="ControllerName" Type="varchar" Mode="In" />
+          <Parameter Name="Method" Type="varchar" Mode="In" />
+          <Parameter Name="Content" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Detail" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="Date" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_DeliveryInstantNoodles_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_DeliveryInstantNoodles_Search" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="date" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_MealOrderException_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_MealOrderException_Search" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="date" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_MealSchedule_Child" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ShiftWork" Type="int" Mode="In" />
+          <Parameter Name="Date" Type="date" Mode="In" />
+        </Function>
+        <Function Name="sp_MealSchedule_GetByDay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="from" Type="varchar" Mode="In" />
+          <Parameter Name="to" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_MealSchedule_Parent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ShiftWork" Type="int" Mode="In" />
+          <Parameter Name="Date" Type="date" Mode="In" />
+        </Function>
+        <Function Name="sp_OrderMeal_GetDay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="day" Type="varchar" Mode="In" />
+          <Parameter Name="User" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_OrderMealOffline_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Day" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ShiftWorkGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="MealControlModelStoreContainer">
+          <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feedback_Reply" EntityType="Self.Feedback_Reply" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Material" EntityType="Self.Material" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaterialType" EntityType="Self.MaterialType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MealDelivery" EntityType="Self.MealDelivery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MealOrderException" EntityType="Self.MealOrderException" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MealSchedule" EntityType="Self.MealSchedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MenuMeal" EntityType="Self.MenuMeal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MenuMealDetail" EntityType="Self.MenuMealDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderMeal" EntityType="Self.OrderMeal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShiftWork" EntityType="Self.ShiftWork" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeLimitOrder" EntityType="Self.TimeLimitOrder" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Feedback_Reply_Feedback" Association="Self.FK_Feedback_Reply_Feedback">
+            <End Role="Feedback" EntitySet="Feedback" />
+            <End Role="Feedback_Reply" EntitySet="Feedback_Reply" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Material_MaterialType" Association="Self.FK_Material_MaterialType">
+            <End Role="MaterialType" EntitySet="MaterialType" />
+            <End Role="Material" EntitySet="Material" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MealDelivery_MenuMeal" Association="Self.FK_MealDelivery_MenuMeal">
+            <End Role="MenuMeal" EntitySet="MenuMeal" />
+            <End Role="MealDelivery" EntitySet="MealDelivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MealDelivery_ShiftWork" Association="Self.FK_MealDelivery_ShiftWork">
+            <End Role="ShiftWork" EntitySet="ShiftWork" />
+            <End Role="MealDelivery" EntitySet="MealDelivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MealOrderException_MenuMeal" Association="Self.FK_MealOrderException_MenuMeal">
+            <End Role="MenuMeal" EntitySet="MenuMeal" />
+            <End Role="MealOrderException" EntitySet="MealOrderException" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MealOrderException_ShiftWork" Association="Self.FK_MealOrderException_ShiftWork">
+            <End Role="ShiftWork" EntitySet="ShiftWork" />
+            <End Role="MealOrderException" EntitySet="MealOrderException" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MealSchedule_MenuMeal" Association="Self.FK_MealSchedule_MenuMeal">
+            <End Role="MenuMeal" EntitySet="MenuMeal" />
+            <End Role="MealSchedule" EntitySet="MealSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MealSchedule_ShiftWork" Association="Self.FK_MealSchedule_ShiftWork">
+            <End Role="ShiftWork" EntitySet="ShiftWork" />
+            <End Role="MealSchedule" EntitySet="MealSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuMealDetail_Material" Association="Self.FK_MenuMealDetail_Material">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="MenuMealDetail" EntitySet="MenuMealDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuMealDetail_MenuMeal" Association="Self.FK_MenuMealDetail_MenuMeal">
+            <End Role="MenuMeal" EntitySet="MenuMeal" />
+            <End Role="MenuMealDetail" EntitySet="MenuMealDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderMeal_MenuMeal" Association="Self.FK_OrderMeal_MenuMeal">
+            <End Role="MenuMeal" EntitySet="MenuMeal" />
+            <End Role="OrderMeal" EntitySet="OrderMeal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderMeal_ShiftWork" Association="Self.FK_OrderMeal_ShiftWork">
+            <End Role="ShiftWork" EntitySet="ShiftWork" />
+            <End Role="OrderMeal" EntitySet="OrderMeal" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MealControlModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TextContain" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="UserAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Feedback_Reply" Relationship="Self.FK_Feedback_Reply_Feedback" FromRole="Feedback" ToRole="Feedback_Reply" />
+        </EntityType>
+        <EntityType Name="Feedback_Reply">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConversationsID" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TextContain" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="UserAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Feedback" Relationship="Self.FK_Feedback_Reply_Feedback" FromRole="Feedback_Reply" ToRole="Feedback" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="MaterialTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="15" Scale="4" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="PCIDAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <Property Name="PCIDUpd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateUpd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MaterialType" Relationship="Self.FK_Material_MaterialType" FromRole="Material" ToRole="MaterialType" />
+          <NavigationProperty Name="MenuMealDetails" Relationship="Self.FK_MenuMealDetail_Material" FromRole="Material" ToRole="MenuMealDetail" />
+        </EntityType>
+        <EntityType Name="MaterialType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="PCIDAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <Property Name="PCIDUpd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateUpd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Materials" Relationship="Self.FK_Material_MaterialType" FromRole="MaterialType" ToRole="Material" />
+        </EntityType>
+        <EntityType Name="MealDelivery">
+          <Key>
+            <PropertyRef Name="DateAdd" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="Int32" Nullable="false" />
+          <Property Name="DateAdd" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MachineNumberID" Type="Int32" />
+          <Property Name="ShiftWorkID" Type="Int32" />
+          <Property Name="MenuMealID" Type="Int32" />
+          <NavigationProperty Name="MenuMeal" Relationship="MealControlModel.FK_MealDelivery_MenuMeal" FromRole="MealDelivery" ToRole="MenuMeal" />
+          <NavigationProperty Name="ShiftWork" Relationship="MealControlModel.FK_MealDelivery_ShiftWork" FromRole="MealDelivery" ToRole="ShiftWork" />
+        </EntityType>
+        <EntityType Name="MealOrderException">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Day" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ShiftWorkID" Type="Int32" Nullable="false" />
+          <Property Name="MenuMealID" Type="Int32" Nullable="false" />
+          <Property Name="DepartmentID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserNameRequest" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsTakeMeal" Type="Boolean" />
+          <Property Name="UserAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MenuMeal" Relationship="MealControlModel.FK_MealOrderException_MenuMeal" FromRole="MealOrderException" ToRole="MenuMeal" />
+          <NavigationProperty Name="ShiftWork" Relationship="MealControlModel.FK_MealOrderException_ShiftWork" FromRole="MealOrderException" ToRole="ShiftWork" />
+        </EntityType>
+        <EntityType Name="MealSchedule">
+          <Key>
+            <PropertyRef Name="Day" />
+            <PropertyRef Name="ShiftWorkID" />
+            <PropertyRef Name="MenuMealID" />
+          </Key>
+          <Property Name="Day" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ShiftWorkID" Type="Int32" Nullable="false" />
+          <Property Name="ShiftWorkCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MenuMealID" Type="Int32" Nullable="false" />
+          <Property Name="MenuMealCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="UserAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <Property Name="UserUpd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateUpd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MenuMeal" Relationship="MealControlModel.FK_MealSchedule_MenuMeal" FromRole="MealSchedule" ToRole="MenuMeal" />
+          <NavigationProperty Name="ShiftWork" Relationship="MealControlModel.FK_MealSchedule_ShiftWork" FromRole="MealSchedule" ToRole="ShiftWork" />
+        </EntityType>
+        <EntityType Name="MenuMeal">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="15" Scale="4" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="PCIDAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="UserAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <Property Name="PCIDUpd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="UserUpd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateUpd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MenuMealDetails" Relationship="Self.FK_MenuMealDetail_MenuMeal" FromRole="MenuMeal" ToRole="MenuMealDetail" />
+          <NavigationProperty Name="MealSchedules" Relationship="MealControlModel.FK_MealSchedule_MenuMeal" FromRole="MenuMeal" ToRole="MealSchedule" />
+          <NavigationProperty Name="OrderMeals" Relationship="MealControlModel.FK_OrderMeal_MenuMeal" FromRole="MenuMeal" ToRole="OrderMeal" />
+          <NavigationProperty Name="MealDeliveries" Relationship="MealControlModel.FK_MealDelivery_MenuMeal" FromRole="MenuMeal" ToRole="MealDelivery" />
+          <NavigationProperty Name="MealOrderExceptions" Relationship="MealControlModel.FK_MealOrderException_MenuMeal" FromRole="MenuMeal" ToRole="MealOrderException" />
+        </EntityType>
+        <EntityType Name="MenuMealDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="MaterialID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="MaterialID" Type="Int32" Nullable="false" />
+          <Property Name="MaterialCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MaterialName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="15" Scale="4" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <NavigationProperty Name="Material" Relationship="Self.FK_MenuMealDetail_Material" FromRole="MenuMealDetail" ToRole="Material" />
+          <NavigationProperty Name="MenuMeal" Relationship="Self.FK_MenuMealDetail_MenuMeal" FromRole="MenuMealDetail" ToRole="MenuMeal" />
+        </EntityType>
+        <EntityType Name="OrderMeal">
+          <Key>
+            <PropertyRef Name="Day" />
+            <PropertyRef Name="ShiftWorkID" />
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Day" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ShiftWorkID" Type="Int32" Nullable="false" />
+          <Property Name="ShiftWorkCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MenuMealID" Type="Int32" Nullable="false" />
+          <Property Name="MenuMealCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsTakeMeal" Type="Boolean" />
+          <Property Name="UserAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <Property Name="UserUpd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateUpd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MenuMeal" Relationship="MealControlModel.FK_OrderMeal_MenuMeal" FromRole="OrderMeal" ToRole="MenuMeal" />
+          <NavigationProperty Name="ShiftWork" Relationship="MealControlModel.FK_OrderMeal_ShiftWork" FromRole="OrderMeal" ToRole="ShiftWork" />
+        </EntityType>
+        <EntityType Name="ShiftWork">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="UserAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <Property Name="UserUpd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateUpd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MealSchedules" Relationship="MealControlModel.FK_MealSchedule_ShiftWork" FromRole="ShiftWork" ToRole="MealSchedule" />
+          <NavigationProperty Name="OrderMeals" Relationship="MealControlModel.FK_OrderMeal_ShiftWork" FromRole="ShiftWork" ToRole="OrderMeal" />
+          <NavigationProperty Name="MealDeliveries" Relationship="MealControlModel.FK_MealDelivery_ShiftWork" FromRole="ShiftWork" ToRole="MealDelivery" />
+          <NavigationProperty Name="MealOrderExceptions" Relationship="MealControlModel.FK_MealOrderException_ShiftWork" FromRole="ShiftWork" ToRole="MealOrderException" />
+        </EntityType>
+        <EntityType Name="TimeLimitOrder">
+          <Key>
+            <PropertyRef Name="ShiftWorkID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShiftWorkID" Type="Int32" Nullable="false" />
+          <Property Name="ShiftWorkCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TimeLimit" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="IsOffice" Type="Boolean" />
+          <Property Name="BeginTime" Type="Time" Precision="7" />
+          <Property Name="EndTime" Type="Time" Precision="7" />
+          <Property Name="UserAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <Property Name="UserUpd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateUpd" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_Feedback_Reply_Feedback">
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="0..1" />
+          <End Role="Feedback_Reply" Type="Self.Feedback_Reply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Feedback">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Feedback_Reply">
+              <PropertyRef Name="ConversationsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Material_MaterialType">
+          <End Role="MaterialType" Type="Self.MaterialType" Multiplicity="1" />
+          <End Role="Material" Type="Self.Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="MaterialTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuMealDetail_Material">
+          <End Role="Material" Type="Self.Material" Multiplicity="1" />
+          <End Role="MenuMealDetail" Type="Self.MenuMealDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MenuMealDetail">
+              <PropertyRef Name="MaterialID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuMealDetail_MenuMeal">
+          <End Role="MenuMeal" Type="Self.MenuMeal" Multiplicity="1" />
+          <End Role="MenuMealDetail" Type="Self.MenuMealDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MenuMeal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MenuMealDetail">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MealControlEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
+          <EntitySet Name="Feedback_Reply" EntityType="Self.Feedback_Reply" />
+          <EntitySet Name="Materials" EntityType="Self.Material" />
+          <EntitySet Name="MaterialTypes" EntityType="Self.MaterialType" />
+          <EntitySet Name="MealDeliveries" EntityType="Self.MealDelivery" />
+          <EntitySet Name="MealOrderExceptions" EntityType="Self.MealOrderException" />
+          <EntitySet Name="MealSchedules" EntityType="Self.MealSchedule" />
+          <EntitySet Name="MenuMeals" EntityType="Self.MenuMeal" />
+          <EntitySet Name="MenuMealDetails" EntityType="Self.MenuMealDetail" />
+          <EntitySet Name="OrderMeals" EntityType="Self.OrderMeal" />
+          <EntitySet Name="ShiftWorks" EntityType="Self.ShiftWork" />
+          <EntitySet Name="TimeLimitOrders" EntityType="Self.TimeLimitOrder" />
+          <AssociationSet Name="FK_Feedback_Reply_Feedback" Association="Self.FK_Feedback_Reply_Feedback">
+            <End Role="Feedback" EntitySet="Feedbacks" />
+            <End Role="Feedback_Reply" EntitySet="Feedback_Reply" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Material_MaterialType" Association="Self.FK_Material_MaterialType">
+            <End Role="MaterialType" EntitySet="MaterialTypes" />
+            <End Role="Material" EntitySet="Materials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuMealDetail_Material" Association="Self.FK_MenuMealDetail_Material">
+            <End Role="Material" EntitySet="Materials" />
+            <End Role="MenuMealDetail" EntitySet="MenuMealDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuMealDetail_MenuMeal" Association="Self.FK_MenuMealDetail_MenuMeal">
+            <End Role="MenuMeal" EntitySet="MenuMeals" />
+            <End Role="MenuMealDetail" EntitySet="MenuMealDetails" />
+          </AssociationSet>
+          <FunctionImport Name="sp_DeliveryInstantNoodles_Get" ReturnType="Collection(MealControlModel.sp_DeliveryInstantNoodles_Get_Result)" />
+          <FunctionImport Name="sp_MealOrderException_Get" ReturnType="Collection(MealControlModel.sp_MealOrderException_Get_Result)" />
+          <FunctionImport Name="sp_MealSchedule_Child" ReturnType="Collection(MealControlModel.sp_MealSchedule_Child_Result)">
+            <Parameter Name="ShiftWork" Mode="In" Type="Int32" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_MealSchedule_GetByDay" ReturnType="Collection(MealControlModel.sp_MealSchedule_GetByDay_Result)">
+            <Parameter Name="from" Mode="In" Type="String" />
+            <Parameter Name="to" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_MealSchedule_Parent" ReturnType="Collection(MealControlModel.sp_MealSchedule_Parent_Result)">
+            <Parameter Name="ShiftWork" Mode="In" Type="Int32" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_OrderMeal_GetDay" ReturnType="Collection(MealControlModel.sp_OrderMeal_GetDay_Result)">
+            <Parameter Name="day" Mode="In" Type="String" />
+            <Parameter Name="User" Mode="In" Type="String" />
+          </FunctionImport>
+          <AssociationSet Name="FK_MealSchedule_MenuMeal" Association="MealControlModel.FK_MealSchedule_MenuMeal">
+            <End Role="MenuMeal" EntitySet="MenuMeals" />
+            <End Role="MealSchedule" EntitySet="MealSchedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MealSchedule_ShiftWork" Association="MealControlModel.FK_MealSchedule_ShiftWork">
+            <End Role="ShiftWork" EntitySet="ShiftWorks" />
+            <End Role="MealSchedule" EntitySet="MealSchedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderMeal_MenuMeal" Association="MealControlModel.FK_OrderMeal_MenuMeal">
+            <End Role="MenuMeal" EntitySet="MenuMeals" />
+            <End Role="OrderMeal" EntitySet="OrderMeals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderMeal_ShiftWork" Association="MealControlModel.FK_OrderMeal_ShiftWork">
+            <End Role="ShiftWork" EntitySet="ShiftWorks" />
+            <End Role="OrderMeal" EntitySet="OrderMeals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MealDelivery_MenuMeal" Association="MealControlModel.FK_MealDelivery_MenuMeal">
+            <End Role="MenuMeal" EntitySet="MenuMeals" />
+            <End Role="MealDelivery" EntitySet="MealDeliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MealDelivery_ShiftWork" Association="MealControlModel.FK_MealDelivery_ShiftWork">
+            <End Role="ShiftWork" EntitySet="ShiftWorks" />
+            <End Role="MealDelivery" EntitySet="MealDeliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MealOrderException_MenuMeal" Association="MealControlModel.FK_MealOrderException_MenuMeal">
+            <End Role="MenuMeal" EntitySet="MenuMeals" />
+            <End Role="MealOrderException" EntitySet="MealOrderExceptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MealOrderException_ShiftWork" Association="MealControlModel.FK_MealOrderException_ShiftWork">
+            <End Role="ShiftWork" EntitySet="ShiftWorks" />
+            <End Role="MealOrderException" EntitySet="MealOrderExceptions" />
+          </AssociationSet>
+          <FunctionImport Name="sp_MealOrderException_Search" ReturnType="Collection(MealControlModel.sp_MealOrderException_Search_Result)">
+          <Parameter Name="date" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DeliveryInstantNoodles_Search" ReturnType="Collection(MealControlModel.sp_DeliveryInstantNoodles_Search_Result)">
+          <Parameter Name="date" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ShiftWorkGet" ReturnType="Collection(MealControlModel.sp_ShiftWorkGet_Result)" />
+          <FunctionImport Name="sp_OrderMealOffline_Get" ReturnType="Collection(MealControlModel.sp_OrderMealOffline_Get_Result)">
+          <Parameter Name="Day" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ActionLog">
+            <Parameter Name="ActionName" Mode="In" Type="String" />
+            <Parameter Name="ControllerName" Mode="In" Type="String" />
+            <Parameter Name="Method" Mode="In" Type="String" />
+            <Parameter Name="Content" Mode="In" Type="String" />
+            <Parameter Name="Detail" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_DeliveryInstantNoodles_Get_Result">
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Day" Nullable="false" MaxLength="8" />
+          <Property Type="Int32" Name="ShiftWorkID" Nullable="false" />
+          <Property Type="String" Name="ShiftWorkName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="MenuMealID" Nullable="false" />
+          <Property Type="String" Name="MenuMealName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="TenNhanVien" Nullable="false" MaxLength="36" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="9" />
+          <Property Type="Boolean" Name="isCheck" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_MealOrderException_Get_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Day" Nullable="false" MaxLength="8" />
+          <Property Type="Int32" Name="ShiftWorkID" Nullable="false" />
+          <Property Type="String" Name="ShiftWorkName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="MenuMealID" Nullable="false" />
+          <Property Type="String" Name="MenuMealName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="DepartmentName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="UserNameRequest" Nullable="false" MaxLength="36" />
+          <Property Type="String" Name="FullName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="9" />
+          <Property Type="Boolean" Name="IsTakeMeal" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_MealSchedule_Child_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="MaterialID" Nullable="false" />
+          <Property Type="String" Name="MaterialCode" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="MaterialName" Nullable="false" MaxLength="100" />
+          <Property Type="Decimal" Name="Price" Nullable="true" Precision="15" Scale="4" />
+          <Property Type="String" Name="TableName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_MealSchedule_GetByDay_Result">
+          <Property Type="String" Name="Day" Nullable="false" MaxLength="8" />
+          <Property Type="DateTime" Name="DateAdd" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="ShiftWorkID" Nullable="false" />
+          <Property Type="String" Name="ShiftWorkCode" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="ShiftWorkName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="MenuMealID" Nullable="false" />
+          <Property Type="String" Name="MenuMealCode" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="MenuMealName" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="sp_MealSchedule_Parent_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="500" />
+          <Property Type="Decimal" Name="Price" Nullable="true" Precision="15" Scale="4" />
+          <Property Type="String" Name="TableName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Image" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+          <Property Type="String" Name="PCIDAdd" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="UserAdd" Nullable="true" MaxLength="25" />
+          <Property Type="DateTime" Name="DateAdd" Nullable="true" Precision="23" />
+          <Property Type="String" Name="PCIDUpd" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="UserUpd" Nullable="true" MaxLength="25" />
+          <Property Type="DateTime" Name="DateUpd" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="sp_OrderMeal_GetDay_Result">
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Day" Nullable="false" MaxLength="8" />
+          <Property Type="Int32" Name="ShiftWorkID" Nullable="false" />
+          <Property Type="String" Name="ShiftWorkCode" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="ShiftWorkName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="256" />
+          <Property Type="Int32" Name="MenuMealID" Nullable="false" />
+          <Property Type="String" Name="MenuMealCode" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="MenuMealName" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <Association Name="FK_MealSchedule_MenuMeal">
+          <End Type="MealControlModel.MenuMeal" Role="MenuMeal" Multiplicity="1" />
+          <End Type="MealControlModel.MealSchedule" Role="MealSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MenuMeal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MealSchedule">
+              <PropertyRef Name="MenuMealID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MealSchedule_ShiftWork">
+          <End Type="MealControlModel.ShiftWork" Role="ShiftWork" Multiplicity="1" />
+          <End Type="MealControlModel.MealSchedule" Role="MealSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShiftWork">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MealSchedule">
+              <PropertyRef Name="ShiftWorkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderMeal_MenuMeal">
+          <End Type="MealControlModel.MenuMeal" Role="MenuMeal" Multiplicity="1" />
+          <End Type="MealControlModel.OrderMeal" Role="OrderMeal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MenuMeal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderMeal">
+              <PropertyRef Name="MenuMealID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderMeal_ShiftWork">
+          <End Type="MealControlModel.ShiftWork" Role="ShiftWork" Multiplicity="1" />
+          <End Type="MealControlModel.OrderMeal" Role="OrderMeal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShiftWork">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderMeal">
+              <PropertyRef Name="ShiftWorkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MealDelivery_MenuMeal">
+          <End Type="MealControlModel.MenuMeal" Role="MenuMeal" Multiplicity="0..1" />
+          <End Type="MealControlModel.MealDelivery" Role="MealDelivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MenuMeal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MealDelivery">
+              <PropertyRef Name="MenuMealID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MealDelivery_ShiftWork">
+          <End Type="MealControlModel.ShiftWork" Role="ShiftWork" Multiplicity="0..1" />
+          <End Type="MealControlModel.MealDelivery" Role="MealDelivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShiftWork">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MealDelivery">
+              <PropertyRef Name="ShiftWorkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MealOrderException_MenuMeal">
+          <End Type="MealControlModel.MenuMeal" Role="MenuMeal" Multiplicity="1" />
+          <End Type="MealControlModel.MealOrderException" Role="MealOrderException" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MenuMeal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MealOrderException">
+              <PropertyRef Name="MenuMealID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MealOrderException_ShiftWork">
+          <End Type="MealControlModel.ShiftWork" Role="ShiftWork" Multiplicity="1" />
+          <End Type="MealControlModel.MealOrderException" Role="MealOrderException" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShiftWork">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MealOrderException">
+              <PropertyRef Name="ShiftWorkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_MealOrderException_Search_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Day" Nullable="false" MaxLength="8" />
+          <Property Type="Int32" Name="ShiftWorkID" Nullable="false" />
+          <Property Type="String" Name="ShiftWorkName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="MenuMealID" Nullable="false" />
+          <Property Type="String" Name="MenuMealName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="DepartmentName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="UserNameRequest" Nullable="true" MaxLength="43" />
+          <Property Type="String" Name="FullName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="9" />
+          <Property Type="Boolean" Name="IsTakeMeal" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_DeliveryInstantNoodles_Search_Result">
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Day" Nullable="false" MaxLength="8" />
+          <Property Type="Int32" Name="ShiftWorkID" Nullable="false" />
+          <Property Type="String" Name="ShiftWorkName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="MenuMealID" Nullable="false" />
+          <Property Type="String" Name="MenuMealName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="TenNhanVien" Nullable="false" MaxLength="36" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="9" />
+          <Property Type="Boolean" Name="isCheck" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_ShiftWorkGet_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="500" />
+          <Property Type="Boolean" Name="IsOffice" Nullable="true" />
+          <Property Type="Time" Name="TimeLimit" Nullable="false" />
+          <Property Type="Time" Name="BeginTime" Nullable="true" />
+          <Property Type="Time" Name="EndTime" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_OrderMealOffline_Get_Result">
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Day" Nullable="false" MaxLength="8" />
+          <Property Type="Int32" Name="ShiftWorkID" Nullable="false" />
+          <Property Type="String" Name="ShiftWorkCode" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="ShiftWorkName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="TenNhanVien" Nullable="true" MaxLength="36" />
+          <Property Type="Int32" Name="MenuMealID" Nullable="false" />
+          <Property Type="String" Name="MenuMealCode" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="MenuMealName" Nullable="false" MaxLength="100" />
+          <Property Type="Boolean" Name="IsTakeMeal" Nullable="true" />
+          <Property Type="DateTime" Name="DateAdd" Nullable="true" Precision="23" />
+          <Property Type="String" Name="UserAdd" Nullable="true" MaxLength="25" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MealControlModelStoreContainer" CdmEntityContainer="MealControlEntities">
+          <EntitySetMapping Name="Feedbacks">
+            <EntityTypeMapping TypeName="MealControlModel.Feedback">
+              <MappingFragment StoreEntitySet="Feedback">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="TextContain" ColumnName="TextContain" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feedback_Reply">
+            <EntityTypeMapping TypeName="MealControlModel.Feedback_Reply">
+              <MappingFragment StoreEntitySet="Feedback_Reply">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ConversationsID" ColumnName="ConversationsID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="TextContain" ColumnName="TextContain" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materials">
+            <EntityTypeMapping TypeName="MealControlModel.Material">
+              <MappingFragment StoreEntitySet="Material">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MaterialTypeID" ColumnName="MaterialTypeID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="PCIDUpd" ColumnName="PCIDUpd" />
+                <ScalarProperty Name="DateUpd" ColumnName="DateUpd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaterialTypes">
+            <EntityTypeMapping TypeName="MealControlModel.MaterialType">
+              <MappingFragment StoreEntitySet="MaterialType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="PCIDUpd" ColumnName="PCIDUpd" />
+                <ScalarProperty Name="DateUpd" ColumnName="DateUpd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MealDeliveries">
+            <EntityTypeMapping TypeName="MealControlModel.MealDelivery">
+              <MappingFragment StoreEntitySet="MealDelivery">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="MachineNumberID" ColumnName="MachineNumberID" />
+                <ScalarProperty Name="ShiftWorkID" ColumnName="ShiftWorkID" />
+                <ScalarProperty Name="MenuMealID" ColumnName="MenuMealID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MealOrderExceptions">
+            <EntityTypeMapping TypeName="MealControlModel.MealOrderException">
+              <MappingFragment StoreEntitySet="MealOrderException">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="ShiftWorkID" ColumnName="ShiftWorkID" />
+                <ScalarProperty Name="MenuMealID" ColumnName="MenuMealID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="UserNameRequest" ColumnName="UserNameRequest" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="IsTakeMeal" ColumnName="IsTakeMeal" />
+                <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MealSchedules">
+            <EntityTypeMapping TypeName="MealControlModel.MealSchedule">
+              <MappingFragment StoreEntitySet="MealSchedule">
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="ShiftWorkID" ColumnName="ShiftWorkID" />
+                <ScalarProperty Name="ShiftWorkCode" ColumnName="ShiftWorkCode" />
+                <ScalarProperty Name="MenuMealID" ColumnName="MenuMealID" />
+                <ScalarProperty Name="MenuMealCode" ColumnName="MenuMealCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="UserUpd" ColumnName="UserUpd" />
+                <ScalarProperty Name="DateUpd" ColumnName="DateUpd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MenuMeals">
+            <EntityTypeMapping TypeName="MealControlModel.MenuMeal">
+              <MappingFragment StoreEntitySet="MenuMeal">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="PCIDUpd" ColumnName="PCIDUpd" />
+                <ScalarProperty Name="UserUpd" ColumnName="UserUpd" />
+                <ScalarProperty Name="DateUpd" ColumnName="DateUpd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MenuMealDetails">
+            <EntityTypeMapping TypeName="MealControlModel.MenuMealDetail">
+              <MappingFragment StoreEntitySet="MenuMealDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MaterialID" ColumnName="MaterialID" />
+                <ScalarProperty Name="MaterialCode" ColumnName="MaterialCode" />
+                <ScalarProperty Name="MaterialName" ColumnName="MaterialName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderMeals">
+            <EntityTypeMapping TypeName="MealControlModel.OrderMeal">
+              <MappingFragment StoreEntitySet="OrderMeal">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="ShiftWorkID" ColumnName="ShiftWorkID" />
+                <ScalarProperty Name="ShiftWorkCode" ColumnName="ShiftWorkCode" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="MenuMealID" ColumnName="MenuMealID" />
+                <ScalarProperty Name="MenuMealCode" ColumnName="MenuMealCode" />
+                <ScalarProperty Name="IsTakeMeal" ColumnName="IsTakeMeal" />
+                <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="UserUpd" ColumnName="UserUpd" />
+                <ScalarProperty Name="DateUpd" ColumnName="DateUpd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShiftWorks">
+            <EntityTypeMapping TypeName="MealControlModel.ShiftWork">
+              <MappingFragment StoreEntitySet="ShiftWork">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="UserUpd" ColumnName="UserUpd" />
+                <ScalarProperty Name="DateUpd" ColumnName="DateUpd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimeLimitOrders">
+            <EntityTypeMapping TypeName="MealControlModel.TimeLimitOrder">
+              <MappingFragment StoreEntitySet="TimeLimitOrder">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ShiftWorkID" ColumnName="ShiftWorkID" />
+                <ScalarProperty Name="ShiftWorkCode" ColumnName="ShiftWorkCode" />
+                <ScalarProperty Name="TimeLimit" ColumnName="TimeLimit" />
+                <ScalarProperty Name="IsOffice" ColumnName="IsOffice" />
+                <ScalarProperty Name="BeginTime" ColumnName="BeginTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="UserUpd" ColumnName="UserUpd" />
+                <ScalarProperty Name="DateUpd" ColumnName="DateUpd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_DeliveryInstantNoodles_Get" FunctionName="MealControlModel.Store.sp_DeliveryInstantNoodles_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MealControlModel.sp_DeliveryInstantNoodles_Get_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="ShiftWorkID" ColumnName="ShiftWorkID" />
+                <ScalarProperty Name="ShiftWorkName" ColumnName="ShiftWorkName" />
+                <ScalarProperty Name="MenuMealID" ColumnName="MenuMealID" />
+                <ScalarProperty Name="MenuMealName" ColumnName="MenuMealName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="TenNhanVien" ColumnName="TenNhanVien" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="isCheck" ColumnName="isCheck" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_MealOrderException_Get" FunctionName="MealControlModel.Store.sp_MealOrderException_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MealControlModel.sp_MealOrderException_Get_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="ShiftWorkID" ColumnName="ShiftWorkID" />
+                <ScalarProperty Name="ShiftWorkName" ColumnName="ShiftWorkName" />
+                <ScalarProperty Name="MenuMealID" ColumnName="MenuMealID" />
+                <ScalarProperty Name="MenuMealName" ColumnName="MenuMealName" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="UserNameRequest" ColumnName="UserNameRequest" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsTakeMeal" ColumnName="IsTakeMeal" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_MealSchedule_Child" FunctionName="MealControlModel.Store.sp_MealSchedule_Child">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MealControlModel.sp_MealSchedule_Child_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MaterialID" ColumnName="MaterialID" />
+                <ScalarProperty Name="MaterialCode" ColumnName="MaterialCode" />
+                <ScalarProperty Name="MaterialName" ColumnName="MaterialName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_MealSchedule_GetByDay" FunctionName="MealControlModel.Store.sp_MealSchedule_GetByDay">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MealControlModel.sp_MealSchedule_GetByDay_Result">
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="ShiftWorkID" ColumnName="ShiftWorkID" />
+                <ScalarProperty Name="ShiftWorkCode" ColumnName="ShiftWorkCode" />
+                <ScalarProperty Name="ShiftWorkName" ColumnName="ShiftWorkName" />
+                <ScalarProperty Name="MenuMealID" ColumnName="MenuMealID" />
+                <ScalarProperty Name="MenuMealCode" ColumnName="MenuMealCode" />
+                <ScalarProperty Name="MenuMealName" ColumnName="MenuMealName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_MealSchedule_Parent" FunctionName="MealControlModel.Store.sp_MealSchedule_Parent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MealControlModel.sp_MealSchedule_Parent_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="PCIDUpd" ColumnName="PCIDUpd" />
+                <ScalarProperty Name="UserUpd" ColumnName="UserUpd" />
+                <ScalarProperty Name="DateUpd" ColumnName="DateUpd" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_OrderMeal_GetDay" FunctionName="MealControlModel.Store.sp_OrderMeal_GetDay">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MealControlModel.sp_OrderMeal_GetDay_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="ShiftWorkID" ColumnName="ShiftWorkID" />
+                <ScalarProperty Name="ShiftWorkCode" ColumnName="ShiftWorkCode" />
+                <ScalarProperty Name="ShiftWorkName" ColumnName="ShiftWorkName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="MenuMealID" ColumnName="MenuMealID" />
+                <ScalarProperty Name="MenuMealCode" ColumnName="MenuMealCode" />
+                <ScalarProperty Name="MenuMealName" ColumnName="MenuMealName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_MealOrderException_Search" FunctionName="MealControlModel.Store.sp_MealOrderException_Search">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MealControlModel.sp_MealOrderException_Search_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="ShiftWorkID" ColumnName="ShiftWorkID" />
+                <ScalarProperty Name="ShiftWorkName" ColumnName="ShiftWorkName" />
+                <ScalarProperty Name="MenuMealID" ColumnName="MenuMealID" />
+                <ScalarProperty Name="MenuMealName" ColumnName="MenuMealName" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="UserNameRequest" ColumnName="UserNameRequest" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsTakeMeal" ColumnName="IsTakeMeal" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DeliveryInstantNoodles_Search" FunctionName="MealControlModel.Store.sp_DeliveryInstantNoodles_Search">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MealControlModel.sp_DeliveryInstantNoodles_Search_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="ShiftWorkID" ColumnName="ShiftWorkID" />
+                <ScalarProperty Name="ShiftWorkName" ColumnName="ShiftWorkName" />
+                <ScalarProperty Name="MenuMealID" ColumnName="MenuMealID" />
+                <ScalarProperty Name="MenuMealName" ColumnName="MenuMealName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="TenNhanVien" ColumnName="TenNhanVien" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="isCheck" ColumnName="isCheck" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ShiftWorkGet" FunctionName="MealControlModel.Store.sp_ShiftWorkGet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MealControlModel.sp_ShiftWorkGet_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsOffice" ColumnName="IsOffice" />
+                <ScalarProperty Name="TimeLimit" ColumnName="TimeLimit" />
+                <ScalarProperty Name="BeginTime" ColumnName="BeginTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_OrderMealOffline_Get" FunctionName="MealControlModel.Store.sp_OrderMealOffline_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MealControlModel.sp_OrderMealOffline_Get_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="ShiftWorkID" ColumnName="ShiftWorkID" />
+                <ScalarProperty Name="ShiftWorkCode" ColumnName="ShiftWorkCode" />
+                <ScalarProperty Name="ShiftWorkName" ColumnName="ShiftWorkName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="TenNhanVien" ColumnName="TenNhanVien" />
+                <ScalarProperty Name="MenuMealID" ColumnName="MenuMealID" />
+                <ScalarProperty Name="MenuMealCode" ColumnName="MenuMealCode" />
+                <ScalarProperty Name="MenuMealName" ColumnName="MenuMealName" />
+                <ScalarProperty Name="IsTakeMeal" ColumnName="IsTakeMeal" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ActionLog" FunctionName="MealControlModel.Store.sp_ActionLog" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

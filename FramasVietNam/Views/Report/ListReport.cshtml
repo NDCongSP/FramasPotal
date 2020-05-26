@@ -1,0 +1,81 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            @Language.label("Report")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">@Language.label("Report")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+
+                    <section>
+                        <!-- sidebar menu: : style can be found in sidebar.less -->
+                        <ul data-widget="tree">
+                            <li class="treeview">
+                                <a href="#">
+                                    <i></i> <span>Báo cáo tổng hợp xuất ăn</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="#"><i></i> Thống kê số lượng xuất cơm</a></li>
+                                    <li><a href="#"><i></i> Thống kê số lượng 1</a></li>
+                                    <li><a href="#"><i></i> Thống kê số lượng 2</a></li>
+                                    <li><a href="#"><i></i> Thống kê số lượng 3</a></li>
+                                    <li><a href="#"><i></i> Thống kê số lượng 4</a></li>
+                                    <li><a href="#"><i></i> Thống kê số lượng 5</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- sidebar menu: : style can be found in sidebar.less -->
+                        <ul data-widget="tree">
+                            <li class="treeview">
+                                <a href="#">
+                                    <i></i> <span>Báo cáo chi tiết xuất ăn</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="#"><i></i> Thống kê số lượng xuất cơm</a></li>
+                                    <li><a href="#"><i></i> Thống kê số lượng 6</a></li>
+                                    <li><a href="#"><i></i> Thống kê số lượng 7</a></li>
+                                    <li><a href="#"><i></i> Thống kê số lượng 8</a></li>
+                                    <li><a href="#"><i></i> Thống kê số lượng 9</a></li>
+                                    <li><a href="#"><i></i> Thống kê số lượng 10</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>

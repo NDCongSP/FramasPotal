@@ -1,0 +1,175 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var lstOrder = (List<FramasVietNam.Models.Meal.sp_OrderMealOffline_Get_Result>)ViewBag.lstOrder;
+
+    //check time limit change
+    var timeHC = (TimeSpan)ViewBag.timeHC;
+    var timeOT = (TimeSpan)ViewBag.timeOT;
+    var time1 = (TimeSpan)ViewBag.time1;
+    var time2 = (TimeSpan)ViewBag.time2;
+    var time3 = (TimeSpan)ViewBag.time3;
+
+    var strDateSearch = mFunction.ToDateTime(ViewBag.strDateSearch);
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            @Language.label("OfflineOrderMeal")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">@Language.label("OfflineOrderMeal")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <div style="margin-bottom:10px">
+                    @Html.ActionLinkRole("Add", "OfflineOrderMeal", "MealControlCanteen", Language.label("Add"), "OfflineOrderMealAdd", "MealControlCanteen", new { @class = "btn btn-primary" })
+                </div>
+            </div>
+        </div>
+        <div class="row" style="min-height:906px; margin:2px">
+
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">@Language.label("List")</h3>
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    @using (Html.BeginForm("OfflineOrderMeal", "MealControlCanteen", FormMethod.Post))
+                    {
+
+                        <div class="row" style="margin-bottom:5px;">
+                            <div class="col-xs-2">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input name="dateSearch" type='text' class="form-control" id='dateSearch' value="@strDateSearch" />
+                                </div>
+                            </div>
+                            <div class="col-xs-1">
+                                @Html.ButtonRoles("Search", "OfflineOrderMeal", "MealControlCanteen", Language.label("Search"), new { @class = "btn btn-primary" })
+                            </div>
+                        </div>
+                    }
+
+                    @using (Html.BeginForm("OfflineOrderMeal", "MealControlCanteen", FormMethod.Post))
+                    {
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>@Language.label("Num")</th>
+                                    <th>@Language.label("Code")</th>
+                                    <th>@Language.label("Day")</th>
+                                    <th>@Language.label("Shift")</th>
+                                    <th>@Language.label("Meal")</th>
+                                    <th>@Language.label("User")</th>
+                                    <th>@Language.label("Change")</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (lstOrder != null)
+                                {
+                                    int i = 1;
+                                    foreach (var item in lstOrder)
+                                    {
+                                        <tr>
+                                            <td class="text">@i</td>
+                                            <td class="text">@item.ID</td>
+                                            <td class="text">@item.Day</td>
+                                            <td class="text">@item.ShiftWorkName</td>
+                                            <td class="text">@item.MenuMealName</td>
+                                            <td class="text">@item.TenNhanVien</td>
+                                            <!-- General tools such as edit or delete-->
+                                            <td>
+                                                @if (mFunction.ToInt(item.Day) >= mFunction.ToInt(DateTime.Now.ToString("yyyyMMdd")))
+                                                {
+                                                    if (item.ShiftWorkID == 1)
+                                                    {
+                                                        if (timeHC > DateTime.Now.TimeOfDay)
+                                                        {
+                                                            @Html.ActionLinkRole("Edit", "OfflineOrderMeal", "MealControlCanteen", " ", "OfflineOrderMealEdit/" + item.ID, "MealControlCanteen", new { @class = "fa fa-edit label-primary btn-sm" })
+                                                            @Html.ActionLinkRole("Delete", "OfflineOrderMeal", "MealControlCanteen", " ", "OfflineOrderMealDel/" + item.ID, "MealControlCanteen", new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                                        }
+                                                    }
+                                                    if (item.ShiftWorkID == 2)
+                                                    {
+                                                        if (timeOT > DateTime.Now.TimeOfDay)
+                                                        {
+                                                            @Html.ActionLinkRole("Edit", "OfflineOrderMeal", "MealControlCanteen", " ", "OfflineOrderMealEdit/" + item.ID, "MealControlCanteen", new { @class = "fa fa-edit label-primary btn-sm" })
+                                                            @Html.ActionLinkRole("Delete", "OfflineOrderMeal", "MealControlCanteen", " ", "OfflineOrderMealDel/" + item.ID, "MealControlCanteen", new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                                        }
+                                                    }
+                                                    if (item.ShiftWorkID == 3)
+                                                    {
+                                                        if (time1 > DateTime.Now.TimeOfDay)
+                                                        {
+                                                            @Html.ActionLinkRole("Edit", "OfflineOrderMeal", "MealControlCanteen", " ", "OfflineOrderMealEdit/" + item.ID, "MealControlCanteen", new { @class = "fa fa-edit label-primary btn-sm" })
+                                                            @Html.ActionLinkRole("Delete", "OfflineOrderMeal", "MealControlCanteen", " ", "OfflineOrderMealDel/" + item.ID, "MealControlCanteen", new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                                        }
+                                                    }
+                                                    if (item.ShiftWorkID == 4)
+                                                    {
+                                                        if (time2 > DateTime.Now.TimeOfDay)
+                                                        {
+                                                            @Html.ActionLinkRole("Edit", "OfflineOrderMeal", "MealControlCanteen", " ", "OfflineOrderMealEdit/" + item.ID, "MealControlCanteen", new { @class = "fa fa-edit label-primary btn-sm" })
+                                                            @Html.ActionLinkRole("Delete", "OfflineOrderMeal", "MealControlCanteen", " ", "OfflineOrderMealDel/" + item.ID, "MealControlCanteen", new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                                        }
+                                                    }
+                                                    if (item.ShiftWorkID == 5)
+                                                    {
+                                                        if (time3 > DateTime.Now.TimeOfDay)
+                                                        {
+                                                            @Html.ActionLinkRole("Edit", "OfflineOrderMeal", "MealControlCanteen", " ", "OfflineOrderMealEdit/" + item.ID, "MealControlCanteen", new { @class = "fa fa-edit label-primary btn-sm" })
+                                                            @Html.ActionLinkRole("Delete", "OfflineOrderMeal", "MealControlCanteen", " ", "OfflineOrderMealDel/" + item.ID, "MealControlCanteen", new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                                        }
+                                                    }
+                                                }
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+    $(function () {
+        $('#dateSearch').datetimepicker({
+            format:"MM/DD/YYYY"
+        });
+    });
+    </script>
+}
+
+
+

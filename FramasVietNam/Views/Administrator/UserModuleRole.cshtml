@@ -1,0 +1,266 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var lstUser = ViewBag.listUser;
+    var lstMaterial = (List<FramasVietNam.Models.Meal.Material>)ViewBag.lstMaterial;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            @Language.label("User") @Language.label("Roles")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">@Language.label("User") @Language.label("Roles")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <!-- TO DO List -->
+            @using (Html.BeginForm("UserModuleRole", "Administrator", FormMethod.Post))
+            {
+                <div class="row" style="margin-bottom: 5px;">
+                    <div class="col-xs-1 form-group">
+                        <label for="Add">&nbsp;</label>
+                        <div>
+                            @Html.ActionLinkRole("Add", "UserModuleRole", "Administrator", Language.label("Add"), new { @class = "btn btn-primary", data_toggle = "modal", data_target = "#UserModuleRole" })
+                        </div>
+                    </div>
+                    @if (ViewBag.ListPart != null && ViewBag.DataModule != null)
+                    {
+                        <div class="col-xs-4 form-group">
+                            <label for="ListPartCode">@Language.label("ListPartCode")</label>
+                            <select class="form-control select2" id="maBoPhan" name="maBoPhan" data-placeholder="Select a part code">
+                                <option value=""> Select a part code</option>
+                                @foreach (var item in ViewBag.ListPart)
+                                {
+                                    <option @(item.MaBoPhan1 == ViewBag.MaBoPhan ? "selected" : "") value="@item.MaBoPhan1">
+                                        @item.TenBoPhanA
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-xs-4 form-group">
+                            <label for="Module">@Language.label("Module")</label>
+                            <select class="form-control select2" id="moduleId" name="moduleId" data-placeholder="Select a module">
+                                <option value=""> Select a module</option>
+                                @foreach (var item in ViewBag.DataModule)
+                                {
+                                    <option @(item.ID == ViewBag.ModuleId ? "selected" : "") value="@item.ID">
+                                        @item.Title
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-xs-2 form-group">
+                            @*<button class="btn btn-success">
+                            <i class="fa fa-search"></i>&nbsp;@Language.label("Search")
+                        </button>*@
+                            <label for="Search">&nbsp;</label>
+                            <div>
+                                @Html.ButtonRoles("Search", "UserModuleRole", "Administrator", Language.label("Search"), new { @class = "btn btn-success" })
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="ion ion-clipboard"></i>
+                    <h3 class="box-title">@Language.label("List") @Language.label("User")</h3>
+                    <div class="box-tools pull-right">
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="table-module-user" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th width="27px">@Language.label("Num")</th>
+                                <th>@Language.label("UserName")</th>
+                                <th>@Language.label("FirstName")</th>
+                                <th>@Language.label("Roles")</th>
+                                <th>@Language.label("Module")</th>
+                                <th>@Language.label("Edit")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                int i = 1;
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="text">@i</td>
+                                        <td class="text">@item.UserID</td>
+                                        <td class="text">@item.FullName</td>
+                                        <td class="text">@item.RoleName</td>
+                                        <td class="text">@item.Title</td>
+                                        <td class="text">
+                                            @Html.ButtonRoles("Edit", "UserModuleRole", "Administrator", "", new { @class = "fa fa-edit btn btn-sm btn-primary", @onclick = "openModal('" + item.UserID + "', " + item.ModuleID + ");" })
+                                            @Html.ActionLinkRole("Delete", "UserModuleRole", "Administrator", " ", "UserModuleRoleDelete", "Administrator", new { moduleId = item.ModuleID, userId = item.UserID }, new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- #region Thêm mới quyền -->
+        @Html.Partial("_ModuleRoleAdd")
+
+        <!-- #region Chỉnh sửa quyền -->
+        <div id='modal-edit-roles' class='modal'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='ContentModal'></div>
+                </div>
+            </div>
+        </div>
+        <!-- #endregion -->
+    </section>
+</div>
+
+@section Styles{
+    <link rel="stylesheet" href="~/Content/adminlte/components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- Select2 -->
+    <style type="text/css">
+        .select2-container--default .select2-selection--single {
+            border: 1px solid #d2d6de;
+            border-radius: 0;
+            padding: 6px 12px;
+            height: 34px;
+        }
+    </style>
+}
+
+@section Scripts{
+    <!-- DataTables -->
+    <script src="~/Content/adminlte/components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/adminlte/components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            //data table
+            $('#table-module-user').DataTable();
+             $('.select2').select2();
+        });
+         var openModal = function (id, moduleId) {
+            var url ='@Url.Action("UserModuleRoleEdit", "Administrator")?id='+ id+'&moduleId=' + moduleId;
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (data) {
+                    $('#ContentModal').html(data);
+                    $('#modal-edit-roles').modal(options);
+                    $('#modal-edit-roles').modal('show');
+                },
+                error: function (e) {
+                    alert('@Language.label("OopsSomethingWentWrong")');
+                    return false;
+                }
+            });
+        }
+
+        //User ModuleRoles Update
+        function UserModuleRolesUpdate() {
+            debugger;
+            var roleId = $("#select_Roles option:selected").text();
+            var moduleId = $("#select_ModuleId").val();
+            var userId = $("#userId").val();
+            var desc = $("#_description").val();
+            if (roleId == '' || roleId == null) {
+                alert('@Language.label("PleaseChoose") roles !');
+                return false;
+            }
+            else {
+                var data = {
+                    userId: userId,
+                    roleId: roleId,
+                    desc: desc,
+                    moduleId: moduleId
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "/Administrator/UserModuleRoleEdit",
+                    content: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: data,
+                    success: function (d) {
+                        if (d) {
+                            alert('@Language.label("CommandsCompletedSuccessfully")');
+                            $('#modal-edit-roles').modal('hide');
+                            location.reload();
+                        }
+                        else {
+                            alert('@Language.label("ErrorSave")');
+                            return false;
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                      alert('@Language.label("OopsSomethingWentWrong")');
+                        return false;
+                    }
+                });
+            }
+        }
+
+        //User Module Role Add
+        function UserModuleRoleAdd() {
+            var userId      = $("#select_UserId").val();
+            var roleId      = $("#select_RoleId option:selected").text();
+            var groupId     = $("#select_Group").val();
+            var description = $("#description").val();
+            if (userId      == "") {
+                alert('@Language.label("PleaseChoose") user');
+                location.reload();
+            }
+            else if (roleId == "") {
+                 alert('@Language.label("PleaseChoose") role');
+                location.reload();
+            }
+            else if (groupId == "") {
+                 alert('@Language.label("PleaseChoose") group');
+                location.reload();
+            }
+            else {
+                var moduleRole = {
+                    UserID: userId,
+                    ModuleID: groupId,
+                    RoleID: roleId,
+                    Description: description
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/Administrator/UserModuleRoleAdd",
+                    content: "application/json; charset =utf-8",
+                    dataType: "json",
+                    data: moduleRole,
+                    success: function (result) {
+                        if (result) {
+                            alert('@Language.label("CommandsCompletedSuccessfully")');
+                            location.reload();
+                        }
+                        else {
+                            alert('@Language.label("ErrorSave")');
+                            return false;
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                       alert('@Language.label("OopsSomethingWentWrong")');
+                        return false;
+                    }
+                });
+            }
+        }
+
+    </script>
+}

@@ -1,0 +1,79 @@
+﻿@model FramasVietNam.Models.RegisterViewModel
+@using FramasVietNam.Common
+@{
+    Layout = null;
+    ViewBag.Title = Language.label("Register");
+}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        @Language.label("Register")
+    </title>
+    <link rel="stylesheet" href="~/Content/style.min.css">
+    <link rel="stylesheet" href="~/Content/materialize.min.css">
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Assets/js/materialize.min.js"></script>
+</head>
+
+<body class="bg-login">
+    <div id="status" class="status"></div>
+    <div class="fade">
+        <div class="login fadeInLogin">
+            <h4 class="title-login">
+                @Language.label("Register")
+            </h4>
+            <section id="loginForm">
+
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <h6>@Language.label("RegisterAsANewUser").</h6>
+                    <hr />
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.Label(Language.label("Email"), new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label(Language.label("UserName"), new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label(Language.label("Password"), new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label(Language.label("ConfirmnNewPassword"), new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" class="btn btn-default" value="@Language.label("Register")" />
+                        </div>
+                        <div style="height:5px">
+                        </div>
+                        <div class="col-md-offset-2 col-md-10">
+                            @Html.ActionLink(Language.label("Login"), "Login")
+                        </div>
+                    </div>
+                    <div style="height:10px">
+                    </div>
+                }
+            </section>
+        </div>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</body>
+</html>

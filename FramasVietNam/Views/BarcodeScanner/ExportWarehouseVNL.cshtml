@@ -1,0 +1,160 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var lst_BarcodeScanner = (List<FramasVietNam.Models.BarcodeScanner.sp_ExportInventoryVNL_GetParent_Result>)ViewBag.lst_BarcodeScanner;
+    var _strOCDN = mFunction.ToString(ViewBag._strOCDN);
+    var _strDateSearch = mFunction.ToString(ViewBag._strDateSearch);
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+    window.onload = function () {
+        alert("@Html.Raw(ViewBag.Message)");
+    };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            @*@Language.label("Empty")*@
+            Export Warehouse - VNL
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">@*@Language.label("Empty")*@QR Barcode Inventory - VNL</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    @using (Html.BeginForm("ExportWarehouseVNL", "BarcodeScanner", FormMethod.Post))
+                    {
+                        <div class="row" style="margin-bottom:5px;">
+                            <div class="col-xs-2">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type='text' name="dateSearch" class="form-control" id='dateSearch' value="@_strDateSearch" />
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <input type='text' class="form-control" name="txtOCDN" id='txtOCDN' placeholder="OC - DN Number" value="@_strOCDN" />
+                            </div>
+                            <div class="col-xs-1">
+                                @Html.ButtonRoles("Search", "ExportWarehouseVNL", "BarcodeScanner", Language.label("Search"), new { @class = "btn btn-primary" })
+                            </div>
+                        </div>
+                    }
+                    <div style="overflow-x:auto;">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Num</th>
+                                    <th>OC Number</th>
+                                    <th>Quantity</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Total</th>
+                                    <th>Scan</th>
+                                    <th>Export WH</th>
+                                    <th>View</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (lst_BarcodeScanner != null)
+                                {
+
+                                    foreach (var item in lst_BarcodeScanner)
+                                    {
+
+                                        <tr>
+                                            <td class="text">@item.STT</td>
+                                            <td class="text">@item.OCNo</td>
+                                            <td class="text">@item.QtyOrd</td>
+                                            <td class="text">@item.DateSearch</td>
+                                            @if (@item.Stauts == "OK")
+                                            {
+                                                <td class="text"><div class="label-success btn-sm">@item.Stauts</div></td>
+                                            }
+                                            else
+                                            {
+                                                <td class="text"><div class="label-danger btn-sm">@item.Stauts</div></td>
+                                            }
+                                            <th>@item.TotalOC</th>
+                                            <th>@item.TotalScan</th>
+                                            <th>@item.TotalWH</th>
+                                            <td class="text">@Html.ActionLink("Detail", "ExportWarehouseVNLShowPopup", "BarcodeScanner", new { strOC = @item.OCNo }, new { @class = "modal-link" })</td>
+                                        </tr>
+
+                                    }
+
+                                }
+                            </tbody>
+                        </table>
+                        <!-- /.to do something-->
+                    </div>
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+
+<div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-content">
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        //Call js datetimepicker
+        $('#dateSearch').datetimepicker({
+            format: "MM/DD/YYYY"
+        });
+
+        // Initialize numeric spinner input boxes
+        //$(".numeric-spinner").spinedit();
+
+        // Initalize modal dialog
+        // attach modal-container bootstrap attributes to links with .modal-link class.
+        // when a link is clicked with these attributes, bootstrap will display the href content in a modal dialog.
+        $('body').on('click', '.modal-link', function (e) {
+            e.preventDefault();
+            $(this).attr('data-target', '#modal-container');
+            $(this).attr('data-toggle', 'modal');
+        });
+
+        // Attach listener to .modal-close-btn's so that when the button is pressed the modal dialog disappears
+        $('body').on('click', '.modal-close-btn', function () {
+            $('#modal-container').modal('hide');
+        });
+
+        //clear modal cache, so that new content can be loaded
+        $('#modal-container').on('hidden.bs.modal', function () {
+            $(this).removeData('bs.modal');
+        });
+
+        $('#CancelModal').on('click', function () {
+            return false;
+        });
+    });
+</script>

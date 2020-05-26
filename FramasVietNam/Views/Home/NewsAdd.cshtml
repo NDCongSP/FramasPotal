@@ -1,0 +1,175 @@
+﻿@using FramasVietNam.Common
+@{
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var strTitle = (string)ViewBag.strTitle;
+    string txtTitle_EG = mFunction.ToString(ViewBag.txtTitle_EG);
+    string txtTitle_VN = mFunction.ToString(ViewBag.txtTitle_VN);
+    string txtTitle_GR = mFunction.ToString(ViewBag.txtTitle_GR);
+    string txtContent_EG = mFunction.ToString(ViewBag.txtContent_EG);
+    string txtContent_VN = mFunction.ToString(ViewBag.txtContent_VN);
+    string txtContent_GR = mFunction.ToString(ViewBag.txtContent_GR);
+    string txtShortContent_EG = mFunction.ToString(ViewBag.txtShortContent_EG);
+    string txtShortContent_VN = mFunction.ToString(ViewBag.txtShortContent_VN);
+    string txtShortContent_GR = mFunction.ToString(ViewBag.txtShortContent_GR);
+    string txtImageAddress = mFunction.ToString(ViewBag.txtImageAddress);
+    string txtNewsType = mFunction.ToString(ViewBag.txtNewsType);
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("News","Home")"></a>
+            @Language.label("Add")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("News")</a></li>
+            <li class="active">@Language.label("Add")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    @using (Html.BeginForm("NewsAdd", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <ul class="todo-list">
+                            <li>
+                                @Language.label("Title") @Language.label("English") (*)
+                                @Html.TextBox("txtTitle_EG", txtTitle_EG, new { @class = "form-control", @placeholder = @Language.label("Subject") })
+                            </li>
+                            <li>
+                                @Language.label("Title") @Language.label("VietNam") (*)
+                                @Html.TextBox("txtTitle_VN", txtTitle_VN, new { @class = "form-control", @placeholder = @Language.label("Subject") })
+                            </li>
+                            <li>
+                                @Language.label("Title") @Language.label("Germany") (*)
+                                @Html.TextBox("txtTitle_GR", txtTitle_GR, new { @class = "form-control", @placeholder = @Language.label("Subject") })
+                            </li>
+                            <li>
+                                @Language.label("ShortContent") @Language.label("English") (*)
+                                <textarea id="txtShortContent_EG" name="txtShortContent_EG" rows="10" cols="80"> 
+                                    @txtShortContent_EG                                
+                                </textarea>
+                            </li>
+                            <li>
+                                @Language.label("ShortContent") @Language.label("VietNam") (*)
+                                <textarea id="txtShortContent_VN" name="txtShortContent_VN" rows="10" cols="80">  
+                                    @txtShortContent_VN                               
+                                </textarea>
+                            </li>
+                            <li>
+                                @Language.label("ShortContent") @Language.label("Germany") (*)
+                                <textarea id="txtShortContent_GR" name="txtShortContent_GR" rows="10" cols="80"> 
+                                    @txtShortContent_GR                                
+                                </textarea>
+                            </li>
+                            <li>
+                                @Language.label("Content") @Language.label("English") (*)
+                                <textarea id="txtContent_EG" name="txtContent_EG" rows="10" cols="80">  
+                                    @txtContent_EG                               
+                                </textarea>
+                            </li>
+                            <li>
+                                @Language.label("Content") @Language.label("VietNam") (*)
+                                <textarea id="txtContent_VN" name="txtContent_VN" rows="10" cols="80">     
+                                    @txtContent_VN                            
+                                </textarea>
+                            </li>
+                            <li>
+                                @Language.label("Content") @Language.label("Germany") (*)
+                                <textarea id="txtContent_GR" name="txtContent_GR" rows="10" cols="80">       
+                                    @txtContent_GR                          
+                                </textarea>
+                            </li>
+                            @*<li>
+                                    @Language.label("ImageAddress") (*)
+                                    @Html.TextBox("txtImageAddress", txtImageAddress, new { @class = "form-control" })
+                                </li>*@
+                            <li class="file-upload-container">
+                                <div>
+                                    <label>
+                                        <a data-fancybox="gallery" href="/Content/adminlte/dist/img/no_image.jpg" class="lightbox-preview" rel="group">
+                                            <img src="/Content/adminlte/dist/img/no_image.jpg" id="img_Avatar" alt="avatar" class="default-image img-polaroid avatar file-upload-preview">
+                                        </a>
+                                        <br>
+                                        <input preview="file-upload-preview" type="file" data-width="1000" id="file" data-height="1000" class="skip file-upload-control" name="file" accept="image/*">
+                                        <input type="hidden" name="file" value="/Content/adminlte/dist/img/no_image.jpg" />
+                                        <br>
+                                        <span class="help-block"> Ảnh hỗ trợ: *.jpg, *.jpeg, *.gif, *.png</span>
+                                    </label>
+                                    <span class="btn file-upload-thumb-remove">X</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group">
+                                    <label>@Language.label("NewsType") <code>(*)</code></label>
+                                    <select class="form-control" name="txtNewsType" id="txtNewsType">
+                                        <option value="1">Short news</option>
+                                        <option value="2">Long news</option>
+                                    </select>
+                                </div>
+                            </li>
+
+                            <li>
+                                @Html.ButtonRoles("Save", "News", "Home", Language.label("Save"), new { @class = "btn btn-primary" })
+                                @*@Html.ButtonRoles("Save", Language.label("Save"), new { @class = "btn btn-success btn-sm" })*@
+                            </li>
+                        </ul>
+                    }
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+@section Scripts{
+    <!-- CK Editor -->
+    <script src="~/Content/adminlte/components/ckeditor/ckeditor.js"></script>
+    <!-- Bootstrap WYSIHTML5 -->
+    <script src="~/Content/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    <script>
+        $(function () {
+            CKEDITOR.replace('txtShortContent_EG')
+            $('.textarea').wysihtml5()
+        });
+        $(function () {
+            CKEDITOR.replace('txtShortContent_VN')
+            $('.textarea').wysihtml5()
+        });
+        $(function () {
+            CKEDITOR.replace('txtShortContent_GR')
+            $('.textarea').wysihtml5()
+        });
+        $(function () {
+            CKEDITOR.replace('txtContent_EG')
+            $('.textarea').wysihtml5()
+        });
+        $(function () {
+            CKEDITOR.replace('txtContent_VN')
+            $('.textarea').wysihtml5()
+        });
+        $(function () {
+            CKEDITOR.replace('txtContent_GR')
+            $('.textarea').wysihtml5()
+        });
+    </script>
+
+    <!-- Upload images -->
+    <script src="~/Content/adminlte/plugins/upload/fullobf.js"></script>
+    <script src="~/Content/adminlte/plugins/upload/dataconfig.js"></script>
+}

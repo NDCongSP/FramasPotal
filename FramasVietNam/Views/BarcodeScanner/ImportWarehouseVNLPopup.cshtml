@@ -1,0 +1,360 @@
+﻿@using FramasVietNam.Common
+@model FramasVietNam.Models.Meal.CheckBoxList
+@{
+    var lst_BarcodeScanner = (List<FramasVietNam.Models.BarcodeScanner.sp_ImportInventoryVNL_GetChild_Result>)ViewBag.lst_BarcodeScanner;
+    var lst_WarehouseGet = (List<FramasVietNam.Models.BarcodeScanner.vWarehouseVNL>)ViewBag.lst_WarehouseGet;
+    var _strID = mFunction.ToString(ViewBag._strID).Trim();
+    int _TotalQuantity = mFunction.ToInt(ViewBag._TotalQuantity);
+    var lst_KeyPost = (List<FramasVietNam.Models.BarcodeScanner.sp_KeyPostVNL_Get_Result>)ViewBag.lst_KeyPost;
+}
+<div class="modal-body">
+
+    @using (Html.BeginForm("ImportWarehouseVNL_Post", "BarcodeScanner", FormMethod.Post))
+    {
+
+    <div style="overflow-x:auto; background-color:white; padding:20px">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <table id="inventario" class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="check-all"></th>
+                    <th>Num</th>
+                    <th>OC Number</th>
+                    <th>DN Number</th>
+                    <th>Box Number</th>
+                    <th>Item</th>
+                    <th>Product No</th>
+                    <th>Color</th>
+                    <th>Size</th>
+                    <th>Quantity</th>
+                    <th>Unit price</th>
+                    <th>Date scan</th>
+                    <th>WH from</th>
+                    <th>WH to</th>
+                    <th>Location</th>
+                    <th>Status scan</th>
+                    <th>Import WH</th>
+                </tr>
+            </thead>
+
+            <tbody id="inventario-data">
+                @if (lst_BarcodeScanner != null)
+                {
+                    int i = 1;
+                    foreach (var item in lst_BarcodeScanner)
+                    {
+                        <tr>
+
+                            <td>
+                                @for (int icheck = 0; icheck < Model.CheckBox.Count; icheck++)
+                                {
+                                    if (item.ID == Model.CheckBox[icheck].Value)
+                                    {
+                                        <!-- checkbox -->
+                                        @Html.CheckBoxFor(m => Model.CheckBox[icheck].IsChecked, new { @class = "data-check" })
+                                        @*@Html.CheckBoxFor(m => Model.CheckBox[icheck].IsChecked, new { @class = "flat-red" })*@
+                                        @Html.HiddenFor(m => Model.CheckBox[icheck].Value)
+                                        @Html.HiddenFor(m => Model.CheckBox[icheck].Code)
+                                        @Html.HiddenFor(m => Model.CheckBox[icheck].Name)
+                                    }
+                                }
+                            </td>
+
+                            @if (@item.BusinessStatusID == 1)
+                            {
+                                <td class="text">@i</td>
+                                <td class="text">@item.OCNo</td>
+                                <td class="text">@item.DNNo</td>
+                                <td class="text">@item.CrtBox</td>
+                                <td class="text">@item.ProductName</td>
+                                <td class="text">@item.ITEMCODE</td>
+                                <td class="text">@item.color</td>
+                                <td class="text">@item.size</td>
+                                <td class="text">@item.QIB</td>
+                                <td class="text">@item.UPrice</td>
+                                <td class="text">@item.ScannedDateScan</td>
+                                <td class="text">@item.WHFromName</td>
+                                @*<td class="text">@item.WHFromKey</td>*@
+                                <td class="text">@item.WHToName</td>
+                                @*<td class="text">@item.WHToKey</td>*@
+                                <th>@item.BusinessName</th>
+                                if (@item.StatusScan == "OK")
+                                {
+                                    <td class="text"><div class="label-primary btn-sm">@item.StatusScan</div></td>
+                                }
+                                else
+                                {
+                                    <td class="text"><div class="label-danger btn-sm">@item.StatusScan</div></td>
+                                }
+                                if (@item.StatusScan == "OK" && @item.WHStatus == "OK")
+                                {
+                                    <td class="text"><div class="label-primary btn-sm">@item.WHStatus</div></td>
+                                }
+                                else
+                                {
+                                    <td class="text"><div class="label-danger btn-sm">@item.WHStatus</div></td>
+                                }
+                            }
+                            else
+                            {
+                                if (@item.BusinessStatusID != 2 && @item.BusinessStatusID != 3)
+                                {
+                                    <td class="text">@i</td>
+                                    <td class="text">@item.OCNo</td>
+                                    <td class="text">@item.DNNo</td>
+                                    <td class="text">@item.CrtBox</td>
+                                    <td class="text">@item.ProductName</td>
+                                    <td class="text">@item.ITEMCODE</td>
+                                    <td class="text">@item.color</td>
+                                    <td class="text">@item.size</td>
+                                    <td class="text">@item.QIB</td>
+                                    <td class="text">@item.UPrice</td>
+                                    <td class="text">@item.ScannedDateScan</td>
+                                    <td class="text">@item.WHFromName</td>
+                                    @*<td class="text">@item.WHFromKey</td>*@
+                                    <td class="text">@item.WHToName</td>
+                                    @*<td class="text">@item.WHToKey</td>*@
+                                    <th>@item.BusinessName</th>
+                                    <td class="text"></td>
+                                    <td class="text"></td>
+                                }
+                                else
+                                {
+                                    <td style="text-decoration: line-through" class="text">@i</td>
+                                    <td style="text-decoration: line-through" class="text">@item.OCNo</td>
+                                    <td style="text-decoration: line-through" class="text">@item.DNNo</td>
+                                    <td style="text-decoration: line-through" class="text">@item.CrtBox</td>
+                                    <td style="text-decoration: line-through" class="text">@item.ProductName</td>
+                                    <td style="text-decoration: line-through" class="text">@item.ITEMCODE</td>
+                                    <td style="text-decoration: line-through" class="text">@item.color</td>
+                                    <td style="text-decoration: line-through" class="text">@item.size</td>
+                                    <td style="text-decoration: line-through" class="text">@item.QIB</td>
+                                    <td style="text-decoration: line-through" class="text">@item.UPrice</td>
+                                    <td style="text-decoration: line-through" class="text">@item.ScannedDateScan</td>
+                                    <td style="text-decoration: line-through" class="text">@item.WHFromName</td>
+                                    @*<td style="text-decoration: line-through" class="text">@item.WHFromKey</td>*@
+                                    <td style="text-decoration: line-through" class="text">@item.WHToName</td>
+                                    @*<td style="text-decoration: line-through" class="text">@item.WHToKey</td>*@
+                                    <th style="text-decoration: line-through">@item.BusinessName</th>
+                                    <td style="text-decoration: line-through" class="text"></td>
+                                    <td style="text-decoration: line-through" class="text"></td>
+                                }
+                            }
+
+                        </tr>
+                        i++;
+                    }
+                }
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th style="text-align:right">Total</th>
+                    <th><span id="checked-prices-total-sum">0</span></th>
+                    <th><span id="totalkg" style="visibility: hidden;">@_TotalQuantity</span></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div style="width: 100%; display: flex; align-items: center; justify-content: center;">
+
+            <button type="submit" name="command" value="Close" class="btn btn-danger" style="margin:2px">Close</button>
+
+            @if (_strID.Length > 0)
+            {
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default" style="margin:2px" id="btnPopup" name="btnPopup">Post</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-success" disabled data-toggle="modal" data-target="#modal-default" style="margin:2px" id="btnPopup" name="btnPopup">Post</button>
+            }
+        </div>
+
+        <div class="modal fade" id="modal-default">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="submit" name="command" value="Close" class="close" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Quantity total: <input id="txt_TotalBarcode" name="txt_TotalBarcode" style="width:50px; text-align:center" readonly value="" /></h4>
+                    </div>
+
+                    <input type="hidden" name="txt_strID" id="txtBarcodeID" value=@_strID size="30" />
+
+                    <div class="modal-body">
+
+                        <ul class="todo-list">
+
+                            <li style="display: none">
+                                Post type
+                                <select name="CboPostType" id="CboPostType" class="select2-dropdown" style="width:100%">
+                                    <option selected value="1">Import</option>
+                                </select>
+                            </li>
+
+                            <li>
+                                Warehouse to
+                                <select name="CboWarehouseTo" id="CboWarehouseTo" class="form-control" style="width:100%">
+                                    <option value="0">---------choose data---------</option>
+                                    @if (lst_WarehouseGet != null)
+                                    {
+                                        foreach (var item in lst_WarehouseGet)
+                                        {
+                                            <option value="@item.WHID">@item.WHNAME</option>
+                                        }
+                                    }
+                                </select>
+                            </li>
+
+                            <li>
+                                Key to
+                                <select name="CboKeyTo" id="CboKeyTo" class="form-control" style="width:100%">
+                                    <option value="0">---------choose data---------</option>
+                                    @if (lst_KeyPost != null)
+                                    {
+                                        foreach (var item in lst_KeyPost)
+                                        {
+                                            if (item.KEYTYPE == 1)
+                                            {
+                                                <option value="@item.KEYVALUE">@item.KEYVALUE</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+
+                        <div style="width: 100%; display: flex; align-items: center; justify-content: center;">
+                            <button type="submit" value="submit" name="command" id="btnSave" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                    @*}*@
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </div>
+
+    }
+
+</div>
+
+
+<script src="~/Content/adminlte/plugins/iCheck/icheck.min.js"></script>
+
+<script type="text/javascript">
+
+
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red').iCheck({
+        checkboxClass: 'icheckbox_flat-green'
+    });
+
+    $(function () {
+        $('#approve-btn').click(function () {
+            debugger;
+            $('#modal-container').modal('hide');
+        });
+    });
+
+    $("#btnSave").prop("disabled", true);
+
+    function reload_cart() {
+
+        $("#btnSave").prop("disabled", true);
+
+        var _type = $("#CboPostType").val();
+        var _whTo = $("#CboWarehouseTo").val();
+        var _keyTo = $("#CboKeyTo").val();
+        if (_type == 1) { //Inport warehouse
+            if (_whTo != 0 && _keyTo != 0) {
+                $("#btnSave").prop("disabled", false);
+            }
+        }
+
+    }
+
+
+    $("#btnPopup").click(function () {
+        var count = document.getElementById("checked-prices-total-sum").innerText;
+        $('#txt_TotalBarcode').val(count);
+
+    });
+
+    $(document).ready(function () {
+        $("#check-all").click(function () {
+            var isChecked = $(this).prop('checked');
+            $(".data-check").prop('checked', isChecked);
+            var $sumchecked = $('#sumchecked');
+            var $totalSum = $('#checked-prices-total-sum');
+
+            if (isChecked) {
+                $totalSum.html($('#totalkg').html());
+                $sumchecked.css('visibility', 'visible');
+            } else {
+                $totalSum.html(0);
+                $sumchecked.css('visibility', 'hidden');
+            }
+        });
+
+        $('#inventario-data').on('change', 'input[type="checkbox"]', function () {
+            var $sumchecked = $('#sumchecked');
+            var $totalSum = $('#checked-prices-total-sum');
+            var totalSumValue = parseFloat($totalSum.html());
+            var price = parseFloat($(this).parent().next().next().next().next().next().next().next().next().next().html().replace(",", "."));
+
+            if ($(this).is(':checked')) {
+                totalSumValue += price;
+            } else {
+                totalSumValue -= price;
+            }
+
+            $totalSum.html(totalSumValue.toFixed(0));
+            totalSumValue > 0 ? $sumchecked.css('visibility', 'visible') : $sumchecked.css('visibility', 'hidden');
+        });
+    });
+
+
+    $('#CboWarehouseTo').on('change', function () {
+        reload_cart();
+    });
+    $('#CboKeyTo').on('change', function () {
+        reload_cart();
+    });
+
+
+    $(function () {
+        //Initialize Select2 Elements
+        $('#CboWarehouseTo').select2()
+    })
+
+    $(function () {
+        //Initialize Select2 Elements
+        $('#CboKeyTo').select2()
+    })
+</script>
+
+
+
+

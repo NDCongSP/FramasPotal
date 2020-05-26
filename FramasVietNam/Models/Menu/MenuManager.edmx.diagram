@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="21e1c54509b646fe9f3fa04ba172e10f" Name="Diagram1">
+        <EntityTypeShape EntityType="MenuManagerModel.Booking" Width="1.5" PointX="0.75" PointY="9" />
+        <EntityTypeShape EntityType="MenuManagerModel.Department" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="MenuManagerModel.DeptToModule" Width="1.5" PointX="3" PointY="5" />
+        <EntityTypeShape EntityType="MenuManagerModel.Document" Width="1.5" PointX="8.75" PointY="3" />
+        <EntityTypeShape EntityType="MenuManagerModel.EventList" Width="1.5" PointX="10.75" PointY="3" />
+        <EntityTypeShape EntityType="MenuManagerModel.FSComputer" Width="1.5" PointX="2.75" PointY="13" />
+        <EntityTypeShape EntityType="MenuManagerModel.Function" Width="1.5" PointX="3.75" PointY="8.375" />
+        <EntityTypeShape EntityType="MenuManagerModel.Group" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MenuManagerModel.GroupToFunction" Width="1.5" PointX="6" PointY="1" />
+        <EntityTypeShape EntityType="MenuManagerModel.ListWorkLoad" Width="1.5" PointX="4.75" PointY="13" />
+        <EntityTypeShape EntityType="MenuManagerModel.MailSupport" Width="1.5" PointX="10.75" PointY="9" />
+        <EntityTypeShape EntityType="MenuManagerModel.Module" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="MenuManagerModel.ModuleToGroup" Width="1.5" PointX="6" PointY="5" />
+        <EntityTypeShape EntityType="MenuManagerModel.News" Width="1.5" PointX="6.75" PointY="13" />
+        <EntityTypeShape EntityType="MenuManagerModel.SaturdayOffPlanning" Width="1.5" PointX="8.75" PointY="13" />
+        <EntityTypeShape EntityType="MenuManagerModel.Slider" Width="1.5" PointX="10.75" PointY="12" />
+        <EntityTypeShape EntityType="MenuManagerModel.sys_Language" Width="1.5" PointX="5.75" PointY="9.5" />
+        <EntityTypeShape EntityType="MenuManagerModel.sys_Translation" Width="1.5" PointX="8" PointY="9.25" />
+        <EntityTypeShape EntityType="MenuManagerModel.UserToDept" Width="1.5" PointX="12.75" PointY="3" />
+        <AssociationConnector Association="MenuManagerModel.FK_DeptToModule_Department" />
+        <AssociationConnector Association="MenuManagerModel.FK_DeptToModule_Module" />
+        <AssociationConnector Association="MenuManagerModel.FK_GroupToFunction_Function" />
+        <AssociationConnector Association="MenuManagerModel.FK_GroupToFunction_Group" />
+        <AssociationConnector Association="MenuManagerModel.FK_ModuleToGroup_Group" />
+        <AssociationConnector Association="MenuManagerModel.FK_ModuleToGroup_Module" />
+        <AssociationConnector Association="MenuManagerModel.FK_sys_Translation_sys_Language" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

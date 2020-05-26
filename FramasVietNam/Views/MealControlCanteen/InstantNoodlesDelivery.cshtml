@@ -1,0 +1,120 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    //getdata from meal order
+    var lstOrder = (List<FramasVietNam.Models.Meal.sp_DeliveryInstantNoodles_Search_Result>)ViewBag.lstOrder;
+
+    var strDateSearch = mFunction.ToDateTime(ViewBag.strDateSearch);
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            @Language.label("DeliveryInstantNoodles")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">@Language.label("DeliveryInstantNoodles")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <!-- .box -->
+            <div class="box">
+                <!-- .box-header -->
+                <div class="box-header">
+                    <h3 class="box-title">@Language.label("ListOfOrderedNoodles")</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- .box-body -->
+                <div class="box-body">
+                    @using (Html.BeginForm("InstantNoodlesDelivery", "MealControlCanteen", FormMethod.Post))
+                    {
+                    <div class="row" style="margin-bottom:5px;">
+                        <div class="col-xs-2">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type='text' name="dateSearch" class="form-control" id='dateSearch' value="@strDateSearch" />
+                            </div>
+                        </div>
+                        <div class="col-xs-1">
+                            @Html.ButtonRoles("Search", "InstantNoodlesDelivery", "MealControlCanteen", Language.label("Search"), new { @class = "btn btn-primary" })
+                        </div>
+                    </div>
+                    }
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>@Language.label("Num")</th>
+                                <th>@Language.label("Day")</th>
+                                <th>@Language.label("Shift")</th>
+                                <th>@Language.label("Meal")</th>
+                                <th>@Language.label("Name")</th>
+                                <th>@Language.label("Status")</th>
+                                <th>@Language.label("Confirm")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (lstOrder != null)
+                            {
+                                int i = 1;
+                                foreach (var item in lstOrder)
+                                {
+                                    <tr>
+                                        <td class="text">@i</td>
+                                        <td class="text">@item.Day</td>
+                                        <td class="text">@item.ShiftWorkName</td>
+                                        <td class="text">@item.MenuMealName</td>
+                                        <td class="text">@item.UserName - @item.TenNhanVien</td>
+                                        <td class="text">@item.Status</td>
+                                        <!-- General tools such as edit or delete-->
+                                        <td>
+                                            @if (item.isCheck == false)
+                                            {
+                                                @Html.ActionLink(" ", "InstantNoodlesDeliveryIsTakeMeal/" + item.ID, "MealControl", new { @class = "fa fa-check-square-o label-success btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                            }
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+    $(function () {
+        $('#dateSearch').datetimepicker({
+            format: 'MM/DD/YYYY',
+        });
+    });
+    </script>
+}
+
+
+

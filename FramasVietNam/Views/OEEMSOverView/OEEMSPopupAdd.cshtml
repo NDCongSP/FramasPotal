@@ -1,0 +1,332 @@
+﻿
+@using FramasVietNam.Common
+@model FramasVietNam.Models.OEEMS.tblWorkPieceList
+
+@{
+    var _lsttblProject = (List<FramasVietNam.Models.OEEMS.tblProject>)ViewBag.lsttblProject;
+    var _lsttblWorkPiece = (List<FramasVietNam.Models.OEEMS.tblWorkpiece>)ViewBag.lsttblWorkPiece;
+    var _lsttblComp = (List<FramasVietNam.Models.OEEMS.tblComp>)ViewBag.lsttblComp;
+    //var _tblWorkpieceProcess = (List<FramasVietNam.Models.OEEMS.sp_tblWorkpieceProcess_Get_Result>)ViewBag.tblWorkpieceProcess;
+    string _dtdate = mFunction.ToString(ViewBag.dtDateSearch);
+}
+
+@*Popup add*@
+
+<style>
+    .modal-dialog_new {
+        width: 60%;
+        height: 80%;
+        margin: 10px auto;
+    }
+</style>
+
+<div class="modal-dialog_new" id="AddModal">
+
+    @using (Html.BeginForm("OEEMSInputAdd", "OEEMSOverView", FormMethod.Post, new { @id = "frmID" }))
+    {
+        @Html.AntiForgeryToken()
+        <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+        <div style="overflow-x:auto;  background-color:white; padding:20px">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4>@Language.label("Add")</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="form-group" style="width: 60%;">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td style="width: 200px;"> @Html.Name("Date") (*)</td>
+                                <td>
+                                    <input hidden="hidden" name="reservation" id="reservation" value="@ViewBag.dtDateSearch">
+                                    <div class="input-group date" style="width: 50%;">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input style="width: 100%;" type="text" class="form-control pull-right" id="datepicker" name="datepicker" value="@DateTime.Now.ToString("MM/dd/yyyy")">
+                                    </div>
+                                    <span class="text-danger"> @ViewBag.err</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Project Name (*) </td>
+                                <td>
+                                    <select class="form-control select2" style="width: 100%;" name="ProjectID" id="ProjectID">
+                                        <option value="0"></option>
+                                        @if (_lsttblProject != null)
+                                        {
+                                            foreach (var item in _lsttblProject)
+                                            {
+                                                <option value="@item.ProjectID">@item.ProjectName</option>
+                                            }
+                                        }
+                                    </select>
+
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>Component (*) </td>
+                                <td>
+                                    <select class="form-control select2" style="width: 70%;" name="CompID" id="CompID" data-placeholder="Select a Component">
+                                       
+                                        @if (_lsttblComp != null)
+                                        {
+                                            foreach (var item in _lsttblComp)
+                                            {
+                                                <option value="@item.CompID">@item.CompName</option>
+                                            }
+                                        }
+                                    </select>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Size (*) </td>
+                                <td>
+                                    <select class="form-control select2" style="width: 70%;" name="SizeID" id="SizeID" data-placeholder="Select a Size"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>WorkPiece (*) </td>
+                                <td>
+                                    <select class="form-control select2" style="width: 100%;" name="WorkPieceID" id="WorkPieceID">
+                                        <option value="0"></option>
+                                        @if (_lsttblWorkPiece != null)
+                                        {
+                                            foreach (var item in _lsttblWorkPiece)
+                                            {
+                                                <option value="@item.WorkpieceID">@item.WorkpieceName</option>
+                                            }
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <table id="tableworkpiece" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center" width="15">#</th>
+                                <th hidden></th>
+                                <th hidden width="auto">WorkpieceID</th>
+                                <th hidden width="auto">ProcessID</th>
+                                <th class="text-center" width="auto">Workpiece Name</th>
+                                <th class="text-center">Process Name</th>
+                                <th colspan="2" class="text-center">Plan Time</th>
+
+                            </tr>
+                            <tr>
+                                <th width="15"></th>
+                                <th hidden></th>
+                                <th class="text-center" hidden width="auto"></th>
+                                <th class="text-center" hidden width="auto"></th>
+                                <th class="text-center" width="auto"></th>
+                                <th class="text-center"></th>
+                                <th class="text-center" width="auto">Hour</th>
+                                <th class="text-center" width="auto">Munite</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @for (int i = 0; i < Model.tblWorkPiece.Count; i++)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td hidden="hidden" class="text">@Html.DisplayFor(m => Model.tblWorkPiece[i].WorkpieceID)</td>
+                                    <td hidden="hidden" class="text">@Html.EditorFor(m => Model.tblWorkPiece[i].WorkpieceID)</td>
+                                    <td hidden="hidden" class="text">@Html.EditorFor(m => Model.tblWorkPiece[i].ProcessID)</td>
+                                    <td>@Html.DisplayFor(m => Model.tblWorkPiece[i].WorkpieceName)</td>
+                                    <td>@Html.DisplayFor(m => Model.tblWorkPiece[i].ProcessName)</td>
+                                    <td width="auto" align="right">@Html.EditorFor(m => Model.tblWorkPiece[i].hour, new { id = "hour" })</td>
+                                    <td width="auto" align="right">@Html.EditorFor(m => Model.tblWorkPiece[i].munite, new { id = "munite" })</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                @*@Html.ButtonRoles("Save", Language.label("Save"), new { @class = "btn btn-success" })*@
+                <button id="btn1" hidden="hidden" name="btn1">Test onclick submit</button>
+                <a id='a' href='#' class="btn btn-success" onClick="a_onClick()"> Save </a>
+                <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+            </div>
+        </div>
+        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
+    }
+
+
+</div>
+<!-- Theme style -->
+<link rel="stylesheet" href="~/Content/adminlte/dist/css/AdminLTE.min.css">
+<!-- FastClick -->
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2()
+
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        })
+
+        //Timepicker
+        $('.timepicker').timepicker({
+            showInputs: false
+        })
+    })
+</script>
+
+<script type="text/javascript">
+    function a_onClick() {
+        debugger
+        var chk = 0;
+
+        if ($("#datepicker").val() == "0" || $("#datepicker").val() == "" || $("#datepicker").val() == null) {
+            alert('Please enter a Date of Project');
+        }
+
+        else if ($("#ProjectID").val() == "0" || $("#ProjectID").val() == "" || $("#ProjectID").val() == null) {
+            alert('Please choise a Project Name');
+        }
+        else if ($("#CompID").val() == "0" || $("#CompID").val() == "" || $("#CompID").val() == null) {
+            alert('Please choise a Component');
+        }
+        else if ($("#SizeID").val() == "0" || $("#SizeID").val() == "" || $("#SizeID").val() == null) {
+            alert('Please choise a Size');
+        }
+
+        else{
+                debugger
+
+                //$('#tbTableValues').empty();    // clear textbox
+                $('#tableworkpiece tr').each(function (row, tr) {
+
+                    if ($(tr).find('td:eq(6) input').val() > 0 || $(tr).find('td:eq(7) input').val() > 0)   // Associate Name
+                    {
+                        chk = chk + $(tr).find('td:eq(6) input').val() +$(tr).find('td:eq(7) input').val() ;
+                        return chk;
+                    }
+                });
+
+                if (chk > 0) {
+                    var r = confirm('Do you want to save?');
+                    if (r == true) {
+                        $("#btn1").click();
+                    }
+                } else {
+                    alert('Please enter Plan time of a Workpice - Processs');
+                }
+            }
+        }
+</script>
+
+<script type="text/javascript">
+
+     $(document).ready(function () {
+
+          $("#ProjectID").select2({
+            dropdownParent: $("#AddModal")
+          });
+         $("#CompID").select2({
+            dropdownParent: $("#AddModal")
+          });
+         $("#SizeID").select2({
+            dropdownParent: $("#AddModal")
+          });
+         $("#WorkPieceID").select2({
+            dropdownParent: $("#AddModal")
+          });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+
+      $("#tableworkpiece tbody tr").hide();
+
+      $(document).ready(function () {
+
+         $("#WorkPieceID").change(function() { // On <select> change...
+
+            var selection = $("#WorkPieceID").val();
+            debugger
+            if (selection == "0")
+            {
+                $("#tableworkpiece tbody tr").hide(); // Show all rows
+            } else
+            {
+                $("#tableworkpiece tbody tr").each(function() { // For each row
+
+                        if ($(this).find("td").eq(1).text() == selection)
+                        {
+                            // Show rows where the first column matches
+                            $(this).show();
+                        } else
+                        {
+                            // Hide rows where the first column does not match
+                            $(this).hide();
+                        }
+
+                });
+            }
+        });
+
+        //Dropdownlist Selectedchange event
+        $("#ProjectID").change(function () {
+
+            @*$.ajax({
+                type: 'POST',
+                url: '@Url.Action("PassdataOEEMSInputCNNew")',
+                dataType: 'json',
+                data: { ProjectID: $("#ProjectID").val() },
+                success: function (items) {
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+                    $("#CompID").empty();
+                    $.each(items, function (i, item) {
+                        $("#CompID").append('<option value="'
+                            + item.CompID + '">'
+                            + item.CompName + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve.' + ex);
+                }
+            });*@
+
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("PassdataOEEMSInputSNNew")',
+                dataType: 'json',
+                data: { ProjectID: $("#ProjectID").val() },
+                success: function (items) {
+                     $("#SizeID").empty();
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+                    $.each(items, function (i, item) {
+                        $("#SizeID").append('<option value="'
+                            + item.SizeID + '">'
+                            + item.SizeName + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve .' + ex);
+                }
+            });
+
+        })
+    });
+</script>

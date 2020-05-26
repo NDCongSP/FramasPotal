@@ -1,0 +1,71 @@
+﻿@using FramasVietNam.Models;
+@using FramasVietNam.Common;
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">@Language.label("Edit")</h4>
+    </div>
+    <div class="modal-body">
+        @if (Model != null)
+        {
+            <div class="form-group">
+                @Language.label("Department")<code>(*)</code>
+                <input name="DepartmentName" type='text' class="form-control" value="@Model.DepartmentName" id='DepartmentName' disabled readonly placeholder="@Language.label("StartDate")" />
+            </div>
+            <div class="form-group">
+                @Language.label("User")<code>(*)</code>
+                <input name="UserId" type='text' class="form-control" id='UserId' value="@Model.EmployeeId" disabled readonly placeholder="@Language.label("StartDate")" />
+            </div>
+            <div class="form-group">
+                <div class="input-group">                              
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <input name="DateWork" type='text' class="form-control" id="DateWork" value="@Model.DateWork.ToString("MM/yyyy")" disabled readonly placeholder="@Language.label("StartDate")" />
+                </div>
+            </div> 
+            <div class="form-group">
+                @Language.label("WorkingHourOnMESTopic")<code>(*)</code>
+                <input type="number" name="workHour" id="workHour" class="form-control" value="@Model.WorkingHour" placeholder="Working hour on MES topic" min="0" max="208" />
+            </div>
+
+            <div class="form-group">
+                @Language.label("TotalWorkingHourInMonth")
+                <input type="text" name="totalHour" id="totalHour" class="form-control" placeholder="Total working hour in month" value="208" disabled readonly />
+            </div>
+            <div class="form-group">
+                @Language.label("Percentage")
+                <span name="Percentage" id="Percentage" class="form-control">@Model.Percen %</span>
+            </div>
+            <div class="form-group">
+                @Language.label("Description")
+                <textarea class="form-control" name="desc" id="desc" placeholder="Detail">@Model.Description</textarea>
+            </div>
+        }
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" onclick = "WorkLoadUpdate(@Model.Id)">
+            @Language.label("Save")
+        </button>
+        @*@Html.ButtonRoles("Save", "MESWorkLoad", "MESWorkLoad", @Language.label("Save"), new { @class = "btn btn-success", @onclick = "WorkLoadUpdate('" + Model.Id + "')" })*@
+    </div>
+</div>
+
+<script>
+    $(":input").bind('keyup mouseup', function () {
+        var hour = $("#workHour").val();
+        if (hour > 208) {
+            alert('Working hour on MES topic must not exceed 208 hours!');
+            return false;
+        }
+        var total = $("#totalHour").val();
+        var result = (hour * 100) / parseFloat(total);
+        var dtResult = $("#Percentage").text(Math.round(result) + "%");
+        $('#totalHour').on('input', function () {
+            $('#Percentage').text(dtResult);
+        });
+    });
+</script>

@@ -1,0 +1,129 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var lstNews = (List<FramasVietNam.Models.Menu.News>)ViewBag.lstNews;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            @Language.label("News")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">@Language.label("News")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <div style="margin-bottom:10px">
+                        @Html.ActionLinkRole("Add", "News", "Home", Language.label("Add"), "NewsAdd", "Home", new { @class = "btn btn-primary" })
+                    </div>
+                </div>
+            </div>
+
+            <!-- .box -->
+            <div class="box box-primary">
+                <!-- .box-header -->
+                <div class="box-header">
+                    <i class="fa fa-newspaper-o"></i>
+                    <h3 class="box-title">@Language.label("News")</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- .box-body -->
+                <div class="box-body">
+                    <table id="News" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>@Language.label("Num")</th>
+                                <th>@Language.label("Title")</th>
+                                <th>@Language.label("ShortContent")</th>
+                                <th>@Language.label("Date")</th>
+                                <th>@Language.label("Change")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (lstNews != null)
+                            {
+                                int i = 1;
+                                foreach (var item in lstNews)
+                                {
+                                    <tr>
+                                        <td class="text">@i</td>
+                                        <td class="text">@item.Title_VN</td>
+                                        <td class="text">@Html.Raw(HttpUtility.HtmlDecode(@item.ShortContent_VN))</td>
+                                        <td class="text">@mFunction.ToDateTime(item.DateAdd).ToString("MM-dd-yyyy")</td>
+
+                                        <!-- General tools such as edit or delete-->
+                                        <td>
+                                            @Html.ActionLinkRole("Edit", "News", "Home", " ", "NewsUpd/", "Home", new { id = @item.ID.ToString() }, new { @class = "fa fa-edit label-primary btn-sm" })
+                                            @Html.ActionLinkRole("Delete", "News", "Home", " ", "NewsDel/", "Home", new { id = @item.ID.ToString() }, new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+@section scripts{
+    <script>
+            $(document).ready(function () {
+                $('#News thead tr').clone(true).appendTo('#News thead');
+                $('#News thead tr:eq(1) th').each(function (i) {
+                   if (i > 0) {
+                        var title = $(this).text();
+                        if (title != "Change" && title != "Status") {
+                            $(this).html('<input type="text"/>');
+                            $('input', this).on('keyup change', function () {
+                                if (table.column(i).search() !== this.value) {
+                                    table
+                                        .column(i)
+                                        .search(this.value)
+                                        .draw();
+                                }
+                            });
+                        }
+                        else {
+                            $(this).html('');
+                        }
+                    }
+                });
+
+                var table = $('#News').DataTable({
+                    "displayLength": 25,
+                    orderCellsTop: true,
+                    fixedHeader: true,
+                     'paging'      : true,
+                   'lengthChange': false,
+                   'searching'   : true,
+                   'ordering'    : true,
+                   'info'        : true,
+                   'autoWidth'   : false
+                });
+
+                table.on('order.dt search.dt', function () {
+                    table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                    });
+                }).draw();
+            });
+    </script>
+}

@@ -1,0 +1,33 @@
+﻿@model DevExpress.XtraReports.UI.XtraReport
+@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Report.cshtml";
+}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    @*<section class="content-header">
+            <h1>
+                <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+                @Language.label("Report")
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+                <li class="active">@Language.label("Report")</li>
+            </ol>
+        </section>*@
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+                <!-- ./col -->
+                @Html.DevExpress().WebDocumentViewer(settings => {
+                settings.Name = "WebDocumentViewer";
+                settings.MobileMode = false;
+                }).Bind(Model).GetHtml()
+
+            </div>
+        </div>
+    </section>
+</div>

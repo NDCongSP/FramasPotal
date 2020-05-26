@@ -1,0 +1,1145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BarcodeScannerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="PackingBarcodeQR_VNL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OCNo" Type="varchar" MaxLength="20" />
+          <Property Name="BarcodeID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Barcode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="ScannedDateScan" Type="datetime" />
+          <Property Name="StatusScan" Type="tinyint" />
+          <Property Name="StatusWH" Type="tinyint" />
+          <Property Name="UserNameScan" Type="nvarchar" MaxLength="256" />
+          <Property Name="MachineNumberScan" Type="nvarchar" MaxLength="256" />
+          <Property Name="BusinessStatusID" Type="int" />
+          <Property Name="WHFromID" Type="int" />
+          <Property Name="WHToID" Type="int" />
+          <Property Name="WHFromKey" Type="varchar" MaxLength="2" />
+          <Property Name="WHToKey" Type="varchar" MaxLength="2" />
+          <Property Name="UserAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+          <Property Name="UserUpd" Type="varchar" MaxLength="25" />
+          <Property Name="DateUpd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PackingBarcodeQR_VNT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OCNo" Type="varchar" MaxLength="20" />
+          <Property Name="BarcodeID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Barcode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="ScannedDateScan" Type="datetime" />
+          <Property Name="StatusScan" Type="tinyint" />
+          <Property Name="StatusWH" Type="tinyint" />
+          <Property Name="UserNameScan" Type="nvarchar" MaxLength="256" />
+          <Property Name="MachineNumberScan" Type="nvarchar" MaxLength="256" />
+          <Property Name="BusinessStatusID" Type="int" />
+          <Property Name="WHFromID" Type="int" />
+          <Property Name="WHToID" Type="int" />
+          <Property Name="WHFromKey" Type="varchar" MaxLength="2" />
+          <Property Name="WHToKey" Type="varchar" MaxLength="2" />
+          <Property Name="UserAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+          <Property Name="UserUpd" Type="varchar" MaxLength="25" />
+          <Property Name="DateUpd" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BarcodeScanner.dbo.vWarehouseVNL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vWarehouseVNL">
+          <Key>
+            <PropertyRef Name="WHID" />
+          </Key>
+          <Property Name="WHID" Type="int" Nullable="false" />
+          <Property Name="WHNAME" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BarcodeScanner.dbo.vWarehouseVNT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vWarehouseVNT">
+          <Key>
+            <PropertyRef Name="WHID" />
+          </Key>
+          <Property Name="WHID" Type="int" Nullable="false" />
+          <Property Name="WHNAME" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Function Name="sp_ActionLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ActionName" Type="varchar" Mode="In" />
+          <Parameter Name="ControllerName" Type="varchar" Mode="In" />
+          <Parameter Name="Method" Type="varchar" Mode="In" />
+          <Parameter Name="Content" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Detail" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="Date" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_CheckBarcodeScanner" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="strID" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Action" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ExportInventoryVNL_GetChild" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OCNo" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ExportInventoryVNL_GetParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DateSearch" Type="nvarchar" Mode="In" />
+          <Parameter Name="OCDN" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ExportInventoryVNL_Ins" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="strID" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="PostType" Type="nvarchar" Mode="In" />
+          <Parameter Name="WarehouseFrom" Type="nvarchar" Mode="In" />
+          <Parameter Name="KeyFrom" Type="nvarchar" Mode="In" />
+          <Parameter Name="WarehouseTo" Type="nvarchar" Mode="In" />
+          <Parameter Name="KeyTo" Type="nvarchar" Mode="In" />
+          <Parameter Name="DateImport" Type="datetime" Mode="In" />
+          <Parameter Name="User" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ExportInventoryVNT_GetChild" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OCNo" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ExportInventoryVNT_GetParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DateSearch" Type="nvarchar" Mode="In" />
+          <Parameter Name="OCDN" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ExportInventoryVNT_Ins" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="strID" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="PostType" Type="nvarchar" Mode="In" />
+          <Parameter Name="WarehouseFrom" Type="nvarchar" Mode="In" />
+          <Parameter Name="KeyFrom" Type="nvarchar" Mode="In" />
+          <Parameter Name="WarehouseTo" Type="nvarchar" Mode="In" />
+          <Parameter Name="KeyTo" Type="nvarchar" Mode="In" />
+          <Parameter Name="DateImport" Type="datetime" Mode="In" />
+          <Parameter Name="User" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ImportInventoryVNL_GetChild" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OCNo" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ImportInventoryVNL_GetParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DateSearch" Type="nvarchar" Mode="In" />
+          <Parameter Name="OCDN" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ImportInventoryVNL_Ins" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="strID" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="PostType" Type="nvarchar" Mode="In" />
+          <Parameter Name="WarehouseFrom" Type="nvarchar" Mode="In" />
+          <Parameter Name="KeyFrom" Type="nvarchar" Mode="In" />
+          <Parameter Name="WarehouseTo" Type="nvarchar" Mode="In" />
+          <Parameter Name="KeyTo" Type="nvarchar" Mode="In" />
+          <Parameter Name="DateImport" Type="datetime" Mode="In" />
+          <Parameter Name="User" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ImportInventoryVNT_GetChild" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OCNo" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ImportInventoryVNT_GetParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DateSearch" Type="nvarchar" Mode="In" />
+          <Parameter Name="OCDN" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ImportInventoryVNT_Ins" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="strID" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="PostType" Type="nvarchar" Mode="In" />
+          <Parameter Name="WarehouseFrom" Type="nvarchar" Mode="In" />
+          <Parameter Name="KeyFrom" Type="nvarchar" Mode="In" />
+          <Parameter Name="WarehouseTo" Type="nvarchar" Mode="In" />
+          <Parameter Name="KeyTo" Type="nvarchar" Mode="In" />
+          <Parameter Name="DateImport" Type="datetime" Mode="In" />
+          <Parameter Name="User" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_KeyPostVNL_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_KeyPostVNT_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_TransferInventoryVNL_GetChild" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OCNo" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_TransferInventoryVNL_GetParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DateSearch" Type="nvarchar" Mode="In" />
+          <Parameter Name="OCDN" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_TransferInventoryVNL_Ins" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="strID" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="PostType" Type="nvarchar" Mode="In" />
+          <Parameter Name="WarehouseFrom" Type="nvarchar" Mode="In" />
+          <Parameter Name="KeyFrom" Type="nvarchar" Mode="In" />
+          <Parameter Name="WarehouseTo" Type="nvarchar" Mode="In" />
+          <Parameter Name="KeyTo" Type="nvarchar" Mode="In" />
+          <Parameter Name="DateImport" Type="datetime" Mode="In" />
+          <Parameter Name="User" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_TransferInventoryVNT_GetChild" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OCNo" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_TransferInventoryVNT_GetParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DateSearch" Type="nvarchar" Mode="In" />
+          <Parameter Name="OCDN" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_TransferInventoryVNT_Ins" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="strID" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="PostType" Type="nvarchar" Mode="In" />
+          <Parameter Name="WarehouseFrom" Type="nvarchar" Mode="In" />
+          <Parameter Name="KeyFrom" Type="nvarchar" Mode="In" />
+          <Parameter Name="WarehouseTo" Type="nvarchar" Mode="In" />
+          <Parameter Name="KeyTo" Type="nvarchar" Mode="In" />
+          <Parameter Name="DateImport" Type="datetime" Mode="In" />
+          <Parameter Name="User" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="BarcodeScannerModelStoreContainer">
+          <EntitySet Name="PackingBarcodeQR_VNL" EntityType="Self.PackingBarcodeQR_VNL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PackingBarcodeQR_VNT" EntityType="Self.PackingBarcodeQR_VNT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vWarehouseVNL" EntityType="Self.vWarehouseVNL" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vWarehouseVNL].[WHID] AS [WHID], 
+    [vWarehouseVNL].[WHNAME] AS [WHNAME]
+    FROM [dbo].[vWarehouseVNL] AS [vWarehouseVNL]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vWarehouseVNT" EntityType="Self.vWarehouseVNT" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vWarehouseVNT].[WHID] AS [WHID], 
+    [vWarehouseVNT].[WHNAME] AS [WHNAME]
+    FROM [dbo].[vWarehouseVNT] AS [vWarehouseVNT]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BarcodeScannerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="PackingBarcodeQR_VNL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OCNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BarcodeID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Barcode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="ScannedDateScan" Type="DateTime" Precision="3" />
+          <Property Name="StatusScan" Type="Byte" />
+          <Property Name="StatusWH" Type="Byte" />
+          <Property Name="UserNameScan" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="MachineNumberScan" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="BusinessStatusID" Type="Int32" />
+          <Property Name="WHFromID" Type="Int32" />
+          <Property Name="WHToID" Type="Int32" />
+          <Property Name="WHFromKey" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="WHToKey" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="UserAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <Property Name="UserUpd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateUpd" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PackingBarcodeQR_VNT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OCNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BarcodeID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Barcode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="ScannedDateScan" Type="DateTime" Precision="3" />
+          <Property Name="StatusScan" Type="Byte" />
+          <Property Name="StatusWH" Type="Byte" />
+          <Property Name="UserNameScan" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="MachineNumberScan" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="BusinessStatusID" Type="Int32" />
+          <Property Name="WHFromID" Type="Int32" />
+          <Property Name="WHToID" Type="Int32" />
+          <Property Name="WHFromKey" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="WHToKey" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="UserAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <Property Name="UserUpd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateUpd" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="vWarehouseVNL">
+          <Key>
+            <PropertyRef Name="WHID" />
+          </Key>
+          <Property Name="WHID" Type="Int32" Nullable="false" />
+          <Property Name="WHNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vWarehouseVNT">
+          <Key>
+            <PropertyRef Name="WHID" />
+          </Key>
+          <Property Name="WHID" Type="Int32" Nullable="false" />
+          <Property Name="WHNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="BarcodeScannerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PackingBarcodeQR_VNL" EntityType="Self.PackingBarcodeQR_VNL" />
+          <EntitySet Name="PackingBarcodeQR_VNT" EntityType="Self.PackingBarcodeQR_VNT" />
+          <EntitySet Name="vWarehouseVNLs" EntityType="Self.vWarehouseVNL" />
+          <EntitySet Name="vWarehouseVNTs" EntityType="Self.vWarehouseVNT" />
+          <FunctionImport Name="sp_ExportInventoryVNL_GetChild" ReturnType="Collection(BarcodeScannerModel.sp_ExportInventoryVNL_GetChild_Result)">
+          <Parameter Name="OCNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ExportInventoryVNL_GetParent" ReturnType="Collection(BarcodeScannerModel.sp_ExportInventoryVNL_GetParent_Result)">
+            <Parameter Name="DateSearch" Mode="In" Type="String" />
+            <Parameter Name="OCDN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ExportInventoryVNL_Ins">
+            <Parameter Name="strID" Mode="In" Type="String" />
+            <Parameter Name="PostType" Mode="In" Type="String" />
+            <Parameter Name="WarehouseFrom" Mode="In" Type="String" />
+            <Parameter Name="KeyFrom" Mode="In" Type="String" />
+            <Parameter Name="WarehouseTo" Mode="In" Type="String" />
+            <Parameter Name="KeyTo" Mode="In" Type="String" />
+            <Parameter Name="DateImport" Mode="In" Type="DateTime" />
+            <Parameter Name="User" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ExportInventoryVNT_GetChild" ReturnType="Collection(BarcodeScannerModel.sp_ExportInventoryVNT_GetChild_Result)">
+          <Parameter Name="OCNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ExportInventoryVNT_GetParent" ReturnType="Collection(BarcodeScannerModel.sp_ExportInventoryVNT_GetParent_Result)">
+            <Parameter Name="DateSearch" Mode="In" Type="String" />
+            <Parameter Name="OCDN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ExportInventoryVNT_Ins">
+            <Parameter Name="strID" Mode="In" Type="String" />
+            <Parameter Name="PostType" Mode="In" Type="String" />
+            <Parameter Name="WarehouseFrom" Mode="In" Type="String" />
+            <Parameter Name="KeyFrom" Mode="In" Type="String" />
+            <Parameter Name="WarehouseTo" Mode="In" Type="String" />
+            <Parameter Name="KeyTo" Mode="In" Type="String" />
+            <Parameter Name="DateImport" Mode="In" Type="DateTime" />
+            <Parameter Name="User" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ImportInventoryVNL_GetChild" ReturnType="Collection(BarcodeScannerModel.sp_ImportInventoryVNL_GetChild_Result)">
+          <Parameter Name="OCNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ImportInventoryVNL_GetParent" ReturnType="Collection(BarcodeScannerModel.sp_ImportInventoryVNL_GetParent_Result)">
+            <Parameter Name="DateSearch" Mode="In" Type="String" />
+            <Parameter Name="OCDN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ImportInventoryVNL_Ins">
+            <Parameter Name="strID" Mode="In" Type="String" />
+            <Parameter Name="PostType" Mode="In" Type="String" />
+            <Parameter Name="WarehouseFrom" Mode="In" Type="String" />
+            <Parameter Name="KeyFrom" Mode="In" Type="String" />
+            <Parameter Name="WarehouseTo" Mode="In" Type="String" />
+            <Parameter Name="KeyTo" Mode="In" Type="String" />
+            <Parameter Name="DateImport" Mode="In" Type="DateTime" />
+            <Parameter Name="User" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ImportInventoryVNT_GetChild" ReturnType="Collection(BarcodeScannerModel.sp_ImportInventoryVNT_GetChild_Result)">
+          <Parameter Name="OCNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ImportInventoryVNT_GetParent" ReturnType="Collection(BarcodeScannerModel.sp_ImportInventoryVNT_GetParent_Result)">
+            <Parameter Name="DateSearch" Mode="In" Type="String" />
+            <Parameter Name="OCDN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ImportInventoryVNT_Ins">
+            <Parameter Name="strID" Mode="In" Type="String" />
+            <Parameter Name="PostType" Mode="In" Type="String" />
+            <Parameter Name="WarehouseFrom" Mode="In" Type="String" />
+            <Parameter Name="KeyFrom" Mode="In" Type="String" />
+            <Parameter Name="WarehouseTo" Mode="In" Type="String" />
+            <Parameter Name="KeyTo" Mode="In" Type="String" />
+            <Parameter Name="DateImport" Mode="In" Type="DateTime" />
+            <Parameter Name="User" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_KeyPostVNL_Get" ReturnType="Collection(BarcodeScannerModel.sp_KeyPostVNL_Get_Result)" />
+          <FunctionImport Name="sp_KeyPostVNT_Get" ReturnType="Collection(BarcodeScannerModel.sp_KeyPostVNT_Get_Result)" />
+          <FunctionImport Name="sp_TransferInventoryVNL_GetChild" ReturnType="Collection(BarcodeScannerModel.sp_TransferInventoryVNL_GetChild_Result)">
+          <Parameter Name="OCNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_TransferInventoryVNL_GetParent" ReturnType="Collection(BarcodeScannerModel.sp_TransferInventoryVNL_GetParent_Result)">
+            <Parameter Name="DateSearch" Mode="In" Type="String" />
+            <Parameter Name="OCDN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_TransferInventoryVNL_Ins">
+            <Parameter Name="strID" Mode="In" Type="String" />
+            <Parameter Name="PostType" Mode="In" Type="String" />
+            <Parameter Name="WarehouseFrom" Mode="In" Type="String" />
+            <Parameter Name="KeyFrom" Mode="In" Type="String" />
+            <Parameter Name="WarehouseTo" Mode="In" Type="String" />
+            <Parameter Name="KeyTo" Mode="In" Type="String" />
+            <Parameter Name="DateImport" Mode="In" Type="DateTime" />
+            <Parameter Name="User" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_TransferInventoryVNT_GetChild" ReturnType="Collection(BarcodeScannerModel.sp_TransferInventoryVNT_GetChild_Result)">
+          <Parameter Name="OCNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_TransferInventoryVNT_GetParent" ReturnType="Collection(BarcodeScannerModel.sp_TransferInventoryVNT_GetParent_Result)">
+            <Parameter Name="DateSearch" Mode="In" Type="String" />
+            <Parameter Name="OCDN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_TransferInventoryVNT_Ins">
+            <Parameter Name="strID" Mode="In" Type="String" />
+            <Parameter Name="PostType" Mode="In" Type="String" />
+            <Parameter Name="WarehouseFrom" Mode="In" Type="String" />
+            <Parameter Name="KeyFrom" Mode="In" Type="String" />
+            <Parameter Name="WarehouseTo" Mode="In" Type="String" />
+            <Parameter Name="KeyTo" Mode="In" Type="String" />
+            <Parameter Name="DateImport" Mode="In" Type="DateTime" />
+            <Parameter Name="User" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ActionLog">
+            <Parameter Name="ActionName" Mode="In" Type="String" />
+            <Parameter Name="ControllerName" Mode="In" Type="String" />
+            <Parameter Name="Method" Mode="In" Type="String" />
+            <Parameter Name="Content" Mode="In" Type="String" />
+            <Parameter Name="Detail" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CheckBarcodeScanner" ReturnType="Collection(Boolean)">
+            <Parameter Name="strID" Mode="In" Type="String" />
+            <Parameter Name="Action" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_ExportInventoryVNL_GetChild_Result">
+          <Property Type="Int64" Name="ID" Nullable="true" />
+          <Property Type="String" Name="StatusScan" Nullable="false" MaxLength="2" />
+          <Property Type="Byte" Name="StatusScanID" Nullable="false" />
+          <Property Type="String" Name="WHStatus" Nullable="false" MaxLength="2" />
+          <Property Type="Byte" Name="WHStatusID" Nullable="false" />
+          <Property Type="String" Name="OCNo" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="DNNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="ITEMCODE" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="QtyOrd" Nullable="true" />
+          <Property Type="Double" Name="UPrice" Nullable="true" />
+          <Property Type="Int32" Name="NOB" Nullable="true" />
+          <Property Type="Int32" Name="BoxOrd" Nullable="true" />
+          <Property Type="String" Name="CrtBox" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="QIB" Nullable="true" />
+          <Property Type="String" Name="color" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="size" Nullable="true" MaxLength="2500" />
+          <Property Type="String" Name="Box" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="DeliName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="DeliAcc" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="AdOpt4" Nullable="true" MaxLength="2000" />
+          <Property Type="String" Name="AdOpt5" Nullable="true" MaxLength="2000" />
+          <Property Type="Double" Name="GrWgt" Nullable="true" />
+          <Property Type="Int32" Name="TotalBox" Nullable="true" />
+          <Property Type="DateTime" Name="ScannedDateScan" Nullable="true" Precision="23" />
+          <Property Type="String" Name="LR" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="BarcodeID" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="WHFromID" Nullable="true" />
+          <Property Type="String" Name="WHFromName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WHFromKey" Nullable="true" MaxLength="2" />
+          <Property Type="Int32" Name="WHToID" Nullable="true" />
+          <Property Type="String" Name="WHToName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WHToKey" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="BusinessName" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="BusinessStatusID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ExportInventoryVNL_GetParent_Result">
+          <Property Type="Int64" Name="STT" Nullable="true" />
+          <Property Type="String" Name="OCNo" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="QtyOrd" Nullable="true" />
+          <Property Type="DateTime" Name="DateSearch" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Stauts" Nullable="false" MaxLength="7" />
+          <Property Type="String" Name="Percentage" Nullable="true" MaxLength="51" />
+          <Property Type="Int32" Name="TotalOC" Nullable="true" />
+          <Property Type="Int32" Name="TotalScan" Nullable="true" />
+          <Property Type="Int32" Name="TotalWH" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_ExportInventoryVNT_GetChild_Result">
+          <Property Type="Int64" Name="ID" Nullable="true" />
+          <Property Type="String" Name="StatusScan" Nullable="false" MaxLength="2" />
+          <Property Type="Byte" Name="StatusScanID" Nullable="false" />
+          <Property Type="String" Name="WHStatus" Nullable="false" MaxLength="2" />
+          <Property Type="Byte" Name="WHStatusID" Nullable="false" />
+          <Property Type="String" Name="OCNo" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="DNNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="ITEMCODE" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="QtyOrd" Nullable="true" />
+          <Property Type="Double" Name="UPrice" Nullable="true" />
+          <Property Type="Int32" Name="NOB" Nullable="true" />
+          <Property Type="Int32" Name="BoxOrd" Nullable="true" />
+          <Property Type="String" Name="CrtBox" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="QIB" Nullable="true" />
+          <Property Type="String" Name="color" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="size" Nullable="true" MaxLength="2500" />
+          <Property Type="String" Name="Box" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="DeliName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="DeliAcc" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="AdOpt4" Nullable="true" MaxLength="2000" />
+          <Property Type="String" Name="AdOpt5" Nullable="true" MaxLength="2000" />
+          <Property Type="Double" Name="GrWgt" Nullable="true" />
+          <Property Type="Int32" Name="TotalBox" Nullable="true" />
+          <Property Type="DateTime" Name="ScannedDateScan" Nullable="true" Precision="23" />
+          <Property Type="String" Name="LR" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="BarcodeID" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="WHFromID" Nullable="true" />
+          <Property Type="String" Name="WHFromName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WHFromKey" Nullable="true" MaxLength="2" />
+          <Property Type="Int32" Name="WHToID" Nullable="true" />
+          <Property Type="String" Name="WHToName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WHToKey" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="BusinessName" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="BusinessStatusID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ExportInventoryVNT_GetParent_Result">
+          <Property Type="Int64" Name="STT" Nullable="true" />
+          <Property Type="String" Name="OCNo" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="QtyOrd" Nullable="true" />
+          <Property Type="DateTime" Name="DateSearch" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Stauts" Nullable="false" MaxLength="7" />
+          <Property Type="String" Name="Percentage" Nullable="true" MaxLength="51" />
+          <Property Type="Int32" Name="TotalOC" Nullable="true" />
+          <Property Type="Int32" Name="TotalScan" Nullable="true" />
+          <Property Type="Int32" Name="TotalWH" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_ImportInventoryVNL_GetChild_Result">
+          <Property Type="Int64" Name="ID" Nullable="true" />
+          <Property Type="String" Name="StatusScan" Nullable="false" MaxLength="2" />
+          <Property Type="Byte" Name="StatusScanID" Nullable="false" />
+          <Property Type="String" Name="WHStatus" Nullable="false" MaxLength="2" />
+          <Property Type="Byte" Name="WHStatusID" Nullable="false" />
+          <Property Type="String" Name="OCNo" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="DNNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="ITEMCODE" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="QtyOrd" Nullable="true" />
+          <Property Type="Double" Name="UPrice" Nullable="true" />
+          <Property Type="Int32" Name="NOB" Nullable="true" />
+          <Property Type="Int32" Name="BoxOrd" Nullable="true" />
+          <Property Type="String" Name="CrtBox" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="QIB" Nullable="true" />
+          <Property Type="String" Name="color" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="size" Nullable="true" MaxLength="2500" />
+          <Property Type="String" Name="Box" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="DeliName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="DeliAcc" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="AdOpt4" Nullable="true" MaxLength="2000" />
+          <Property Type="String" Name="AdOpt5" Nullable="true" MaxLength="2000" />
+          <Property Type="Double" Name="GrWgt" Nullable="true" />
+          <Property Type="Int32" Name="TotalBox" Nullable="true" />
+          <Property Type="DateTime" Name="ScannedDateScan" Nullable="true" Precision="23" />
+          <Property Type="String" Name="LR" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="BarcodeID" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="WHFromID" Nullable="true" />
+          <Property Type="String" Name="WHFromName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WHFromKey" Nullable="true" MaxLength="2" />
+          <Property Type="Int32" Name="WHToID" Nullable="true" />
+          <Property Type="String" Name="WHToName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WHToKey" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="BusinessName" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="BusinessStatusID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ImportInventoryVNL_GetParent_Result">
+          <Property Type="Int64" Name="STT" Nullable="true" />
+          <Property Type="String" Name="OCNo" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="QtyOrd" Nullable="true" />
+          <Property Type="DateTime" Name="DateSearch" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Stauts" Nullable="false" MaxLength="7" />
+          <Property Type="String" Name="Percentage" Nullable="true" MaxLength="51" />
+          <Property Type="Int32" Name="TotalOC" Nullable="true" />
+          <Property Type="Int32" Name="TotalScan" Nullable="true" />
+          <Property Type="Int32" Name="TotalWH" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_ImportInventoryVNT_GetChild_Result">
+          <Property Type="Int64" Name="ID" Nullable="true" />
+          <Property Type="String" Name="StatusScan" Nullable="false" MaxLength="2" />
+          <Property Type="Byte" Name="StatusScanID" Nullable="false" />
+          <Property Type="String" Name="WHStatus" Nullable="false" MaxLength="2" />
+          <Property Type="Byte" Name="WHStatusID" Nullable="false" />
+          <Property Type="String" Name="OCNo" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="DNNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="ITEMCODE" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="QtyOrd" Nullable="true" />
+          <Property Type="Double" Name="UPrice" Nullable="true" />
+          <Property Type="Int32" Name="NOB" Nullable="true" />
+          <Property Type="Int32" Name="BoxOrd" Nullable="true" />
+          <Property Type="String" Name="CrtBox" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="QIB" Nullable="true" />
+          <Property Type="String" Name="color" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="size" Nullable="true" MaxLength="2500" />
+          <Property Type="String" Name="Box" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="DeliName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="DeliAcc" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="AdOpt4" Nullable="true" MaxLength="2000" />
+          <Property Type="String" Name="AdOpt5" Nullable="true" MaxLength="2000" />
+          <Property Type="Double" Name="GrWgt" Nullable="true" />
+          <Property Type="Int32" Name="TotalBox" Nullable="true" />
+          <Property Type="DateTime" Name="ScannedDateScan" Nullable="true" Precision="23" />
+          <Property Type="String" Name="LR" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="BarcodeID" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="WHFromID" Nullable="true" />
+          <Property Type="String" Name="WHFromName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WHFromKey" Nullable="true" MaxLength="2" />
+          <Property Type="Int32" Name="WHToID" Nullable="true" />
+          <Property Type="String" Name="WHToName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WHToKey" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="BusinessName" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="BusinessStatusID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ImportInventoryVNT_GetParent_Result">
+          <Property Type="Int64" Name="STT" Nullable="true" />
+          <Property Type="String" Name="OCNo" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="QtyOrd" Nullable="true" />
+          <Property Type="DateTime" Name="DateSearch" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Stauts" Nullable="false" MaxLength="7" />
+          <Property Type="String" Name="Percentage" Nullable="true" MaxLength="51" />
+          <Property Type="Int32" Name="TotalOC" Nullable="true" />
+          <Property Type="Int32" Name="TotalScan" Nullable="true" />
+          <Property Type="Int32" Name="TotalWH" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_KeyPostVNL_Get_Result">
+          <Property Type="Int32" Name="KEYID" Nullable="true" />
+          <Property Type="String" Name="KEYVALUE" Nullable="true" MaxLength="2" />
+          <Property Type="Byte" Name="KEYTYPE" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_KeyPostVNT_Get_Result">
+          <Property Type="Int32" Name="KEYID" Nullable="true" />
+          <Property Type="String" Name="KEYVALUE" Nullable="true" MaxLength="2" />
+          <Property Type="Byte" Name="KEYTYPE" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_TransferInventoryVNL_GetChild_Result">
+          <Property Type="Int64" Name="ID" Nullable="true" />
+          <Property Type="String" Name="StatusScan" Nullable="false" MaxLength="2" />
+          <Property Type="Byte" Name="StatusScanID" Nullable="false" />
+          <Property Type="String" Name="WHStatus" Nullable="false" MaxLength="2" />
+          <Property Type="Byte" Name="WHStatusID" Nullable="false" />
+          <Property Type="String" Name="OCNo" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="DNNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="ITEMCODE" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="QtyOrd" Nullable="true" />
+          <Property Type="Double" Name="UPrice" Nullable="true" />
+          <Property Type="Int32" Name="NOB" Nullable="true" />
+          <Property Type="Int32" Name="BoxOrd" Nullable="true" />
+          <Property Type="String" Name="CrtBox" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="QIB" Nullable="true" />
+          <Property Type="String" Name="color" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="size" Nullable="true" MaxLength="2500" />
+          <Property Type="String" Name="Box" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="DeliName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="DeliAcc" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="AdOpt4" Nullable="true" MaxLength="2000" />
+          <Property Type="String" Name="AdOpt5" Nullable="true" MaxLength="2000" />
+          <Property Type="Double" Name="GrWgt" Nullable="true" />
+          <Property Type="Int32" Name="TotalBox" Nullable="true" />
+          <Property Type="DateTime" Name="ScannedDateScan" Nullable="true" Precision="23" />
+          <Property Type="String" Name="LR" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="BarcodeID" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="WHFromID" Nullable="true" />
+          <Property Type="String" Name="WHFromName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WHFromKey" Nullable="true" MaxLength="2" />
+          <Property Type="Int32" Name="WHToID" Nullable="true" />
+          <Property Type="String" Name="WHToName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WHToKey" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="BusinessName" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="BusinessStatusID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_TransferInventoryVNL_GetParent_Result">
+          <Property Type="Int64" Name="STT" Nullable="true" />
+          <Property Type="String" Name="OCNo" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="QtyOrd" Nullable="true" />
+          <Property Type="DateTime" Name="DateSearch" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Stauts" Nullable="false" MaxLength="7" />
+          <Property Type="String" Name="Percentage" Nullable="true" MaxLength="51" />
+          <Property Type="Int32" Name="TotalOC" Nullable="true" />
+          <Property Type="Int32" Name="TotalScan" Nullable="true" />
+          <Property Type="Int32" Name="TotalWH" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_TransferInventoryVNT_GetChild_Result">
+          <Property Type="Int64" Name="ID" Nullable="true" />
+          <Property Type="String" Name="StatusScan" Nullable="false" MaxLength="2" />
+          <Property Type="Byte" Name="StatusScanID" Nullable="false" />
+          <Property Type="String" Name="WHStatus" Nullable="false" MaxLength="2" />
+          <Property Type="Byte" Name="WHStatusID" Nullable="false" />
+          <Property Type="String" Name="OCNo" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="DNNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="ITEMCODE" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="QtyOrd" Nullable="true" />
+          <Property Type="Double" Name="UPrice" Nullable="true" />
+          <Property Type="Int32" Name="NOB" Nullable="true" />
+          <Property Type="Int32" Name="BoxOrd" Nullable="true" />
+          <Property Type="String" Name="CrtBox" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="QIB" Nullable="true" />
+          <Property Type="String" Name="color" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="size" Nullable="true" MaxLength="2500" />
+          <Property Type="String" Name="Box" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="DeliName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="DeliAcc" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="AdOpt4" Nullable="true" MaxLength="2000" />
+          <Property Type="String" Name="AdOpt5" Nullable="true" MaxLength="2000" />
+          <Property Type="Double" Name="GrWgt" Nullable="true" />
+          <Property Type="Int32" Name="TotalBox" Nullable="true" />
+          <Property Type="DateTime" Name="ScannedDateScan" Nullable="true" Precision="23" />
+          <Property Type="String" Name="LR" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="BarcodeID" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="WHFromID" Nullable="true" />
+          <Property Type="String" Name="WHFromName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WHFromKey" Nullable="true" MaxLength="2" />
+          <Property Type="Int32" Name="WHToID" Nullable="true" />
+          <Property Type="String" Name="WHToName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WHToKey" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="BusinessName" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="BusinessStatusID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_TransferInventoryVNT_GetParent_Result">
+          <Property Type="Int64" Name="STT" Nullable="true" />
+          <Property Type="String" Name="OCNo" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="QtyOrd" Nullable="true" />
+          <Property Type="DateTime" Name="DateSearch" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Stauts" Nullable="false" MaxLength="7" />
+          <Property Type="String" Name="Percentage" Nullable="true" MaxLength="51" />
+          <Property Type="Int32" Name="TotalOC" Nullable="true" />
+          <Property Type="Int32" Name="TotalScan" Nullable="true" />
+          <Property Type="Int32" Name="TotalWH" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BarcodeScannerModelStoreContainer" CdmEntityContainer="BarcodeScannerEntities">
+          <EntitySetMapping Name="PackingBarcodeQR_VNL">
+            <EntityTypeMapping TypeName="BarcodeScannerModel.PackingBarcodeQR_VNL">
+              <MappingFragment StoreEntitySet="PackingBarcodeQR_VNL">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OCNo" ColumnName="OCNo" />
+                <ScalarProperty Name="BarcodeID" ColumnName="BarcodeID" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="ScannedDateScan" ColumnName="ScannedDateScan" />
+                <ScalarProperty Name="StatusScan" ColumnName="StatusScan" />
+                <ScalarProperty Name="StatusWH" ColumnName="StatusWH" />
+                <ScalarProperty Name="UserNameScan" ColumnName="UserNameScan" />
+                <ScalarProperty Name="MachineNumberScan" ColumnName="MachineNumberScan" />
+                <ScalarProperty Name="BusinessStatusID" ColumnName="BusinessStatusID" />
+                <ScalarProperty Name="WHFromID" ColumnName="WHFromID" />
+                <ScalarProperty Name="WHToID" ColumnName="WHToID" />
+                <ScalarProperty Name="WHFromKey" ColumnName="WHFromKey" />
+                <ScalarProperty Name="WHToKey" ColumnName="WHToKey" />
+                <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="UserUpd" ColumnName="UserUpd" />
+                <ScalarProperty Name="DateUpd" ColumnName="DateUpd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PackingBarcodeQR_VNT">
+            <EntityTypeMapping TypeName="BarcodeScannerModel.PackingBarcodeQR_VNT">
+              <MappingFragment StoreEntitySet="PackingBarcodeQR_VNT">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OCNo" ColumnName="OCNo" />
+                <ScalarProperty Name="BarcodeID" ColumnName="BarcodeID" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="ScannedDateScan" ColumnName="ScannedDateScan" />
+                <ScalarProperty Name="StatusScan" ColumnName="StatusScan" />
+                <ScalarProperty Name="StatusWH" ColumnName="StatusWH" />
+                <ScalarProperty Name="UserNameScan" ColumnName="UserNameScan" />
+                <ScalarProperty Name="MachineNumberScan" ColumnName="MachineNumberScan" />
+                <ScalarProperty Name="BusinessStatusID" ColumnName="BusinessStatusID" />
+                <ScalarProperty Name="WHFromID" ColumnName="WHFromID" />
+                <ScalarProperty Name="WHToID" ColumnName="WHToID" />
+                <ScalarProperty Name="WHFromKey" ColumnName="WHFromKey" />
+                <ScalarProperty Name="WHToKey" ColumnName="WHToKey" />
+                <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="UserUpd" ColumnName="UserUpd" />
+                <ScalarProperty Name="DateUpd" ColumnName="DateUpd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vWarehouseVNLs">
+            <EntityTypeMapping TypeName="BarcodeScannerModel.vWarehouseVNL">
+              <MappingFragment StoreEntitySet="vWarehouseVNL">
+                <ScalarProperty Name="WHID" ColumnName="WHID" />
+                <ScalarProperty Name="WHNAME" ColumnName="WHNAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vWarehouseVNTs">
+            <EntityTypeMapping TypeName="BarcodeScannerModel.vWarehouseVNT">
+              <MappingFragment StoreEntitySet="vWarehouseVNT">
+                <ScalarProperty Name="WHID" ColumnName="WHID" />
+                <ScalarProperty Name="WHNAME" ColumnName="WHNAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_ExportInventoryVNL_GetChild" FunctionName="BarcodeScannerModel.Store.sp_ExportInventoryVNL_GetChild">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarcodeScannerModel.sp_ExportInventoryVNL_GetChild_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StatusScan" ColumnName="StatusScan" />
+                <ScalarProperty Name="StatusScanID" ColumnName="StatusScanID" />
+                <ScalarProperty Name="WHStatus" ColumnName="WHStatus" />
+                <ScalarProperty Name="WHStatusID" ColumnName="WHStatusID" />
+                <ScalarProperty Name="OCNo" ColumnName="OCNo" />
+                <ScalarProperty Name="DNNo" ColumnName="DNNo" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ITEMCODE" ColumnName="ITEMCODE" />
+                <ScalarProperty Name="QtyOrd" ColumnName="QtyOrd" />
+                <ScalarProperty Name="UPrice" ColumnName="UPrice" />
+                <ScalarProperty Name="NOB" ColumnName="NOB" />
+                <ScalarProperty Name="BoxOrd" ColumnName="BoxOrd" />
+                <ScalarProperty Name="CrtBox" ColumnName="CrtBox" />
+                <ScalarProperty Name="QIB" ColumnName="QIB" />
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="size" ColumnName="size" />
+                <ScalarProperty Name="Box" ColumnName="Box" />
+                <ScalarProperty Name="DeliName" ColumnName="DeliName" />
+                <ScalarProperty Name="DeliAcc" ColumnName="DeliAcc" />
+                <ScalarProperty Name="AdOpt4" ColumnName="AdOpt4" />
+                <ScalarProperty Name="AdOpt5" ColumnName="AdOpt5" />
+                <ScalarProperty Name="GrWgt" ColumnName="GrWgt" />
+                <ScalarProperty Name="TotalBox" ColumnName="TotalBox" />
+                <ScalarProperty Name="ScannedDateScan" ColumnName="ScannedDateScan" />
+                <ScalarProperty Name="LR" ColumnName="LR" />
+                <ScalarProperty Name="BarcodeID" ColumnName="BarcodeID" />
+                <ScalarProperty Name="WHFromID" ColumnName="WHFromID" />
+                <ScalarProperty Name="WHFromName" ColumnName="WHFromName" />
+                <ScalarProperty Name="WHFromKey" ColumnName="WHFromKey" />
+                <ScalarProperty Name="WHToID" ColumnName="WHToID" />
+                <ScalarProperty Name="WHToName" ColumnName="WHToName" />
+                <ScalarProperty Name="WHToKey" ColumnName="WHToKey" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="BusinessStatusID" ColumnName="BusinessStatusID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ExportInventoryVNL_GetParent" FunctionName="BarcodeScannerModel.Store.sp_ExportInventoryVNL_GetParent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarcodeScannerModel.sp_ExportInventoryVNL_GetParent_Result">
+                <ScalarProperty Name="STT" ColumnName="STT" />
+                <ScalarProperty Name="OCNo" ColumnName="OCNo" />
+                <ScalarProperty Name="QtyOrd" ColumnName="QtyOrd" />
+                <ScalarProperty Name="DateSearch" ColumnName="DateSearch" />
+                <ScalarProperty Name="Stauts" ColumnName="Stauts" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="TotalOC" ColumnName="TotalOC" />
+                <ScalarProperty Name="TotalScan" ColumnName="TotalScan" />
+                <ScalarProperty Name="TotalWH" ColumnName="TotalWH" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ExportInventoryVNL_Ins" FunctionName="BarcodeScannerModel.Store.sp_ExportInventoryVNL_Ins" />
+          <FunctionImportMapping FunctionImportName="sp_ExportInventoryVNT_GetChild" FunctionName="BarcodeScannerModel.Store.sp_ExportInventoryVNT_GetChild">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarcodeScannerModel.sp_ExportInventoryVNT_GetChild_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StatusScan" ColumnName="StatusScan" />
+                <ScalarProperty Name="StatusScanID" ColumnName="StatusScanID" />
+                <ScalarProperty Name="WHStatus" ColumnName="WHStatus" />
+                <ScalarProperty Name="WHStatusID" ColumnName="WHStatusID" />
+                <ScalarProperty Name="OCNo" ColumnName="OCNo" />
+                <ScalarProperty Name="DNNo" ColumnName="DNNo" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ITEMCODE" ColumnName="ITEMCODE" />
+                <ScalarProperty Name="QtyOrd" ColumnName="QtyOrd" />
+                <ScalarProperty Name="UPrice" ColumnName="UPrice" />
+                <ScalarProperty Name="NOB" ColumnName="NOB" />
+                <ScalarProperty Name="BoxOrd" ColumnName="BoxOrd" />
+                <ScalarProperty Name="CrtBox" ColumnName="CrtBox" />
+                <ScalarProperty Name="QIB" ColumnName="QIB" />
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="size" ColumnName="size" />
+                <ScalarProperty Name="Box" ColumnName="Box" />
+                <ScalarProperty Name="DeliName" ColumnName="DeliName" />
+                <ScalarProperty Name="DeliAcc" ColumnName="DeliAcc" />
+                <ScalarProperty Name="AdOpt4" ColumnName="AdOpt4" />
+                <ScalarProperty Name="AdOpt5" ColumnName="AdOpt5" />
+                <ScalarProperty Name="GrWgt" ColumnName="GrWgt" />
+                <ScalarProperty Name="TotalBox" ColumnName="TotalBox" />
+                <ScalarProperty Name="ScannedDateScan" ColumnName="ScannedDateScan" />
+                <ScalarProperty Name="LR" ColumnName="LR" />
+                <ScalarProperty Name="BarcodeID" ColumnName="BarcodeID" />
+                <ScalarProperty Name="WHFromID" ColumnName="WHFromID" />
+                <ScalarProperty Name="WHFromName" ColumnName="WHFromName" />
+                <ScalarProperty Name="WHFromKey" ColumnName="WHFromKey" />
+                <ScalarProperty Name="WHToID" ColumnName="WHToID" />
+                <ScalarProperty Name="WHToName" ColumnName="WHToName" />
+                <ScalarProperty Name="WHToKey" ColumnName="WHToKey" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="BusinessStatusID" ColumnName="BusinessStatusID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ExportInventoryVNT_GetParent" FunctionName="BarcodeScannerModel.Store.sp_ExportInventoryVNT_GetParent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarcodeScannerModel.sp_ExportInventoryVNT_GetParent_Result">
+                <ScalarProperty Name="STT" ColumnName="STT" />
+                <ScalarProperty Name="OCNo" ColumnName="OCNo" />
+                <ScalarProperty Name="QtyOrd" ColumnName="QtyOrd" />
+                <ScalarProperty Name="DateSearch" ColumnName="DateSearch" />
+                <ScalarProperty Name="Stauts" ColumnName="Stauts" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="TotalOC" ColumnName="TotalOC" />
+                <ScalarProperty Name="TotalScan" ColumnName="TotalScan" />
+                <ScalarProperty Name="TotalWH" ColumnName="TotalWH" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ExportInventoryVNT_Ins" FunctionName="BarcodeScannerModel.Store.sp_ExportInventoryVNT_Ins" />
+          <FunctionImportMapping FunctionImportName="sp_ImportInventoryVNL_GetChild" FunctionName="BarcodeScannerModel.Store.sp_ImportInventoryVNL_GetChild">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarcodeScannerModel.sp_ImportInventoryVNL_GetChild_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StatusScan" ColumnName="StatusScan" />
+                <ScalarProperty Name="StatusScanID" ColumnName="StatusScanID" />
+                <ScalarProperty Name="WHStatus" ColumnName="WHStatus" />
+                <ScalarProperty Name="WHStatusID" ColumnName="WHStatusID" />
+                <ScalarProperty Name="OCNo" ColumnName="OCNo" />
+                <ScalarProperty Name="DNNo" ColumnName="DNNo" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ITEMCODE" ColumnName="ITEMCODE" />
+                <ScalarProperty Name="QtyOrd" ColumnName="QtyOrd" />
+                <ScalarProperty Name="UPrice" ColumnName="UPrice" />
+                <ScalarProperty Name="NOB" ColumnName="NOB" />
+                <ScalarProperty Name="BoxOrd" ColumnName="BoxOrd" />
+                <ScalarProperty Name="CrtBox" ColumnName="CrtBox" />
+                <ScalarProperty Name="QIB" ColumnName="QIB" />
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="size" ColumnName="size" />
+                <ScalarProperty Name="Box" ColumnName="Box" />
+                <ScalarProperty Name="DeliName" ColumnName="DeliName" />
+                <ScalarProperty Name="DeliAcc" ColumnName="DeliAcc" />
+                <ScalarProperty Name="AdOpt4" ColumnName="AdOpt4" />
+                <ScalarProperty Name="AdOpt5" ColumnName="AdOpt5" />
+                <ScalarProperty Name="GrWgt" ColumnName="GrWgt" />
+                <ScalarProperty Name="TotalBox" ColumnName="TotalBox" />
+                <ScalarProperty Name="ScannedDateScan" ColumnName="ScannedDateScan" />
+                <ScalarProperty Name="LR" ColumnName="LR" />
+                <ScalarProperty Name="BarcodeID" ColumnName="BarcodeID" />
+                <ScalarProperty Name="WHFromID" ColumnName="WHFromID" />
+                <ScalarProperty Name="WHFromName" ColumnName="WHFromName" />
+                <ScalarProperty Name="WHFromKey" ColumnName="WHFromKey" />
+                <ScalarProperty Name="WHToID" ColumnName="WHToID" />
+                <ScalarProperty Name="WHToName" ColumnName="WHToName" />
+                <ScalarProperty Name="WHToKey" ColumnName="WHToKey" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="BusinessStatusID" ColumnName="BusinessStatusID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ImportInventoryVNL_GetParent" FunctionName="BarcodeScannerModel.Store.sp_ImportInventoryVNL_GetParent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarcodeScannerModel.sp_ImportInventoryVNL_GetParent_Result">
+                <ScalarProperty Name="STT" ColumnName="STT" />
+                <ScalarProperty Name="OCNo" ColumnName="OCNo" />
+                <ScalarProperty Name="QtyOrd" ColumnName="QtyOrd" />
+                <ScalarProperty Name="DateSearch" ColumnName="DateSearch" />
+                <ScalarProperty Name="Stauts" ColumnName="Stauts" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="TotalOC" ColumnName="TotalOC" />
+                <ScalarProperty Name="TotalScan" ColumnName="TotalScan" />
+                <ScalarProperty Name="TotalWH" ColumnName="TotalWH" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ImportInventoryVNL_Ins" FunctionName="BarcodeScannerModel.Store.sp_ImportInventoryVNL_Ins" />
+          <FunctionImportMapping FunctionImportName="sp_ImportInventoryVNT_GetChild" FunctionName="BarcodeScannerModel.Store.sp_ImportInventoryVNT_GetChild">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarcodeScannerModel.sp_ImportInventoryVNT_GetChild_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StatusScan" ColumnName="StatusScan" />
+                <ScalarProperty Name="StatusScanID" ColumnName="StatusScanID" />
+                <ScalarProperty Name="WHStatus" ColumnName="WHStatus" />
+                <ScalarProperty Name="WHStatusID" ColumnName="WHStatusID" />
+                <ScalarProperty Name="OCNo" ColumnName="OCNo" />
+                <ScalarProperty Name="DNNo" ColumnName="DNNo" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ITEMCODE" ColumnName="ITEMCODE" />
+                <ScalarProperty Name="QtyOrd" ColumnName="QtyOrd" />
+                <ScalarProperty Name="UPrice" ColumnName="UPrice" />
+                <ScalarProperty Name="NOB" ColumnName="NOB" />
+                <ScalarProperty Name="BoxOrd" ColumnName="BoxOrd" />
+                <ScalarProperty Name="CrtBox" ColumnName="CrtBox" />
+                <ScalarProperty Name="QIB" ColumnName="QIB" />
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="size" ColumnName="size" />
+                <ScalarProperty Name="Box" ColumnName="Box" />
+                <ScalarProperty Name="DeliName" ColumnName="DeliName" />
+                <ScalarProperty Name="DeliAcc" ColumnName="DeliAcc" />
+                <ScalarProperty Name="AdOpt4" ColumnName="AdOpt4" />
+                <ScalarProperty Name="AdOpt5" ColumnName="AdOpt5" />
+                <ScalarProperty Name="GrWgt" ColumnName="GrWgt" />
+                <ScalarProperty Name="TotalBox" ColumnName="TotalBox" />
+                <ScalarProperty Name="ScannedDateScan" ColumnName="ScannedDateScan" />
+                <ScalarProperty Name="LR" ColumnName="LR" />
+                <ScalarProperty Name="BarcodeID" ColumnName="BarcodeID" />
+                <ScalarProperty Name="WHFromID" ColumnName="WHFromID" />
+                <ScalarProperty Name="WHFromName" ColumnName="WHFromName" />
+                <ScalarProperty Name="WHFromKey" ColumnName="WHFromKey" />
+                <ScalarProperty Name="WHToID" ColumnName="WHToID" />
+                <ScalarProperty Name="WHToName" ColumnName="WHToName" />
+                <ScalarProperty Name="WHToKey" ColumnName="WHToKey" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="BusinessStatusID" ColumnName="BusinessStatusID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ImportInventoryVNT_GetParent" FunctionName="BarcodeScannerModel.Store.sp_ImportInventoryVNT_GetParent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarcodeScannerModel.sp_ImportInventoryVNT_GetParent_Result">
+                <ScalarProperty Name="STT" ColumnName="STT" />
+                <ScalarProperty Name="OCNo" ColumnName="OCNo" />
+                <ScalarProperty Name="QtyOrd" ColumnName="QtyOrd" />
+                <ScalarProperty Name="DateSearch" ColumnName="DateSearch" />
+                <ScalarProperty Name="Stauts" ColumnName="Stauts" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="TotalOC" ColumnName="TotalOC" />
+                <ScalarProperty Name="TotalScan" ColumnName="TotalScan" />
+                <ScalarProperty Name="TotalWH" ColumnName="TotalWH" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ImportInventoryVNT_Ins" FunctionName="BarcodeScannerModel.Store.sp_ImportInventoryVNT_Ins" />
+          <FunctionImportMapping FunctionImportName="sp_KeyPostVNL_Get" FunctionName="BarcodeScannerModel.Store.sp_KeyPostVNL_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarcodeScannerModel.sp_KeyPostVNL_Get_Result">
+                <ScalarProperty Name="KEYID" ColumnName="KEYID" />
+                <ScalarProperty Name="KEYVALUE" ColumnName="KEYVALUE" />
+                <ScalarProperty Name="KEYTYPE" ColumnName="KEYTYPE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_KeyPostVNT_Get" FunctionName="BarcodeScannerModel.Store.sp_KeyPostVNT_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarcodeScannerModel.sp_KeyPostVNT_Get_Result">
+                <ScalarProperty Name="KEYID" ColumnName="KEYID" />
+                <ScalarProperty Name="KEYVALUE" ColumnName="KEYVALUE" />
+                <ScalarProperty Name="KEYTYPE" ColumnName="KEYTYPE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_TransferInventoryVNL_GetChild" FunctionName="BarcodeScannerModel.Store.sp_TransferInventoryVNL_GetChild">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarcodeScannerModel.sp_TransferInventoryVNL_GetChild_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StatusScan" ColumnName="StatusScan" />
+                <ScalarProperty Name="StatusScanID" ColumnName="StatusScanID" />
+                <ScalarProperty Name="WHStatus" ColumnName="WHStatus" />
+                <ScalarProperty Name="WHStatusID" ColumnName="WHStatusID" />
+                <ScalarProperty Name="OCNo" ColumnName="OCNo" />
+                <ScalarProperty Name="DNNo" ColumnName="DNNo" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ITEMCODE" ColumnName="ITEMCODE" />
+                <ScalarProperty Name="QtyOrd" ColumnName="QtyOrd" />
+                <ScalarProperty Name="UPrice" ColumnName="UPrice" />
+                <ScalarProperty Name="NOB" ColumnName="NOB" />
+                <ScalarProperty Name="BoxOrd" ColumnName="BoxOrd" />
+                <ScalarProperty Name="CrtBox" ColumnName="CrtBox" />
+                <ScalarProperty Name="QIB" ColumnName="QIB" />
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="size" ColumnName="size" />
+                <ScalarProperty Name="Box" ColumnName="Box" />
+                <ScalarProperty Name="DeliName" ColumnName="DeliName" />
+                <ScalarProperty Name="DeliAcc" ColumnName="DeliAcc" />
+                <ScalarProperty Name="AdOpt4" ColumnName="AdOpt4" />
+                <ScalarProperty Name="AdOpt5" ColumnName="AdOpt5" />
+                <ScalarProperty Name="GrWgt" ColumnName="GrWgt" />
+                <ScalarProperty Name="TotalBox" ColumnName="TotalBox" />
+                <ScalarProperty Name="ScannedDateScan" ColumnName="ScannedDateScan" />
+                <ScalarProperty Name="LR" ColumnName="LR" />
+                <ScalarProperty Name="BarcodeID" ColumnName="BarcodeID" />
+                <ScalarProperty Name="WHFromID" ColumnName="WHFromID" />
+                <ScalarProperty Name="WHFromName" ColumnName="WHFromName" />
+                <ScalarProperty Name="WHFromKey" ColumnName="WHFromKey" />
+                <ScalarProperty Name="WHToID" ColumnName="WHToID" />
+                <ScalarProperty Name="WHToName" ColumnName="WHToName" />
+                <ScalarProperty Name="WHToKey" ColumnName="WHToKey" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="BusinessStatusID" ColumnName="BusinessStatusID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_TransferInventoryVNL_GetParent" FunctionName="BarcodeScannerModel.Store.sp_TransferInventoryVNL_GetParent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarcodeScannerModel.sp_TransferInventoryVNL_GetParent_Result">
+                <ScalarProperty Name="STT" ColumnName="STT" />
+                <ScalarProperty Name="OCNo" ColumnName="OCNo" />
+                <ScalarProperty Name="QtyOrd" ColumnName="QtyOrd" />
+                <ScalarProperty Name="DateSearch" ColumnName="DateSearch" />
+                <ScalarProperty Name="Stauts" ColumnName="Stauts" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="TotalOC" ColumnName="TotalOC" />
+                <ScalarProperty Name="TotalScan" ColumnName="TotalScan" />
+                <ScalarProperty Name="TotalWH" ColumnName="TotalWH" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_TransferInventoryVNL_Ins" FunctionName="BarcodeScannerModel.Store.sp_TransferInventoryVNL_Ins" />
+          <FunctionImportMapping FunctionImportName="sp_TransferInventoryVNT_GetChild" FunctionName="BarcodeScannerModel.Store.sp_TransferInventoryVNT_GetChild">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarcodeScannerModel.sp_TransferInventoryVNT_GetChild_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StatusScan" ColumnName="StatusScan" />
+                <ScalarProperty Name="StatusScanID" ColumnName="StatusScanID" />
+                <ScalarProperty Name="WHStatus" ColumnName="WHStatus" />
+                <ScalarProperty Name="WHStatusID" ColumnName="WHStatusID" />
+                <ScalarProperty Name="OCNo" ColumnName="OCNo" />
+                <ScalarProperty Name="DNNo" ColumnName="DNNo" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ITEMCODE" ColumnName="ITEMCODE" />
+                <ScalarProperty Name="QtyOrd" ColumnName="QtyOrd" />
+                <ScalarProperty Name="UPrice" ColumnName="UPrice" />
+                <ScalarProperty Name="NOB" ColumnName="NOB" />
+                <ScalarProperty Name="BoxOrd" ColumnName="BoxOrd" />
+                <ScalarProperty Name="CrtBox" ColumnName="CrtBox" />
+                <ScalarProperty Name="QIB" ColumnName="QIB" />
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="size" ColumnName="size" />
+                <ScalarProperty Name="Box" ColumnName="Box" />
+                <ScalarProperty Name="DeliName" ColumnName="DeliName" />
+                <ScalarProperty Name="DeliAcc" ColumnName="DeliAcc" />
+                <ScalarProperty Name="AdOpt4" ColumnName="AdOpt4" />
+                <ScalarProperty Name="AdOpt5" ColumnName="AdOpt5" />
+                <ScalarProperty Name="GrWgt" ColumnName="GrWgt" />
+                <ScalarProperty Name="TotalBox" ColumnName="TotalBox" />
+                <ScalarProperty Name="ScannedDateScan" ColumnName="ScannedDateScan" />
+                <ScalarProperty Name="LR" ColumnName="LR" />
+                <ScalarProperty Name="BarcodeID" ColumnName="BarcodeID" />
+                <ScalarProperty Name="WHFromID" ColumnName="WHFromID" />
+                <ScalarProperty Name="WHFromName" ColumnName="WHFromName" />
+                <ScalarProperty Name="WHFromKey" ColumnName="WHFromKey" />
+                <ScalarProperty Name="WHToID" ColumnName="WHToID" />
+                <ScalarProperty Name="WHToName" ColumnName="WHToName" />
+                <ScalarProperty Name="WHToKey" ColumnName="WHToKey" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="BusinessStatusID" ColumnName="BusinessStatusID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_TransferInventoryVNT_GetParent" FunctionName="BarcodeScannerModel.Store.sp_TransferInventoryVNT_GetParent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarcodeScannerModel.sp_TransferInventoryVNT_GetParent_Result">
+                <ScalarProperty Name="STT" ColumnName="STT" />
+                <ScalarProperty Name="OCNo" ColumnName="OCNo" />
+                <ScalarProperty Name="QtyOrd" ColumnName="QtyOrd" />
+                <ScalarProperty Name="DateSearch" ColumnName="DateSearch" />
+                <ScalarProperty Name="Stauts" ColumnName="Stauts" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="TotalOC" ColumnName="TotalOC" />
+                <ScalarProperty Name="TotalScan" ColumnName="TotalScan" />
+                <ScalarProperty Name="TotalWH" ColumnName="TotalWH" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_TransferInventoryVNT_Ins" FunctionName="BarcodeScannerModel.Store.sp_TransferInventoryVNT_Ins" />
+          <FunctionImportMapping FunctionImportName="sp_ActionLog" FunctionName="BarcodeScannerModel.Store.sp_ActionLog" />
+          <FunctionImportMapping FunctionImportName="sp_CheckBarcodeScanner" FunctionName="BarcodeScannerModel.Store.sp_CheckBarcodeScanner" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

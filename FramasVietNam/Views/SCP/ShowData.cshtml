@@ -1,0 +1,293 @@
+﻿@using FramasVietNam.Common
+@model IEnumerable<FramasVietNam.Models.SCP.show_data_Result>
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            OverView Caculation SCP
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">OverView Caculation SCP</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            @using (Html.BeginForm("ShowData", "SCP", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="col-md-2">
+                                    @Html.DropDownList("dropdownlistYear", new List<SelectListItem>
+                                           {
+                                            new SelectListItem {Text = "2018", Value = "2018"},
+                                            new SelectListItem {Text = "2019", Value = "2019"},
+                                            new SelectListItem {Text = "2020", Value = "2020"},
+                                            new SelectListItem {Text = "2021", Value = "2021"},
+                                            new SelectListItem {Text = "2022", Value = "2022"},
+                                           }, "--- Select year ---", new { style = "width:150px ; margin-left:5px;height:30px" })
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.DropDownList("dropdownlistmonth", new List<SelectListItem>
+                                          {
+                                            new SelectListItem {Text = "All", Value = "0"},
+                                            new SelectListItem {Text = "January", Value = "January"},
+                                            new SelectListItem {Text = "February", Value = "February"},
+                                            new SelectListItem {Text = "March", Value = "March"},
+                                            new SelectListItem {Text = "April", Value = "April"},
+                                            new SelectListItem {Text = "May", Value = "May"},
+                                            new SelectListItem {Text = "June", Value = "June"},
+                                            new SelectListItem {Text = "July", Value = "July"},
+                                            new SelectListItem {Text = "August", Value = "August"},
+
+                                            new SelectListItem {Text = "September", Value = "September"},
+                                            new SelectListItem {Text = "October", Value = "October"},
+                                            new SelectListItem {Text = "November", Value = "November"},
+                                            new SelectListItem {Text = "December", Value = "December"},
+
+                                          }, "--- Select month ---", new { style = "width:150px ; margin-left:5px;height:30px" })
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.DropDownList("dropdownlistvender", new List<SelectListItem>
+                                     {
+                                      new SelectListItem {Text = "All", Value = "0"},
+                                      new SelectListItem {Text = "FRAMAS (NON COM)", Value = "FRAMAS (NON COM)"},
+                                       new SelectListItem {Text = "FRAMAS (COM)", Value = "FRAMAS (COM)"},
+                                     }, "--- Select vendor Name ---", new { style = "width 150px ; margin-left:5px;height:30px;margin-:5px;" })
+                                </div>
+
+                                <div class="col-md-2">
+                                    @*<button type="submit" class="btn btn-primary">Show data</button>*@
+
+                                    <button type="submit" class="btn btn-primary">Show data</button>
+
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    @*<div class="col-md-2">
+                            <Button id="previewBtn" class="btn btn-primary reportBtn" onclick="PrintReport('inline');">Preview Report</Button>
+
+                        </div>*@
+
+
+                    <br />
+                    <br />
+                    <div>
+                        <span class="text-danger"> @ViewBag.err</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div style="overflow-x:auto;">
+                                <table border="1" id="headerTable" style="width:100%">
+                                    <thead>
+                                        <tr bgcolor="#A5A4A3">
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.Year)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.Month)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.Material_Shipped_From_Country)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.Order_Quantity)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.Shipped_Quantity)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.RFT)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.SDP)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.MDP)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.SDPs)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.SCP)
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+                                        @foreach (var item in Model)
+                                        {
+                                            if (item.Material_Shipped_From_Country == "Total")
+                                            {
+                                                <tr bgcolor="#C0C0C0">
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Year)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Month)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Material_Shipped_From_Country)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Order_Quantity)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Shipped_Quantity)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.RFT)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SDP)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.MDP)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SDPs)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SCP)
+                                                    </td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Year)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Month)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Material_Shipped_From_Country)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Order_Quantity)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Shipped_Quantity)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.RFT)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SDP)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.MDP)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SDPs)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SCP)
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                @*<div class="col-md-2">
+                                        <Button id="previewBtn" class="btn btn-primary reportBtn" onclick="PrintReport('inline');">Preview Report</Button>
+
+                                    </div>*@
+                                <div class="col-md-1">
+                                    <Button id="excelBtn" class="btn btn-info reportBtn" onclick="fnExcelReport();">Export to Excel</Button>
+                                    @*<input class="btn btn-info reportBtn" value="Export to Excel" onclick="fnExcelReport();" />*@
+                                    <iframe id="txtArea1" style="display:none"></iframe>
+                                </div>
+
+                                <div class="col-md-1">
+                                    <Button id="pdfBtn" class="btn btn-info reportBtn" onclick="PrintReport('pdf');">Export to PDF</Button>
+                                </div>
+
+                                <div class="col-md-1">
+                                    <Button id="wordBtn" class="btn btn-info reportBtn" onclick="PrintReport('word');">Export to Word</Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @section scripts{
+                        <script>
+                                function fnExcelReport() {
+                                    var tab_text = '<table border="1px" style="font-size:20px" ">';
+                                    var textRange;
+                                    var j = 0;
+                                    var tab = document.getElementById('headerTable'); // id of table
+                                    var lines = tab.rows.length;
+
+                                    // the first headline of the table
+                                    if (lines > 0) {
+                                        tab_text = tab_text + '<tr bgcolor="#DFDFDF">' + tab.rows[0].innerHTML + '</tr>';
+                                    }
+
+                                    // table data lines, loop starting from 1
+                                    for (j = 1; j < lines; j++) {
+                                        tab_text = tab_text + "<tr>" + tab.rows[j].innerHTML + "</tr>";
+                                    }
+
+                                    tab_text = tab_text + "</table>";
+                                    tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");             //remove if u want links in your table
+                                    tab_text = tab_text.replace(/<img[^>]*>/gi, "");                 // remove if u want images in your table
+                                    tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, "");    // reomves input params
+                                    // console.log(tab_text); // aktivate so see the result (press F12 in browser)
+
+                                    var ua = window.navigator.userAgent;
+                                    var msie = ua.indexOf("MSIE ");
+
+                                    // if Internet Explorer
+                                    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+                                        txtArea1.document.open("txt/html", "replace");
+                                        txtArea1.document.write(tab_text);
+                                        txtArea1.document.close();
+                                        txtArea1.focus();
+                                        sa = txtArea1.document.execCommand("SaveAs", true, "DataTableExport.xls");
+                                    }
+                                    else // other browser not tested on IE 11
+                                        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+
+                                    return (sa);
+                                }
+                        </script>
+                    }
+
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+ 

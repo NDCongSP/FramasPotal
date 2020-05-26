@@ -1,0 +1,54 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var objNews = (FramasVietNam.Models.Menu.sp_NewsDetail_Get_Result)ViewBag.objNews;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Home")"></a>
+            @Language.label("News")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("News")</a></li>
+            <li class="active">@Language.label("Detail")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+
+            <!-- .box -->
+            <div class="box box-primary">
+                <!-- .box-header -->
+                <div class="box-header">
+                    <i class="fa fa-newspaper-o"></i>
+                    <h3 class="box-title">@Language.label("Detail")</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- .box-body -->
+                <div class="box-body">
+                    @if (objNews != null)
+                    {
+                        <img src="@Url.Content(objNews.Images)" style="width: 50%; height: auto;">
+                        <h2 class="csc-firstHeader"><a href="#">@objNews.Title</a></h2>
+                        <div class="column">
+                            <div id="c394" class="csc-default">
+                                <p class="bodytext">
+                                    @Html.Raw(HttpUtility.HtmlDecode(objNews.Content))
+                                </p>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+        </div>
+    </section>
+    <!-- /.content -->
+</div>

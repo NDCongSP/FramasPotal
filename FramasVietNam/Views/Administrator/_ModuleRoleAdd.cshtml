@@ -1,0 +1,95 @@
+﻿@using FramasVietNam.Common
+<div class="modal fade" id="UserModuleRole">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">@Language.label("Add")</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    @Language.label("User")<code>(*)</code>
+                    <select class="form-control select2" style="width: 100%;" id="select_UserId" data-placeholder="Select a User">
+                        <option value="">Select a user</option>
+                        @foreach (var item in ViewBag.AllUser)
+                        {
+                            <option value="@item.MaSoNhanVien">@item.MaSoNhanVien _ @item.Ho @item.Ten</option>
+                        }
+                    </select>
+                </div>
+                @if (ViewBag.listRoles != null)
+                {
+                    <div class="form-group">
+                        @Language.label("Roles")<code>(*)</code>
+                        <select class="form-control" id="select_RoleId" style="width: 100%;" data-placeholder="Select a roles">
+                            @foreach (var item in ViewBag.listRoles)
+                            {
+                                <option value="@item.Id">@item.Name </option>
+                            }
+                        </select>
+                    </div>
+                }
+                @if (ViewBag.ListModule != null)
+                {
+                    <div class="form-group">
+                        @Language.label("Module")<code>(*)</code>
+                        <select class="form-control select2" style="width: 100%;" id="select_Group" data-placeholder="Select a group">
+                            <option value="">Select a group</option>
+                            @foreach (var item in ViewBag.ListModule)
+                            {
+                                <option value="@item.ID">@item.Title </option>
+                            }
+                        </select>
+                    </div>
+                }
+                <div class="form-group">
+                    @Language.label("Description")
+                    <textarea class="form-control" id="description"></textarea>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                @Html.ButtonRoles("Save", "Function", "Administrator", @Language.label("Save"), new { @class = "btn btn-success", @onclick = "UserModuleRoleAdd()" })
+                @*@Html.ActionLinkRole("Save", "Function", "Administrator", Language.label("Save"), "UserModuleRole", "Administrator", new { @class = "btn btn-success", onclick = "UserModuleRoleAdd()" })*@
+            </div>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="~/Content/adminlte/dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="~/Content/adminlte/plugins/iCheck/square/blue.css">
+<style type="text/css">
+    .alert {
+        padding: 8px 35px !important;
+        margin-bottom: 0px !important;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    .error {
+        background-color: #fbff00;
+        border-color: #ff0000;
+    }
+</style>
+<!-- Select2 -->
+<style type="text/css">
+    .select2-container--default .select2-selection--single {
+        border: 1px solid #d2d6de;
+        border-radius: 0;
+        padding: 6px 12px;
+        height: 34px;
+    }
+</style>
+<script src="~/Content/adminlte/plugins/iCheck/icheck.min.js"></script>
+<script>
+    $(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' /* optional */
+        });
+        $('.select2').select2();
+    });
+</script>

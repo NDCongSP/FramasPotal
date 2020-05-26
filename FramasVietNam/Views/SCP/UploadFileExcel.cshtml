@@ -1,0 +1,52 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            Upload file excel
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">Upload file excel</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <span class="text-danger"> @ViewBag.err</span>
+
+                    @using (Html.BeginForm("UploadFileExcel", "SCP", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <ul class="todo-list">
+                            <li>
+                                <input class="btn btn-primary btn-sm" type="file" name="file" />
+                            </li>
+                            <li>
+                                <input class="btn btn-primary btn-sm" type="submit" value="OK" />
+                            </li>
+                        </ul>
+                    }
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>

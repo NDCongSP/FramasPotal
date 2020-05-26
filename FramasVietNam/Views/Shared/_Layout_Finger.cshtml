@@ -1,0 +1,29 @@
+﻿
+@using FramasVietNam.Common
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+</head>
+<body style="background-color:#3c8dbc; width:100vw; height:100vh">
+    <div class="container body-content">
+        <div style="height:90vh">
+            <div style="width: 300px;height: 300px;background-color: white;position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;">
+                <div style="background-color:#367fa9; text-align:center;">
+                    <text style="color:white; font-size: 30px;">@Language.label("Login").ToUpper()</text>
+                </div>
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,406 @@
+﻿@using FramasVietNam.Models;
+@using FramasVietNam.Common;
+
+@{
+    var lstDepartment = (List<FramasVietNam.Models.HumanResource.MaBoPhan>)ViewBag.AllDept;
+}
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">@Language.label("Edit")</h4>
+    </div>
+    <div class="modal-body">
+        @if (Model != null)
+        {
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Language.label("Department")<code>(*)</code>
+                    <select class="form-control select2" style="width: 100%;" id="select_DeptId" name="select_DeptId" readonly data-placeholder="Select a department">
+                        <option selected value="@Model.DepartmentId"> @Model.DepartmentName</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Language.label("User")<code>(*)</code>
+                    <select class="form-control select2" style="width: 100%;" id="Userid" name="Userid" readonly data-placeholder="select a user">
+                        <option selected value="@Model.EmployeeId">@Model.EmployeeId _ @Model.EmployeeName</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                @Language.label("Date") <code>(*)</code>
+                <input type='text' name="dtDateAdd" id='dtDateAdd' class="form-control" value="@(Model.DateMark.ToString("dd/MM/yyyy"))" readonly />
+            </div>
+
+            <table class="ComputerAdd">
+                <tr>
+                    <th style="width:27px;">Num</th>
+                    <th style="width:600px;">Description</th>
+                    <th>Mark in first time	</th>
+                    <th>Factor</th>
+                    <th>Note</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>
+                        "Máy tính có sạch sẽ, được bảo quản tốt và dán tem quản lý thiết bị không?
+                        <p style="color: dodgerblue;">Is PC kept clean, in good condition and labled with "PC coding" label?"</p>
+
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" name="Mark1" id="Mark1" value=" @Model.Mark1" />
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option id="Factor1" name="Factor1" value="@Model.Factor1">Extremely good (100%)</option>
+                            <option id="Factor1" name="Factor1" value="@Model.Factor1">very good (75%) -1 </option>
+                            <option id="Factor1" name="Factor1" value="@Model.Factor1 ">somewhat not good (50% ) -2 </option>
+                            <option id="Factor1" name="Factor1" value=" @Model.Factor1">not so good (25% ) -3 </option>
+                            <option id="Factor1" name="Factor1" value="@Model.Factor1"> not at all good -4 </option>
+                        </select>
+                    </td>
+                    <td>
+                        <textarea id="Note1" name="Note1" class="form-control" style="width: 100%; height: 100%; border: 1px solid #ced4da; border-radius: 0.25rem; resize: none;"> @Model.Note1</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>
+                        "Màn hình desktop chỉ chứa các shortcut và chúng được sàng lọc và sắp xếp hợp lý không? (Không lưu file trên màn hình desktop)
+                        <p style="color: dodgerblue;">
+                            Is desktop screen is free of files and folders, just only shortcut stored and shortcuts are sorted and
+                            set in order? (No file saved in desktop)
+                        </p>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="Mark2" name="Mark2" value=" @Model.Mark2" />
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option id="Factor2" name="Factor2" value="@Model.Factor2">Extremely good (100%)</option>
+                            <option id="Factor2" name="Factor2" value="@Model.Factor2">very good (75%) -1 </option>
+                            <option id="Factor2" name="Factor2" value="@Model.Factor2 ">somewhat not good (50% ) -2 </option>
+                            <option id="Factor2" name="Factor2" value=" @Model.Factor2">not so good (25% ) -3 </option>
+                            <option id="Factor2" name="Factor2" value="@Model.Factor2"> not at all good -4 </option>
+                        </select>
+                    </td>
+                    <td>
+                        <textarea id="Note2" name="Note2" class="form-control" style="width: 100%; height: 100%; border: 1px solid #ced4da; border-radius: 0.25rem; resize: none;" value=" @Model.Note2"></textarea>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>
+                        "Có lịch dọn rác máy tính và có xóa bỏ các tập tin, thư mục, email, chương trình,... cũ hoặc không cần thiết theo như lịch không?
+                        Có chống phân mảng máy tính định kì không?
+                        <p style="color: dodgerblue;">
+                            Is there cleaning schedule for your PC? do you delete files, folders, emails and SWs that are no longer needed according to your schedule?
+                            Do you defragment your PC periodically?"
+                        </p>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="Mark3" name="Mark3" value=" @Model.Mark3" />
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option id="Factor3" name="Factor3" value="@Model.Factor3">Extremely good (100%)</option>
+                            <option id="Factor3" name="Factor3" value="@Model.Factor3">very good (75%) -1 </option>
+                            <option id="Factor3" name="Factor3" value="@Model.Factor3 ">somewhat not good (50% ) -2 </option>
+                            <option id="Factor3" name="Factor3" value=" @Model.Factor3">not so good (25% ) -3 </option>
+                            <option id="Factor3" name="Factor3" value="@Model.Factor3"> not at all good -4 </option>
+                        </select>
+                    </td>
+                    <td>
+                        <textarea id="Note3" name="Note3" class="form-control" style="width: 100%; height: 100%; border: 1px solid #ced4da; border-radius: 0.25rem; resize: none;" value=" @Model.Note3"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>
+                        "Có đặt tên tập tin, thư mục theo đúng quy định của công ty không? (những file chỉ tạo 1 lần duy nhất; file nhạc, phim,…;
+                        những thư mục không quan trọng thì không cần đặt tên theo qui định).
+                        <p style="color: dodgerblue;">Are files, folders named follow company's rules? (exception: files that create 1 time or don't need to be distingushed with the others; music, video, and folders are not important)".</p>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="Mark4" name="Mark4" value=" @Model.Mark4" />
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option id="Factor4" name="Factor4" value="@Model.Factor4">Extremely good (100%)</option>
+                            <option id="Factor4" name="Factor4" value="@Model.Factor4">very good (75%) -1 </option>
+                            <option id="Factor4" name="Factor4" value="@Model.Factor4 ">somewhat not good (50% ) -2 </option>
+                            <option id="Factor4" name="Factor4" value=" @Model.Factor4">not so good (25% ) -3 </option>
+                            <option id="Factor4" name="Factor4" value="@Model.Factor4"> not at all good -4 </option>
+                        </select>
+                    </td>
+                    <td>
+                        <textarea id="Note4" name="Note4" class="form-control" style="width: 100%; height: 100%; border: 1px solid #ced4da; border-radius: 0.25rem; resize: none;" value="@Model.Note4"></textarea>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>
+                        "Các tập tin, thư mục có được lưu để dễ tim kiếm trong vòng 30 giây?
+                        <p style="color: dodgerblue;">Are files, folders saved in a way that can be searched in 30sec?"</p>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="Mark5" name="Mark5" value=" @Model.Mark5" />
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option id="Factor5" name="Factor5" value="@Model.Factor5">Extremely good (100%)</option>
+                            <option id="Factor5" name="Factor5" value="@Model.Factor5">very good (75%) -1 </option>
+                            <option id="Factor5" name="Factor5" value="@Model.Factor5 ">somewhat not good (50% ) -2 </option>
+                            <option id="Factor5" name="Factor5" value="@Model.Factor5">not so good (25% ) -3 </option>
+                            <option id="Factor5" name="Factor5" value="@Model.Factor5"> not at all good -4 </option>
+                        </select>
+                    </td>
+                    <td>
+                        <textarea id="Note5" name="Note5" class="form-control" style="width: 100%; height: 100%; border: 1px solid #ced4da; border-radius: 0.25rem; resize: none;" value=" @Model.Note5"></textarea>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>
+                        "Tất cả các tập tin, thư mục và mailbox có được hoàn toàn lưu và theo tác kết nối với server không? (Trừ những file tạm...)
+                        <p style="color: dodgerblue;">Are all files, folders, mailbox fully stored in company server? (excluded temporally files)"</p>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="Mark6" name="Mark6" value=" @Model.Mark6" />
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option id="Factor6" name="Factor6" value="@Model.Factor6">Extremely good (100%)</option>
+                            <option id="Factor6" name="Factor6" value="@Model.Factor6">very good (75%) -1 </option>
+                            <option id="Factor6" name="Factor6" value="@Model.Factor6 ">somewhat not good (50% ) -2 </option>
+                            <option id="Factor6" name="Factor6" value=" @Model.Factor6">not so good (25% ) -3 </option>
+                            <option id="Factor6" name="Factor6" value="@Model.Factor6"> not at all good -4 </option>
+                        </select>
+                    </td>
+                    <td>
+                        <textarea id="Note6" name="Note6" class="form-control" style="width: 100%; height: 100%; border: 1px solid #ced4da; border-radius: 0.25rem; resize: none;" value=" @Model.Note6"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>
+                        "Các tập tin thuộc danh mục tài liệu ISO có được mã hóa theo qui định không?
+                        <p style="color: dodgerblue;">Are ISO files coded follow ISO rules?"</p>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="Mark7" name="Mark7" value=" @Model.Mark7" />
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option id="Factor7" name="Factor7" value="@Model.Factor7">Extremely good (100%)</option>
+                            <option id="Factor7" name="Factor7" value="@Model.Factor7">very good (75%) -1 </option>
+                            <option id="Factor7" name="Factor7" value="@Model.Factor7 ">somewhat not good (50% ) -2 </option>
+                            <option id="Factor7" name="Factor7" value="@Model.Factor7">not so good (25% ) -3 </option>
+                            <option id="Factor7" name="Factor7" value="@Model.Factor7"> not at all good -4 </option>
+                        </select>
+                    </td>
+                    <td>
+                        <textarea id="Note7" name="Note7" class="form-control" style="width: 100%; height: 100%; border: 1px solid #ced4da; border-radius: 0.25rem; resize: none;" value=" @Model.Note7"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>
+                        "Các tập tin được tạo và lưu trong máy có liên quan đến công việc được giao không? (những file này được gọi là file lặp lại và thường được tạo ra hàng ngày, hàng tuần hoặc hàng tháng)
+                        <p style="color: dodgerblue;">Is there job description for each job-related file? (These files are created repeatly daily/weekly or monthly)"</p>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="Mark8" name="Mark8" value=" @Model.Mark8" />
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option id="Factor8" name="Factor8" value="@Model.Factor8">Extremely good (100%)</option>
+                            <option id="Factor8" name="Factor8" value="@Model.Factor8">very good (75%) -1 </option>
+                            <option id="Factor8" name="Factor8" value="@Model.Factor8 ">somewhat not good (50% ) -2 </option>
+                            <option id="Factor8" name="Factor8" value="@Model.Factor8">not so good (25% ) -3 </option>
+                            <option id="Factor8" name="Factor8" value="@Model.Factor8"> not at all good -4 </option>
+                        </select>
+                    </td>
+                    <td>
+                        <textarea id="Note8" name="Note8" class="form-control" style="width: 100%; height: 100%; border: 1px solid #ced4da; border-radius: 0.25rem; resize: none;" value=" @Model.Note8"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>
+                        "Có tài liệu hướng dẫn sử dụng và diễn giải cách thức hoạt động cho các chương trình, tập tin tự xây dựng để phục vụ công việc không?
+                        <p style="color: dodgerblue;">Is there written user's guidelines / SW descriptions for self-programmed SW or files?" NULL</p>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="Mark9" name="Mark9" value=" @Model.Mark9" />
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option id="Factor9" name="Factor9" value="@Model.Factor9">Extremely good (100%)</option>
+                            <option id="Factor9" name="Factor9" value="@Model.Factor9">very good (75%) -1 </option>
+                            <option id="Factor9" name="Factor9" value="@Model.Factor9 ">somewhat not good (50% ) -2 </option>
+                            <option id="Factor9" name="Factor9" value="@Model.Factor9">not so good (25% ) -3 </option>
+                            <option id="Factor9" name="Factor9" value="@Model.Factor9"> not at all good -4 </option>
+                        </select>
+                    </td>
+                    <td>
+                        <textarea id="Note9" name="Note9" class="form-control" style="width: 100%; height: 100%; border: 1px solid #ced4da; border-radius: 0.25rem; resize: none;" value=" @Model.Note9"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>
+                        "Không sử dụng bất kỳ phần mềm, tài liệu, nhạc, phim, ảnh vi phạm bản quyền nào. (Các file nhạc, phim không có bản quyền không được lưu trên public folders)
+                        <p style="color: dodgerblue;">There is no softwares, documents, musics, videos, pictures violated the copyrights in your PC. (not allow no copyright musics, videos in public foldes)"</p>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="Mark10" name="Mark10" value=" @Model.Mark10" />
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option id="Factor10" name="Factor10" value="@Model.Factor10">Extremely good (100%)</option>
+                            <option id="Factor10" name="Factor10" value="@Model.Factor10">very good (75%) -1 </option>
+                            <option id="Factor10" name="Factor10" value="@Model.Factor10 ">somewhat not good (50% ) -2 </option>
+                            <option id="Factor10" name="Factor10" value="@Model.Factor10">not so good (25% ) -3 </option>
+                            <option id="Factor10" name="Factor10" value="@Model.Factor10"> not at all good -4 </option>
+                        </select>
+                    </td>
+                    <td>
+                        <textarea id="Note10" name="Note10" class="form-control" style="width: 100%; height: 100%; border: 1px solid #ced4da; border-radius: 0.25rem; resize: none;" value=" @Model.Note10"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>
+                        "Máy tính có được cài đặt chương trình chống virus và spyware không?
+                        <p style="color: dodgerblue;">Is your PC protected by anti-virus and anti-spyware SW?"</p>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="Mark11" name="Mark11" value=" @Model.Mark11" />
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option id="Factor11" name="Factor11" value="@Model.Factor11">Extremely good (100%)</option>
+                            <option id="Factor11" name="Factor11" value="@Model.Factor11">very good (75%) -1 </option>
+                            <option id="Factor11" name="Factor11" value="@Model.Factor11 ">somewhat not good (50% ) -2 </option>
+                            <option id="Factor11" name="Factor11" value="@Model.Factor11">not so good (25% ) -3 </option>
+                            <option id="Factor11" name="Factor11" value="@Model.Factor11"> not at all good -4 </option>
+                        </select>
+                    </td>
+                    <td>
+                        <textarea id="Note11" name="Note11" class="form-control" style="width: 100%; height: 100%; border: 1px solid #ced4da; border-radius: 0.25rem; resize: none;" value=" @Model.Note11"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>
+                        "Có đặt mục tiêu cải thiện cho lần chấm kế tiếp không và có cải thiện không?
+                        <p style="color: dodgerblue;">Are you actively involved in 5S scan and are you willing to improve by showing your problems and promise to improve?"</p>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="Mark12" name="Mark12" value=" @Model.Mark12" />
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option id="Factor12" name="Factor12" value="@Model.Factor12">Extremely good (100%)</option>
+                            <option id="Factor12" name="Factor12" value="@Model.Factor12">very good (75%) -1 </option>
+                            <option id="Factor12" name="Factor12" value="@Model.Factor12 ">somewhat not good (50% ) -2 </option>
+                            <option id="Factor12" name="Factor12" value="@Model.Factor12">not so good (25% ) -3 </option>
+                            <option id="Factor12" name="Factor12" value="@Model.Factor12"> not at all good -4 </option>
+                        </select>
+                    </td>
+                    <td>
+                        <textarea id="Note12" name="Note12" class="form-control" style="width: 100%; height: 100%; border: 1px solid #ced4da; border-radius: 0.25rem; resize: none;" value=" @Model.Note12"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>
+                        "Cá nhân hoá bộ phần mêm Microsoft Office bằng cách thêm họ tên , phòng bàn và số điện thoại bàn
+                        <p style="color: dodgerblue;">Personalize your copy of Microsoft Office by edit User name with your full name, department and extension phone number"</p>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="Mark13" name="Mark13" value=" @Model.Mark13" />
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option id="Factor13" name="Factor13" value="@Model.Factor13">Extremely good (100%)</option>
+                            <option id="Factor13" name="Factor13" value="@Model.Factor13">very good (75%) -1 </option>
+                            <option id="Factor13" name="Factor13" value="@Model.Factor13 ">somewhat not good (50% ) -2 </option>
+                            <option id="Factor13" name="Factor13" value="@Model.Factor13">not so good (25% ) -3 </option>
+                            <option id="Factor13" name="Factor13" value="@Model.Factor13"> not at all good -4 </option>
+                        </select>
+                    </td>
+                    <td>
+                        <textarea id="Note13" name="Note13" class="form-control" style="width: 100%; height: 100%; border: 1px solid #ced4da; border-radius: 0.25rem; resize: none;" value=" @Model.Note14"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>14</td>
+                    <td>
+                        "Chữ ký trong outlook phai đặt theo quy định công ty
+                        <p style="color: dodgerblue;">Standard signature in Outlook"</p>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="Mark14" name="Mark14" value=" @Model.Mark14" />
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option id="Factor14" name="Factor14" value="@Model.Factor14">Extremely good (100%)</option>
+                            <option id="Factor14" name="Factor14" value="@Model.Factor14">very good (75%) -1 </option>
+                            <option id="Factor14" name="Factor14" value="@Model.Factor14 ">somewhat not good (50% ) -2 </option>
+                            <option id="Factor14" name="Factor14" value="@Model.Factor14">not so good (25% ) -3 </option>
+                            <option id="Factor14" name="Factor14" value="@Model.Factor14"> not at all good -4 </option>
+                        </select>
+                    </td>
+                    <td>
+                        <textarea id="Note14" name="Note14" class="form-control" style="width: 100%; height: 100%; border: 1px solid #ced4da; border-radius: 0.25rem; resize: none;" value=" @Model.Note14"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>15</td>
+                    <td>
+                        "Tổng điểm có thể đạt được
+                        <p style="color: dodgerblue;">Reachable Score"</p>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="TotalScore" name="TotalScore" value="@Model.TotalScore" readonly />
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <b>Resutls in %:</b>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="TotalPercent" name="TotalPercent" value=" @Model.TotalPercent" />
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            </table>
+        }
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        @Html.ButtonRoles("Save", "FSComputer", "FSComputer", @Language.label("Save"), new { @class = "btn btn-success", @onclick = "FSComputerUpdate('" + Model.Id + "')" })
+    </div>
+</div>
+
+
+
+    }
+
+

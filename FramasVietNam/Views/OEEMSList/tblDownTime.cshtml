@@ -1,0 +1,220 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var _lsttblDownTime = (List<FramasVietNam.Models.OEEMS.tblDownTime>)ViewBag.lsttblDownTime;
+    var _lsttblGroupDT = (List<FramasVietNam.Models.OEEMS.tblProcess>)ViewBag.lsttblGroupDT;
+    string _Key = mFunction.ToString(ViewBag._Key);
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            DownTime List
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">DownTime List</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <div style="margin-bottom:10px">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="ion ion-clipboard"></i>
+                    <h3 class="box-title">@Language.label("List")</h3>
+                    <div class="box-tools pull-right">
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="DownTime" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>@Language.label("Code")</th>
+                                <th>@Language.label("Name")</th>
+                                <th>@Language.label("Note")</th>
+                                <th>Process Name</th>
+                                <th>@Language.label("Change")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (_lsttblDownTime != null)
+                            {
+                                int i = 1;
+                                foreach (var item in _lsttblDownTime)
+                                {
+                                    <tr>
+                                        <td class="text"></td>
+                                        <td class="text">@item.DTID</td>
+                                        <td class="text">@item.DTName</td>
+                                        <td class="text">@item.Note</td>
+                                        <td class="text">@item.tblProcess.ProcessName</td>
+                                        <!-- General tools such as edit or delete-->
+                                        <td>
+                                            @Html.ActionLinkRole("Edit", "TblDownTime", "OEEMSList", " ", "TblDownTimeEdit/" + item.DTID, "OEEMSList", new { @class = "fa fa-edit label-primary btn-sm" })
+                                            @Html.ActionLinkRole("Delete", "TblDownTime", "OEEMSList", " ", "TblDownTimeDel/" + item.DTID, "OEEMSList", new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+@*Popup add*@
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color:azure">
+            @using (Html.BeginForm("TblDownTimeSave", "OEEMSList", FormMethod.Post))
+            {
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">@Language.label("Add")</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        @Language.label("Code") <code>(*)</code>
+                        @Html.TextBox("txtDTID", _Key, new { @class = "form-control", @placeholder = Language.label("Code"), @readonly = "true" })
+                    </div>
+                    <div class="form-group">
+                        @Language.label("Name") <code>(*)</code>
+                        @Html.TextBox("txtDTName", null, new { @class = "form-control", @placeholder = "Name" })
+                    </div>
+                    <div class="form-group">
+                        @Language.label("Note") <code>(*)</code>
+                        @Html.TextBox("txtNote", null, new { @class = "form-control", @placeholder = "Note" })
+                    </div>
+                    <div class="form-group">
+                        <span> Process Name</span><code>(*)</code>
+                        <select name="txtGroupID" id="txtGroupID" class="form-control">
+                            @if (_lsttblGroupDT != null)
+                            {
+                                foreach (var item in _lsttblGroupDT)
+                                {
+                                    <option value="@item.ProcessID">@item.ProcessName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    @Html.ButtonRoles("Save", "TblDownTime", "OEEMSList", Language.label("Save"), new { @class = "btn btn-success btn-sm" })
+                </div>
+                <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                @*<ul class="todo-list">
+                    <li style="background-color:azure">
+                        <h2>@Language.label("Add")</h2>
+                        <br />
+                        @Language.label("Code") (*)
+                        @Html.TextBox("txtDTID", _Key, new { @class = "form-control", @placeholder = Language.label("Code"), @readonly = "true" })
+
+                        @Language.label("Name") (*)
+                        @Html.TextBox("txtDTName", null, new { @class = "form-control", @placeholder = "Name" })
+
+                        @Language.label("Note") (*)
+                        @Html.TextBox("txtNote", null, new { @class = "form-control", @placeholder = "Note" })
+
+                        Process Name (*)
+                        <select name="txtGroupID" id="txtGroupID" class="form-control">
+                            @if (_lsttblGroupDT != null)
+                            {
+                                foreach (var item in _lsttblGroupDT)
+                                {
+                                    <option value="@item.ProcessID">@item.ProcessName</option>
+                                }
+                            }
+                        </select>
+                        <br />
+
+                        @Html.ButtonRoles("Save", "TblDownTime", "OEEMSList", Language.label("Save"), new { @class = "btn btn-success btn-sm" })
+                    </li>
+                </ul>*@
+            }
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Setup - add a text input to each footer cell
+            $('#DownTime thead tr').clone(true).appendTo('#DownTime thead');
+            $('#DownTime thead tr:eq(1) th').each(function (i) {
+               if (i > 0) {
+                    var title = $(this).text();
+                    if (title != "Change" && title != "OEE" && title != "Status") {
+                        $(this).html('<input type="text"/>');
+
+                        $('input', this).on('keyup change', function () {
+                            if (table.column(i).search() !== this.value) {
+                                table
+                                    .column(i)
+                                    .search(this.value)
+                                    .draw();
+                            } s
+                        });
+                    }
+                    else {
+                        $(this).html('');
+                    }
+
+                }
+            });
+
+            var table = $('#DownTime').DataTable({
+                "displayLength": 25,
+                orderCellsTop: true,
+                fixedHeader: true,
+                 'paging'      : true,
+               'lengthChange': false,
+               'searching'   : true,
+               'ordering'    : true,
+               'info'        : true,
+               'autoWidth'   : false
+            });
+
+            table.on('order.dt search.dt', function () {
+                table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+        });
+    </script>
+}

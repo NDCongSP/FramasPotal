@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cbc4941008e741d79962946d8514a288" Name="Diagram1">
+        <EntityTypeShape EntityType="OEEMSModel.tblComp" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblCustomer" Width="1.5" PointX="0.625" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblDepartmentProcess" Width="1.5" PointX="8.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblDownTime" Width="1.5" PointX="10.5" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblGroupDT" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblOEEMS_DownTime" Width="1.5" PointX="12.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblOEEMS_Employee" Width="1.5" PointX="12.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblOEEMS_Header" Width="1.875" PointX="5.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblOEEMS_Process" Width="1.5" PointX="10.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblOEEMS_Status" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblProcess" Width="1.5" PointX="6" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblProject" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblProjectComp" Width="1.5" PointX="8.25" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblProjectSize" Width="1.5" PointX="8.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblSize" Width="1.5" PointX="6" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblVersionTablet" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblWorkpiece" Width="1.5" PointX="6" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblWorkpieceProcess" Width="1.5" PointX="8.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblLog" Width="1.5" PointX="2.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblOEEMS_PercentComplete" Width="1.5" PointX="14.5" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OEEMSModel.tblOEEMS_RealTime" Width="1.5" PointX="15" PointY="10.25" IsExpanded="true" />
+        <AssociationConnector Association="OEEMSModel.FK_tblOEEMS_Header_tblComp" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblProjectComp_tblComp" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblProject_tblCustomers" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblDepartmentProcess_tblProcess" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblDownTime_tblProcess" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblOEEMS_DownTime_tblDownTime" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblOEEMS_DownTime_tblOEEMS_Process" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblOEEMS_Employee_tblOEEMS_Process1" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblOEEMS_RealTime_tblOEEMS_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblOEEMS_Header_tblOEEMS_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblOEEMS_Header_tblProject" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblOEEMS_Header_tblSize" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblOEEMS_Process_tblOEEMS_Header" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblOEEMS_Process_tblOEEMS_Status" ManuallyRouted="true" >
+          <ConnectorPoint PointX="4.5" PointY="11.659619513020836" />
+          <ConnectorPoint PointX="4.9125" PointY="11.659619513020836" />
+          <ConnectorPoint PointX="4.9125" PointY="11.326286179687504" />
+          <ConnectorPoint PointX="5.75" PointY="11.326286179687504" />
+          <ConnectorPoint PointX="5.75" PointY="10.59375" />
+          <ConnectorPoint PointX="8" PointY="10.59375" />
+          <ConnectorPoint PointX="8" PointY="9.5" />
+          <ConnectorPoint PointX="10" PointY="9.5" />
+          <ConnectorPoint PointX="10" PointY="10.095602213541666" />
+          <ConnectorPoint PointX="10.166666666666666" PointY="10.095602213541666" />
+          <ConnectorPoint PointX="10.333333333333334" PointY="10.095602213541666" />
+          <ConnectorPoint PointX="10.843748" PointY="10.095602213541666" />
+          <ConnectorPoint PointX="10.843748" PointY="9.8456022135416656" />
+        </AssociationConnector>
+        <AssociationConnector Association="OEEMSModel.FK_tblOEEMS_Process_tblWorkpieceProcess1" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblWorkpieceProcess_tblProcess" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblProjectComp_tblProject" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblProjectSize_tblProject" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblProjectSize_tblSize" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblWorkpieceProcess_tblWorkpiece" ManuallyRouted="false" />
+        <AssociationConnector Association="OEEMSModel.FK_tblOEEMS_PercentComplete_tblOEEMS_Header" />
+        <EntityTypeShape EntityType="OEEMSModel.tblCategory" Width="1.5" PointX="0.625" PointY="6.125" />
+        <AssociationConnector Association="OEEMSModel.FK_tblProject_tblCategory" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

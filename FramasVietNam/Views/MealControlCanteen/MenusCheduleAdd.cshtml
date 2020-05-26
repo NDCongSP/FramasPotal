@@ -1,0 +1,113 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    string date_str = mFunction.ToString(ViewBag.date_str);
+
+    var lstShift = (List<FramasVietNam.Models.Meal.ShiftWork>)ViewBag.lstShift;
+    var lstMeal = (List<FramasVietNam.Models.Meal.MenuMeal>)ViewBag.lstMeal;
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("MenusCheduleEdit", "MealControlCanteen",new { strdate = date_str })"></a>
+            @Language.label("Add")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("MealSchedule")</a></li>
+            <li class="active">@Language.label("Add")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row" style="min-height:906px; margin:2px; ">
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="ion ion-clipboard"></i>
+                    <h3 class="box-title">@date_str</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    @using (Html.BeginForm("MenusCheduleAdd", "MealControlCanteen", FormMethod.Post))
+                    {
+                        <ul class="todo-list">
+                            <li>
+                                @Language.label("Shift")
+                                <br />
+                                @*<input type="hidden" id="dtDate" name="dtDate" value="@date_str" />
+                                    <input id="ShiftID" list="ShiftIDelse" name="ShiftID" style="width:100%">
+                                    <datalist id="ShiftIDelse">
+                                        @if (lstShift != null)
+                                        {
+                                            foreach (var item in lstShift)
+                                            {
+                                                <option value="@item.Name" id="@item.Name"></option>
+                                            }
+                                        }
+                                    </datalist>*@
+                                <input type="hidden" id="dtDate" name="dtDate" value="@date_str" />
+                                <select class="form-control select2" style="width: 100%;" data-placeholder="Select a User" id="ShiftID" name="ShiftID">
+                                    @if (lstShift != null)
+                                    {
+                                        foreach (var item in lstShift)
+                                        {
+                                            <option value="@item.Name" id="@item.Name">@item.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </li>
+                            <li>
+                                @Language.label("Meal")
+                                <br />
+                                @*<input id="MealID" list="MealIDelse" name="MealID" style="width:100%">
+                                    <datalist id="MealIDelse">
+                                        @if (lstShift != null)
+                                        {
+                                            foreach (var item in lstMeal)
+                                            {
+                                                <option value="@item.Name" id="@item.Name"></option>
+                                            }
+                                        }
+                                    </datalist>*@
+                                <select class="form-control select2" style="width: 100%;" data-placeholder="Select a User" id="MealID" name="MealID">
+                                    @if (lstShift != null)
+                                    {
+                                        foreach (var item in lstMeal)
+                                        {
+                                            <option value="@item.Name" id="@item.Name">@item.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </li>
+                            <li>
+                                @Html.ButtonRoles("Save", "MenusChedule", "MealControlCanteen", Language.label("Save"), new { @class = "btn btn-success btn-sm" })
+                            </li>
+                        </ul>
+                    }
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(".select2").select2();
+    </script>
+
+}

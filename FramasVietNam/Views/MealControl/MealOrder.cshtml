@@ -1,0 +1,647 @@
+﻿@using FramasVietNam.Common
+@{
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    //getdata Hanh chinh
+    var ds_MenuItem_HC = (List<FramasVietNam.Models.Meal.sp_MealSchedule_Parent_Result>)ViewBag.ds_MenuItem_HC;
+    var ds_MenuItemsDetails_HC = (List<FramasVietNam.Models.Meal.sp_MealSchedule_Child_Result>)ViewBag.ds_MenuItemsDetails_HC;
+    //getdata Hanh chinh có OT
+    var ds_MenuItem_HC_OT = (List<FramasVietNam.Models.Meal.sp_MealSchedule_Parent_Result>)ViewBag.ds_MenuItem_HC_OT;
+    var ds_MenuItemsDetails_HC_OT = (List<FramasVietNam.Models.Meal.sp_MealSchedule_Child_Result>)ViewBag.ds_MenuItemsDetails_HC_OT;
+    //getdata Ca1
+    var ds_MenuItem_Ca1 = (List<FramasVietNam.Models.Meal.sp_MealSchedule_Parent_Result>)ViewBag.ds_MenuItem_Ca1;
+    var ds_MenuItemsDetails_Ca1 = (List<FramasVietNam.Models.Meal.sp_MealSchedule_Child_Result>)ViewBag.ds_MenuItemsDetails_Ca1;
+    //getdata Ca2
+    var ds_MenuItem_Ca2 = (List<FramasVietNam.Models.Meal.sp_MealSchedule_Parent_Result>)ViewBag.ds_MenuItem_Ca2;
+    var ds_MenuItemsDetails_Ca2 = (List<FramasVietNam.Models.Meal.sp_MealSchedule_Child_Result>)ViewBag.ds_MenuItemsDetails_Ca2;
+    //getdata Ca3
+    var ds_MenuItem_Ca3 = (List<FramasVietNam.Models.Meal.sp_MealSchedule_Parent_Result>)ViewBag.ds_MenuItem_Ca3;
+    var ds_MenuItemsDetails_Ca3 = (List<FramasVietNam.Models.Meal.sp_MealSchedule_Child_Result>)ViewBag.ds_MenuItemsDetails_Ca3;
+
+    //check time limit change
+    var timeHC = (TimeSpan)ViewBag.timeHC;
+    var timeOT = (TimeSpan)ViewBag.timeOT;
+    var time1  = (TimeSpan)ViewBag.time1;
+    var time2  = (TimeSpan)ViewBag.time2;
+    var time3  = (TimeSpan)ViewBag.time3;
+
+    var OfficeHours = (int)ViewBag.OfficeHours;
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            @Language.label("MenuItem")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">@Language.label("MenuItem")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            @using (Html.BeginForm("MealOrder", "MealControl", FormMethod.Post))
+            {
+                //Button save data when commit
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div style="margin-bottom:10px">
+                            <button class="btn btn-primary">@Language.label("Save")</button>
+                            @*@Html.ButtonRoles("Save", "MealOrder", "MealControl", Language.label("Save"), new { @class = "btn btn-primary" })*@
+                        </div>
+                    </div>
+                </div>
+
+                //biến chứa dữ liệu sau khi chọn ca, món ăn
+                <input type="hidden" id="txt_CaHanhChinh" name="txt_CaHanhChinh" value="">
+                <input type="hidden" id="txt_CaHanhChinh_OT" name="txt_CaHanhChinh_OT" value="">
+                <input type="hidden" id="txt_Ca1" name="txt_Ca1" value="">
+                <input type="hidden" id="txt_Ca2" name="txt_Ca2" value="">
+                <input type="hidden" id="txt_Ca3" name="txt_Ca3" value="">
+                <input type="hidden" id="txt_MealCaHanhChinh" name="txt_MealCaHanhChinh" value="">
+                <input type="hidden" id="txt_MealCaHanhChinh_OT" name="txt_MealCaHanhChinh_OT" value="">
+                <input type="hidden" id="txt_MealCa1" name="txt_MealCa1" value="">
+                <input type="hidden" id="txt_MealCa2" name="txt_MealCa2" value="">
+                <input type="hidden" id="txt_MealCa3" name="txt_MealCa3" value="">
+
+                //begin Chọn ca làm việc
+                <div class="box box-primary">
+                    @* title *@
+                    <div class="box-header">
+                        <i class="ion ion-clipboard"></i>
+                        <h3 class="box-title">@Language.label("ChooseShift")</h3>
+                    </div>
+                    @* body *@
+                    <div class="box-body">
+                        @if (OfficeHours == 1)
+                        {
+                            <!-- Left col chọn ca hành chính -->
+                            <section class="col-lg-6 connectedSortable">
+                                <div class="box box-primary" style="height:250px; background-color:aliceblue">
+                                    <div class="box-header">
+                                        <h2 class="box-title">@Language.label("WorkingByOfficeHours")</h2>
+                                    </div>
+                                    <div class="box-body">
+
+                                        @* làm hành chính *@
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" class="radio_HanhChinh" style="width:40px; height:40px" id="radio_HanhChinh" name="groupOfDefaultRadios">
+                                            @*<label class="custom-control-label" style="font-size: 50px" for="defaultGroupExample1">Làm hành chính</label>*@
+                                        </div>
+
+                                        @* làm hành chính và có OT *@
+                                        <div style="margin-left:10px;">
+
+                                            @* check time limit *@
+                                            @if (DateTime.Now.TimeOfDay < timeOT)
+                                            {
+                                                <div>
+                                                    <input type="checkbox" style="width:20px; height:20px" id="chkb_HanhChinh_OT" disabled="disabled">
+                                                    <label class="custom-control-label" for="chkb_HanhChinh_OT">@Language.label("Overtime")</label>
+                                                </div>
+                                            }
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- /.Left col chọn ca hành chính -->
+                        }
+                        else
+                        {
+                            <!-- right col chọn ca 1,2,3 -->
+                            <section class="col-lg-6 connectedSortable">
+                                <div class="box box-primary" style="height:250px; background-color:aliceblue">
+                                    @* title *@
+                                    <div class="box-header">
+                                        <h2 class="box-title">@Language.label("WorkingByShift")</h2>
+                                    </div>
+
+                                    @* body *@
+                                    <div class="box-body">
+
+                                        @* làm hành theo ca *@
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" class="radio_Ca" style="width:40px; height:40px" id="radio_Ca" name="groupOfDefaultRadios">
+                                            @*<label class="custom-control-label" style="font-size: 50px" for="defaultGroupExample2">Làm theo ca</label>*@
+                                        </div>
+
+                                        <div style="margin-left:10px;">
+
+                                            @* làm ca1 *@
+                                            @* check time limit *@
+                                            @if (DateTime.Now.TimeOfDay < time1)
+                                            {
+                                                <div>
+                                                    <input type="checkbox" class="flat-red" style="width:20px; height:20px" id="chkb_Ca1" disabled="disabled">
+                                                    <label class="custom-control-label" for="chkb_Ca1">@Language.label("Shift") 1</label>
+                                                </div>
+                                            }
+                                            @* làm ca2 *@
+                                            @* check time limit *@
+                                            @if (DateTime.Now.TimeOfDay < time2)
+                                            {
+                                                <div>
+                                                    <input type="checkbox" class="flat-red" style="width:20px; height:20px" id="chkb_Ca2" disabled="disabled">
+                                                    <label class="custom-control-label" for="chkb_Ca2">@Language.label("Shift") 2</label>
+                                                </div>
+                                            }
+                                            @* làm ca3 *@
+                                            @* check time limit *@
+                                            @if (DateTime.Now.TimeOfDay < time3)
+                                            {
+                                                <div>
+                                                    <input type="checkbox" class="flat-red" style="width:20px; height:20px" id="chkb_Ca3" disabled="disabled">
+                                                    <label class="custom-control-label" for="chkb_Ca3">@Language.label("Shift") 3</label>
+                                                </div>
+                                            }
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- /.right col chọn ca 1,2,3 -->
+                        }
+                    </div>
+                </div>
+                //end Chọn ca làm việc
+
+
+
+                //begin Chọn xuất ăn
+                <div class="box box-primary">
+                    @* title *@
+                    <div class="box-header">
+                        <i class="ion ion-clipboard"></i>
+                        <h3 class="box-title">@Language.label("ChooseMeal")</h3>
+                    </div>
+
+                    @* body *@
+                    <div class="box-body">
+                        @* Working by office hours *@
+                        @if (OfficeHours == 1)
+                        {
+                            if (DateTime.Now.TimeOfDay < timeHC)
+                            {
+                                <!-- Left col chọn ca hành chính -->
+                                <section id="divHanhChinh" class="col-lg-6 connectedSortable" style="display:none">
+                                    <div class="box box-primary" style="height:auto; background-color:aliceblue">
+                                        <div class="box-header">
+                                            <h2 class="box-title">@Language.label("WorkingByOfficeHours")</h2>
+                                        </div>
+                                        <div class="box-body">
+
+                                            <!-- Profile Image -->
+                                            @if (ds_MenuItem_HC != null)
+                                            {
+                                                foreach (var item in ds_MenuItem_HC)
+                                                {
+                                                    <!-- Profile Image -->
+                                                    <div class="col-lg-3 col-xs-6">
+                                                        <div style="background-color:white; margin-bottom:20px; padding:10px; border-radius:10px">
+                                                            <img class="profile-user-img img-responsive img-circle" src="@Url.Content(@item.Image)" alt="User profile picture">
+                                                            <h3 class="profile-username text-center">@item.Name</h3>
+                                                            @if (ds_MenuItemsDetails_HC != null)
+                                                            {
+                                                                foreach (var itemDetails in ds_MenuItemsDetails_HC)
+                                                                {
+                                                                    if (itemDetails.ID == item.ID)
+                                                                    {
+                                                                        <b>@itemDetails.MaterialName</b> <a class="pull-right">1</a>
+                                                                        <br />
+                                                                    }
+                                                                }
+                                                            }
+                                                            <input type="radio" style="width:40px; height:40px; display: block; margin-left: auto; margin-right: auto;" id="radio_HC_+@item.ID" name="radio_HC" value="@item.ID">
+                                                        </div>
+                                                        <!-- /.box-body -->
+                                                    </div>
+                                                    <!-- /.box -->
+                                                }
+                                            }
+
+                                        </div>
+                                    </div>
+                                </section>
+                            }
+                            <!-- /.Left col chọn ca hành chính -->
+                            if (DateTime.Now.TimeOfDay < timeOT)
+                            {
+                                <!-- Left col chọn ca hành chính OT-->
+                                <section id="divHanhChinh_OT" class="col-lg-6 connectedSortable" style="display:none">
+                                    <div class="box box-primary" style="height:auto; background-color:aliceblue">
+                                        <div class="box-header">
+                                            <h2 class="box-title">@Language.label("Overtime")</h2>
+                                        </div>
+                                        <div class="box-body">
+
+                                            <!-- Profile Image -->
+                                            @if (ds_MenuItem_HC_OT != null)
+                                            {
+                                                foreach (var item in ds_MenuItem_HC_OT)
+                                                {
+                                                    <!-- Profile Image -->
+                                                    <div class="col-lg-3 col-xs-6">
+                                                        <div style="background-color:white; margin-bottom:20px; padding:10px; border-radius:10px">
+                                                            <img class="profile-user-img img-responsive img-circle" src="@Url.Content(@item.Image)" alt="User profile picture">
+                                                            <h3 class="profile-username text-center">@item.Name</h3>
+                                                            @if (ds_MenuItemsDetails_HC_OT != null)
+                                                            {
+                                                                foreach (var itemDetails in ds_MenuItemsDetails_HC_OT)
+                                                                {
+                                                                    if (itemDetails.ID == item.ID)
+                                                                    {
+                                                                        <b>@itemDetails.MaterialName</b> <a class="pull-right">1</a>
+                                                                        <br />
+                                                                    }
+                                                                }
+                                                            }
+                                                            <input type="radio" style="width:40px; height:40px; display: block; margin-left: auto; margin-right: auto;" id="radio_HC_OT_+@item.ID" name="radio_HC_OT" value="@item.ID">
+                                                        </div>
+                                                        <!-- /.box-body -->
+                                                    </div>
+                                                    <!-- /.box -->
+                                                }
+                                            }
+
+                                        </div>
+                                    </div>
+                                </section>
+                            }
+                            <!-- /.Left col chọn ca hành chính OT-->
+                        }
+                        //Working by shift
+                        else
+                        {
+                            if (DateTime.Now.TimeOfDay < time1)
+                            {
+                                <!-- right col chọn ca 1 -->
+                                <section id="divCa1" class="col-lg-6 connectedSortable" style="display:none">
+                                    <div class="box box-primary" style="height:auto; background-color:aliceblue">
+                                        @* title *@
+                                        <div class="box-header">
+                                            <h2 class="box-title">@Language.label("Shift") 1</h2>
+                                        </div>
+
+                                        @* body *@
+                                        <div class="box-body">
+
+
+                                            <!-- Profile Image -->
+                                            @if (ds_MenuItem_Ca1 != null)
+                                            {
+                                                foreach (var item in ds_MenuItem_Ca1)
+                                                {
+                                                    <!-- Profile Image -->
+                                                    <div class="col-lg-3 col-xs-6">
+                                                        <div style="background-color:white; margin-bottom:20px; padding:10px; border-radius:10px">
+                                                            <img class="profile-user-img img-responsive img-circle" src="@Url.Content(@item.Image)" alt="User profile picture">
+                                                            <h3 class="profile-username text-center">@item.Name</h3>
+                                                            @if (ds_MenuItemsDetails_Ca1 != null)
+                                                            {
+                                                                foreach (var itemDetails in ds_MenuItemsDetails_Ca1)
+                                                                {
+                                                                    if (itemDetails.ID == item.ID)
+                                                                    {
+                                                                        <b>@itemDetails.MaterialName</b> <a class="pull-right">1</a>
+                                                                        <br />
+                                                                    }
+                                                                }
+                                                            }
+                                                            <input type="radio" style="width:40px; height:40px; display: block; margin-left: auto; margin-right: auto;" id="radio_Ca1_+@item.ID" name="radio_Ca1" value="@item.ID">
+                                                        </div>
+                                                        <!-- /.box-body -->
+                                                    </div>
+                                                    <!-- /.box -->
+                                                }
+                                            }
+
+                                        </div>
+                                    </div>
+                                </section>
+                            }
+                            <!-- /.right col chọn ca 1 -->
+                            <!-- right col chọn ca 2 -->
+                            if (DateTime.Now.TimeOfDay < time2)
+                            {
+                                <section id="divCa2" class="col-lg-6 connectedSortable" style="display:none">
+                                    <div class="box box-primary" style="height:auto; background-color:aliceblue">
+                                        @* title *@
+                                        <div class="box-header">
+                                            <h2 class="box-title">@Language.label("Shift") 2</h2>
+                                        </div>
+
+                                        @* body *@
+                                        <div class="box-body">
+
+
+                                            <!-- Profile Image -->
+                                            @if (ds_MenuItem_Ca2 != null)
+                                            {
+                                                foreach (var item in ds_MenuItem_Ca2)
+                                                {
+                                                    <!-- Profile Image -->
+                                                    <div class="col-lg-3 col-xs-6">
+                                                        <div style="background-color:white; margin-bottom:20px; padding:10px; border-radius:10px">
+                                                            <img class="profile-user-img img-responsive img-circle" src="@Url.Content(@item.Image)" alt="User profile picture">
+                                                            <h3 class="profile-username text-center">@item.Name</h3>
+                                                            @if (ds_MenuItemsDetails_Ca2 != null)
+                                                            {
+                                                                foreach (var itemDetails in ds_MenuItemsDetails_Ca2)
+                                                                {
+                                                                    if (itemDetails.ID == item.ID)
+                                                                    {
+                                                                        <b>@itemDetails.MaterialName</b> <a class="pull-right">1</a>
+                                                                        <br />
+                                                                    }
+                                                                }
+                                                            }
+                                                            <input type="radio" style="width:40px; height:40px; display: block; margin-left: auto; margin-right: auto;" id="radio_Ca2_+@item.ID" name="radio_Ca2" value="@item.ID">
+                                                        </div>
+                                                        <!-- /.box-body -->
+                                                    </div>
+                                                    <!-- /.box -->
+                                                }
+                                            }
+
+                                        </div>
+                                    </div>
+                                </section>
+                            }
+                            <!-- /.right col chọn ca 2 -->
+                            <!-- right col chọn ca 3 -->
+                            if (DateTime.Now.TimeOfDay < time3)
+                            {
+                                <section id="divCa3" class="col-lg-6 connectedSortable" style="display:none">
+                                    <div class="box box-primary" style="height:auto; background-color:aliceblue">
+                                        @* title *@
+                                        <div class="box-header">
+                                            <h2 class="box-title">@Language.label("Shift") 3</h2>
+                                        </div>
+
+                                        @* body *@
+                                        <div class="box-body">
+
+                                            <!-- Profile Image -->
+                                            @if (ds_MenuItem_Ca3 != null)
+                                            {
+                                                foreach (var item in ds_MenuItem_Ca3)
+                                                {
+                                                    <!-- Profile Image -->
+                                                    <div class="col-lg-3 col-xs-6">
+                                                        <div style="background-color:white; margin-bottom:20px; padding:10px; border-radius:10px">
+                                                            <img class="profile-user-img img-responsive img-circle" src="@Url.Content(@item.Image)" alt="User profile picture">
+                                                            <h3 class="profile-username text-center">@item.Name</h3>
+                                                            @if (ds_MenuItemsDetails_Ca3 != null)
+                                                            {
+                                                                foreach (var itemDetails in ds_MenuItemsDetails_Ca3)
+                                                                {
+                                                                    if (itemDetails.ID == item.ID)
+                                                                    {
+                                                                        <b>@itemDetails.MaterialName</b> <a class="pull-right">1</a>
+                                                                        <br />
+                                                                    }
+                                                                }
+                                                            }
+                                                            <input type="radio" style="width:40px; height:40px; display: block; margin-left: auto; margin-right: auto;" id="radio_Ca3_+@item.ID" name="radio_Ca3" value="@item.ID">
+                                                        </div>
+                                                        <!-- /.box-body -->
+                                                    </div>
+                                                    <!-- /.box -->
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </section>
+                            }
+                            <!-- /.right col chọn ca 3 -->
+                        }
+                    </div>
+                </div>
+                //end Chọn xuất ăn
+
+
+            }
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+
+<!-- script for control in view -->
+<script>
+    //disable or enable checkbox when click radio button
+    $(document).ready(function () {
+
+        //disable or enable checkbox when click radio button (radio_HanhChinh)
+        $("#radio_HanhChinh").click(function () {
+
+            $("#chkb_HanhChinh_OT").prop("disabled", true);
+            $("#chkb_HanhChinh_OT").prop("checked", false);
+            $("#divHanhChinh_OT").hide();
+
+            $("#chkb_Ca1").prop("disabled", true);
+            $("#chkb_Ca2").prop("disabled", true);
+            $("#chkb_Ca3").prop("disabled", true);
+            $("#chkb_Ca1").prop("checked", false);
+            $("#chkb_Ca2").prop("checked", false);
+            $("#chkb_Ca3").prop("checked", false);
+            $("#divCa1").hide();
+            $("#divCa2").hide();
+            $("#divCa3").hide();
+
+            document.getElementById("txt_CaHanhChinh").value = "0";
+            document.getElementById("txt_CaHanhChinh_OT").value = "0";
+            document.getElementById("txt_Ca1").value = "0";
+            document.getElementById("txt_Ca2").value = "0";
+            document.getElementById("txt_Ca3").value = "0";
+
+            if ($(this).hasClass('radio_HanhChinh')) {
+                $("#chkb_HanhChinh_OT").prop("disabled", false);
+                $("#chkb_HanhChinh_OT").prop("checked", false);
+            }
+        });
+
+        //disable or enable checkbox when click radio button (radio_Ca)
+        $("#radio_Ca").click(function () {
+
+            $("#chkb_HanhChinh_OT").prop("disabled", true);
+            $("#chkb_HanhChinh_OT").prop("checked", false);
+            $("#divHanhChinh_OT").hide();
+
+            $("#chkb_Ca1").prop("disabled", true);
+            $("#chkb_Ca2").prop("disabled", true);
+            $("#chkb_Ca3").prop("disabled", true);
+            $("#chkb_Ca1").prop("checked", false);
+            $("#chkb_Ca2").prop("checked", false);
+            $("#chkb_Ca3").prop("checked", false);
+            $("#divCa1").hide();
+            $("#divCa2").hide();
+            $("#divCa3").hide();
+
+            document.getElementById("txt_CaHanhChinh").value = "0";
+            document.getElementById("txt_CaHanhChinh_OT").value = "0";
+            document.getElementById("txt_Ca1").value = "0";
+            document.getElementById("txt_Ca2").value = "0";
+            document.getElementById("txt_Ca3").value = "0";
+
+            if ($(this).hasClass('radio_Ca')) {
+                $("#chkb_Ca1").prop("disabled", false);
+                $("#chkb_Ca2").prop("disabled", false);
+                $("#chkb_Ca3").prop("disabled", false);
+                $("#chkb_Ca1").prop("checked", false);
+                $("#chkb_Ca2").prop("checked", false);
+                $("#chkb_Ca3").prop("checked", false);
+            }
+        });
+
+
+        //Show or hide list menu office hours when click radio button
+        $("#radio_HanhChinh").click(function () {
+            $("#divCa1").hide();
+            $("#divCa2").hide();
+            $("#divCa3").hide();
+            $("#divHanhChinh").show();
+            document.getElementById("txt_CaHanhChinh").value = "1";
+
+        });
+
+        //Show or hide list menu shift when click radio button
+        $("#radio_Ca").click(function () {
+            $("#divHanhChinh").hide();
+            $("#divHanhChinh_OT").hide();
+            document.getElementById("txt_CaHanhChinh").value = "0";
+
+        });
+
+        //Show or hide list menu office hours and OT when click check box
+        $("#chkb_HanhChinh_OT").click(function () {
+            $("#divHanhChinh_OT").hide();
+
+            document.getElementById("txt_CaHanhChinh_OT").value = "0";
+            if ($('#chkb_HanhChinh_OT').is(":checked")) {
+                $("#divHanhChinh_OT").show();
+                document.getElementById("txt_CaHanhChinh_OT").value = "1";
+            }
+        });
+
+        //Show or hide list menu shift 1 when click check box
+        $("#chkb_Ca1").click(function () {
+            $("#divCa1").hide();
+
+            document.getElementById("txt_Ca1").value = "0";
+            if ($('#chkb_Ca1').is(":checked")) {
+                $("#divCa1").show();
+                document.getElementById("txt_Ca1").value = "1";
+            }
+        });
+
+        //Show or hide list menu shift 2 when click check box
+        $("#chkb_Ca2").click(function () {
+            $("#divCa2").hide();
+
+            document.getElementById("txt_Ca2").value = "0";
+            if ($('#chkb_Ca2').is(":checked")) {
+                $("#divCa2").show();
+                document.getElementById("txt_Ca2").value = "1";
+            }
+        });
+
+        //Show or hide list menu shift 3 when click check box
+        $("#chkb_Ca3").click(function () {
+            $("#divCa3").hide();
+
+            document.getElementById("txt_Ca3").value = "0";
+            if ($('#chkb_Ca3').is(":checked")) {
+                $("#divCa3").show();
+                document.getElementById("txt_Ca3").value = "1";
+            }
+        });
+
+        //set meal value when choose meal
+
+        //Ca hanh chinh
+        $('input:radio[name="radio_HC"]').change(function () {
+            //Ca 1
+            var radios = document.getElementsByName('radio_HC');
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (radios[i].checked) {
+                    // do whatever you want with the checked radio
+                    document.getElementById("txt_MealCaHanhChinh").value = radios[i].value;
+                    // only one radio can be logically checked, don't check the rest
+                    break;
+                }
+            }
+        });
+
+        //Ca hanh chinh co OT
+        $('input:radio[name="radio_HC_OT"]').change(function () {
+            //Ca 1
+            var radios = document.getElementsByName('radio_HC_OT');
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (radios[i].checked) {
+                    // do whatever you want with the checked radio
+                    document.getElementById("txt_MealCaHanhChinh_OT").value = radios[i].value;
+                    // only one radio can be logically checked, don't check the rest
+                    break;
+                }
+            }
+        });
+
+        //Ca 1
+        $('input:radio[name="radio_Ca1"]').change(function () {
+            //Ca 1
+            var radios = document.getElementsByName('radio_Ca1');
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (radios[i].checked) {
+                    // do whatever you want with the checked radio
+                    document.getElementById("txt_MealCa1").value = radios[i].value;
+                    // only one radio can be logically checked, don't check the rest
+                    break;
+                }
+            }
+        });
+
+        //Ca 2
+        $('input:radio[name="radio_Ca2"]').change(function () {
+            //Ca 2
+            var radios = document.getElementsByName('radio_Ca2');
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (radios[i].checked) {
+                    // do whatever you want with the checked radio
+                    document.getElementById("txt_MealCa2").value = radios[i].value;
+                    // only one radio can be logically checked, don't check the rest
+                    break;
+                }
+            }
+        });
+
+        //Ca 3
+        $('input:radio[name="radio_Ca3"]').change(function () {
+            //Ca 3
+            var radios = document.getElementsByName('radio_Ca3');
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (radios[i].checked) {
+                    // do whatever you want with the checked radio
+                    document.getElementById("txt_MealCa3").value = radios[i].value;
+                    // only one radio can be logically checked, don't check the rest
+                    break;
+                }
+            }
+        });
+
+    });
+</script>
+
+

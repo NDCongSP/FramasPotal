@@ -1,0 +1,79 @@
+﻿@using FramasVietNam.Common
+
+@if (Model != null)
+{
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">@Language.label("Edit")</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            @Language.label("User")<code>(*)</code>
+            <input type="text" class="form-control" id="userId" value="@Model.UserID" readonly placeholder="@Language.label("PleaseEnterThePartCode")">
+        </div>
+        <div class="form-group">
+            @Language.label("Roles")<code>(*)</code>
+            <select class="form-control " id="select_Roles" data-placeholder="Select a Roles">
+                @foreach (var item in ViewBag.ListRoles)
+                {
+                    <option @(item.Name.Trim() == Model.RoleID.Trim() ? "selected" : "") value="@item.Id">@item.Name </option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            @Language.label("Module")<code>(*)</code>
+            <select class="form-control select2" style="width: 100%;" readonly disabled data-placeholder="Select a Module" id="select_ModuleId">
+                @foreach (var item in ViewBag.ListModule)
+                {
+                    <option @(item.ID == ViewBag.ModuleId ? "selected" : "") value="@item.ID">@item.Title </option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            @Language.label("Description")
+            @if (Model.Description != null)
+            {
+                <textarea class="form-control" id="_description">@Model.Description</textarea>
+            }
+            else
+            {
+                <textarea class="form-control" id="_description"></textarea>
+            }
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        @Html.ButtonRoles("Save", "UserModuleRole", "Administrator", @Language.label("Save"), new { @class = "btn btn-success", @onclick = "UserModuleRolesUpdate()" })
+    </div>
+</div>
+}
+
+<link rel="stylesheet" href="~/Content/adminlte/plugins/iCheck/square/blue.css">
+<style type="text/css">
+    .alert {
+        padding: 8px 35px !important;
+        margin-bottom: 0px !important;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    .error {
+        background-color: #fbff00;
+        border-color: #ff0000;
+    }
+</style>
+<script src="~/Content/adminlte/plugins/iCheck/icheck.min.js"></script>
+<script>
+    $(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' /* optional */
+        });
+        $('.select2').select2();
+    });
+</script>

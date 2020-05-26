@@ -1,0 +1,263 @@
+﻿
+@using FramasVietNam.Common
+@model FramasVietNam.Models.OEEMS.tblOEEMS_PercentCompleteList
+
+@{
+    var _lstOverView = (List<FramasVietNam.Models.OEEMS.tblOEEMS_Header>)ViewBag.lstOverView;
+    var _tblWorkpieceProcess = (List<FramasVietNam.Models.OEEMS.sp_tblWorkpieceProcess_edit_Get_Result>)ViewBag.tblWorkpieceProcess;
+    string _dtdate = mFunction.ToString(ViewBag.dtDateSearch);
+
+}
+
+@*Popup add*@
+<style>
+    .modal-dialog_new {
+        width: 50%;
+        height: 80%;
+        margin: 10px auto;
+    }
+</style>
+<div class="modal-dialog_new" id="EditCPModal">
+
+    @using (Html.BeginForm("OEEMSInputChangeProcessEdit", "OEEMSOverView", FormMethod.Post, new { @id = "frmID" }))
+    {
+        @Html.AntiForgeryToken()
+        <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+        <div style="overflow-x:auto;  background-color:white; padding:20px">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4>Change Process </h4>
+            </div>
+            <div class="modal-body">
+                <input hidden="hidden" name="reservation" id="reservation" value="@ViewBag.dtDateSearch">
+
+                <div class="form-group">
+                    <div class="form-group" style="width: 80%;">
+                        <table class="table table-bordered">
+                            @if (_lstOverView != null)
+                            {
+                                foreach (var item_m in _lstOverView)
+                                {
+                                    <tr>
+                                        <td style="width: 200px;"> @Html.Name("Date")</td>
+                                        <td>
+                                            <div class="input-group date" style="width: 70%;">
+                                                <input hidden="hidden" name="OEEIDCP" id="OEEIDCP" value="@item_m.OEEID">
+                                                @item_m.OEEDate.Value.ToString("MM/dd/yyyy")
+                                            </div>
+                                            <span class="text-danger"> @ViewBag.err</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text">Project Name</td>
+                                        <td>
+                                            @item_m.tblProject.ProjectName
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td class="text">Component</td>
+                                        <td>
+                                            @item_m.tblComp.CompName
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text">Size</td>
+                                        <td>
+                                            @item_m.tblSize.SizeName
+                                        </td>
+                                    </tr>
+                                    @*<tr>
+                                            <td>
+                                                <div class="input-group date" style="width: 100%;">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+                                                    <input hidden="hidden" name="OEEID" id="OEEID" value="@item_m.OEEID">
+                                                    <input style="width: 100%;" type="text" class="form-control pull-right" id="datepicker" name="datepicker" value="">
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <input class="form-control pull-right" name="PercentCom" id="PercentCom">
+                                            </td>
+                                            <td>
+
+                                                <input class="fa fa-plus label-success btn-sm" type="button" id="addrow" />
+
+                                               @Html.ActionLinkRole("Add", " ", "OEEMSInputAddComLoad", "OEEMSOverView", new { @class = "fa fa-plus label-success btn-sm" })
+                                            </td>
+                                        </tr>*@
+                                }
+                            }
+                        </table>
+                    </div>
+
+                    <table id="tableworkpiece" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th width="15"></th>
+                                <th>Workpiece</th>
+                                <th>Process old</th>
+                                <th>Process new</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <select class="form-control select2" style="width: 100%;" name="WorkPieceIDCP" id="WorkPieceIDCP">
+                                        <option value="0"></option>
+                                        @if (_tblWorkpieceProcess != null)
+                                        {
+                                            int _WorkpieceID = 0;
+                                            foreach (var item in _tblWorkpieceProcess)
+                                            {
+                                                if ((item.OEEID != null) && (_WorkpieceID != mFunction.ToInt(@item.WorkpieceID)))
+                                                {
+                                                    <option value="@item.WorkpieceID">@item.WorkpieceName</option>
+                                                    _WorkpieceID = @item.WorkpieceID;
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control select2" style="width: 100%;" name="ProcessIDOld" id="ProcessIDOld">
+                                
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control select2" style="width: 100%;" name="ProcessIDNew" id="ProcessIDNew">
+                                       
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                @*@Html.ButtonRoles("Save", Language.label("Save"), new { @class = "btn btn-success" })*@
+                <button id="btn3" hidden="hidden" name="btn3"></button>
+                <a id='b' href='#' class="btn btn-success" onClick="b_onClickCP()"> Save </a>
+                <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+            </div>
+        </div>
+        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
+    }
+</div>
+<link rel="stylesheet" href="~/Content/adminlte/dist/css/AdminLTE.min.css">
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2()
+
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true,
+        })
+
+        //Timepicker
+        $('.timepicker').timepicker({
+            showInputs: false
+        })
+    })
+</script>
+
+<script type="text/javascript">
+    function b_onClickCP() {
+        debugger
+       
+
+        if ($("#ProcessIDOld").val() == null) {
+            alert('Please choise old process!');
+        }
+        else if ($("#ProcessIDNew").val() == null) {
+            alert('Please choise new process!');
+        }
+        else if ($("#ProcessIDOld").val() == $("#ProcessIDNew").val()) {
+            alert('Please choise new process different old process!');
+        }
+        else {
+            var r = confirm('Do you want to save?');
+            if (r == true) {
+
+                $("#btn3").click();
+            }
+        }
+    }
+</script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#ProcessIDNew").select2({
+            dropdownParent: $("#EditCPModal")
+        });
+        $("#ProcessIDOld").select2({
+            dropdownParent: $("#EditCPModal")
+        });
+        $("#WorkPieceIDCP").select2({
+            dropdownParent: $("#EditCPModal")
+        });
+        //Dropdownlist Selectedchange event
+        $("#WorkPieceIDCP").change(function () {
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("PassdataOEEMSProcess")',
+                dataType: 'json',
+                data: { OEEID: $("#OEEIDCP").val(), WorkpieceID: $("#WorkPieceIDCP").val() },
+                success: function (items) {
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+                    $("#ProcessIDOld").empty();
+                    
+                    $.each(items, function (i, item) {
+                        if (item.OEEID !=null) 
+                            {
+                                $("#ProcessIDOld").append('<option value="'
+                                    + item.ProcessID + '">'
+                                    + item.ProcessName + '</option>');
+                            }
+                                                                     
+                    });
+
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve.' + ex);
+                }
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("PassdataOEEMSProcess")',
+                dataType: 'json',
+                data: { OEEID: $("#OEEIDCP").val(), WorkpieceID: $("#WorkPieceIDCP").val() },
+                success: function (items) {          
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+                    $("#ProcessIDNew").empty();
+                    $.each(items, function (i, item) {
+                        $("#ProcessIDNew").append('<option value="'
+                            + item.ProcessID + '">'
+                            + item.ProcessName + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve .' + ex);
+                }
+            });
+
+
+        })
+    });
+</script>

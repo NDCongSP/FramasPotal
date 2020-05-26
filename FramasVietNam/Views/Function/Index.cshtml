@@ -1,0 +1,51 @@
+﻿@model FramasVietNam.Models.Menu.sp_Function_Get_Result
+@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var ds_Functions = (List<FramasVietNam.Models.Menu.sp_Function_Get_Result>)ViewBag.ds_Functions;
+    var strGroup = ViewBag.strGroup;
+    var strModule = ViewBag.strModule;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Home")"></a>
+            @Language.label("FunctionList")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @strModule</a></li>
+            <li class="active">@strGroup</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="row" style="min-height:906px">
+            <!-- ./col -->
+            @if (ds_Functions != null)
+            {
+                foreach (var item in ds_Functions)
+                {
+                    <a href="@Url.Action(item.Action,item.Controller)">
+                        <div href="@Url.Action(item.Action,item.Controller)" class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="@item.Color">
+                                <div class="inner">
+                                    <h3><strong style="font-size: 20px">@item.Title</strong></h3>
+                                    <p>@item.Description</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="@item.Image"></i>
+                                </div>
+                                <b class="small-box-footer">@Language.label("GoTo") <i class="fa fa-arrow-circle-right"></i></b>
+                            </div>
+                        </div>
+                    </a>
+                }
+            }
+        </div>
+    </section>
+</div>

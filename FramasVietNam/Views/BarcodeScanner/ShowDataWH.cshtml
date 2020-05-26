@@ -1,0 +1,159 @@
+﻿@using FramasVietNam.Common;
+@using FramasVietNam.Models;
+@{
+    ViewBag.Title = "ShowDataWH";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            @Language.label("ShowDataWH")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">@Language.label("ShowDataWH")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#STOCKIN_WS_NEW_VNT86" data-toggle="tab">SHOW DATA WAREHOUSE VNT</a></li>
+                <li class="hide"><a href="#STOCKIN_WS_NEW_VNL86" data-toggle="tab">SHOW DATA WAREHOUSE VNL</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="active tab-pane" id="STOCKIN_WS_NEW_VNT86">
+                    <div class="row" style="min-height:906px; margin:2px">
+                        <div class="box-body">
+                            <div style="overflow-x:auto;">
+                                @using (Html.BeginForm("ShowDataWH", "BarcodeScanner", FormMethod.Post))
+                                {
+                                    <table id="ShowDataWH" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @Language.label("Num")
+                                                </th>
+                                                <th>
+                                                    MESOKEY
+                                                </th>
+                                                <th>
+                                                    C400 Product
+                                                </th>
+                                                <th>
+                                                    C401
+                                                </th>
+                                                <th>
+                                                    C402
+                                                </th>
+                                                <th>
+                                                    C403
+                                                </th>
+                                                <th>
+                                                    C404
+                                                </th>
+                                                <th>
+                                                    C405 Key Post
+                                                </th>
+                                                <th>
+                                                    C406 Description
+                                                </th>
+                                                <th>
+                                                    C409 Machine Name
+                                                </th>
+                                                <th>
+                                                    C412
+                                                </th>
+                                                <th>
+                                                    C417
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model != null)
+                                            {
+                                                int i = 1;
+                                                foreach (var item in Model)
+                                                {
+                                                    <tr>
+                                                        <td class="text">@i</td>
+                                                        <td class="text">@item.MESOKEY</td>
+                                                        <td class="text">@item.C400</td>
+                                                        <td class="text">@item.C401</td>
+                                                        <td class="text">@item.C402</td>
+                                                        <td class="text">@item.C403</td>
+                                                        <td class="text">@mFunction.ToDateTime(item.C404).ToString("MM/dd/yyyy")</td>
+                                                        <td class="text">@item.C405</td>
+                                                        <td class="text">@item.C406</td>
+                                                        <td class="text">@item.C409</td>
+                                                        <td class="text">@item.C412</td>
+                                                        <td class="text">@item.C417</td>
+                                                        <!-- General tools such as edit or delete-->
+                                                    </tr>
+                                                    i++;
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+
+                                <!-- /.to do something-->
+                            </div>
+
+                            <!-- /.to do something-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+    <!-- /.content -->
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#ShowDataWH thead tr').clone(true).appendTo('#ShowDataWH thead');
+        $('#ShowDataWH thead tr:eq(1) th').each(function (i) {
+            if (i > 0) {
+                var title = $(this).text();
+                if (title != "Change" && title != "OEE" && title != "Status") {
+                    $(this).html('<input type="text"/>');
+                    $('input', this).on('keyup change', function () {
+                        if (table.column(i).search() !== this.value) {
+                            table
+                                .column(i)
+                                .search(this.value)
+                                .draw();
+                        }
+                    });
+                }
+                else {
+                    $(this).html('');
+                }
+            }
+        });
+
+        var table = $('#ShowDataWH').DataTable({
+            "displayLength": 25,
+            orderCellsTop: true,
+            fixedHeader: true,
+            'paging': true,
+            'lengthChange': false,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        });
+
+        table.on('order.dt search.dt', function () {
+            table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1;
+            });
+        }).draw();
+    });
+</script>
+

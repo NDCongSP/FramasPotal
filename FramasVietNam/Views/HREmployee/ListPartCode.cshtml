@@ -1,0 +1,223 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index", "Function")"></a>
+            @Language.label("ListPartCode")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">@Language.label("SaturdayOfPlanning")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <div style="margin-bottom:10px">
+                        @Html.ActionLinkRole("Add", "ListPartCode", "HREmployee", Language.label("Add"), new { @class = "btn btn-primary", data_toggle = "modal", data_target = "#modal-add-part-code" })
+                    </div>
+                </div>
+            </div>
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="ion ion-clipboard"></i>
+                    <h3 class="box-title">@Language.label("ListByDepartment")</h3>
+                </div>
+                <div class="box-body">
+                    <table id="tablePartCode" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th style="width:50px;">@Language.label("PartCode")</th>
+                                <th>@Language.label("PartName")</th>
+                                <th>@Language.label("PartCodeEn")</th>
+                                <th>@Language.label("DepartmentCode")</th>
+                                <th>@Language.label("SaturdayOff")</th>
+                                <th>@Language.label("Delete")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="text">@item.MaBoPhan1</td>
+                                        <td class="text">@item.TenBoPhan</td>
+                                        <td class="text">@item.TenBoPhanA</td>
+                                        <td class="text">@item.MaPhongBan</td>
+                                        <td class="text">
+                                            <span class="label label-@(item.Nghi7 == true ? "danger" : "success")">
+                                                @(item.Nghi7 == true ? "Saturday Off" : "No Saturday Off")
+                                            </span>
+                                        </td>
+                                        <td class="text">
+                                            @Html.ActionLinkRole("Delete", "ListPartCode", "HREmployee", " ", "PartCodeDelete", "HREmployee", new { MaBoPhan1 = item.MaBoPhan1, MaPhongBan = item.MaPhongBan }, new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                            @*<a href="#" class="fa fa-trash label-danger btn-sm" onclick="DeleteModuleRoles(@item.UserID)"></a>*@
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- #region Modal Add Part Code -->
+    @Html.Partial("_PartCodeAdd")
+    <!-- #endregion -->
+</div>
+
+@section Styles{
+    <style type="text/css">
+        .alert {
+            padding: 8px 35px !important;
+            margin-bottom: 0px !important;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .error {
+            background-color: #fbff00;
+            border-color: #ff0000;
+        }
+    </style>
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+        //Call js DataTable
+            // Setup - add a text input to each footer cell
+        $('#tablePartCode thead tr').clone(true).appendTo('#tablePartCode thead');
+                $('#tablePartCode thead tr:eq(1) th').each(function (i) {
+                   if (i > 0) {
+                        var title = $(this).text();
+                        if (title != "Change" && title != "Delete" && title != "Status") {
+                            $(this).html('<input type="text"/>');
+
+                            $('input', this).on('keyup change', function () {
+                                if (table.column(i).search() !== this.value) {
+                                    table
+                                        .column(i)
+                                        .search(this.value)
+                                        .draw();
+                                }
+                            });
+                        }
+                        else {
+                            $(this).html('');
+                        }
+                    }
+                });
+
+                var table = $('#tablePartCode').DataTable({
+                    "displayLength": 25,
+                    orderCellsTop: true,
+                    fixedHeader: true,
+                     'paging'      : true,
+                   'lengthChange': false,
+                   'searching'   : true,
+                   'ordering'    : true,
+                   'info'        : true,
+                   'autoWidth'   : false
+                });
+
+                table.on('order.dt search.dt', function () {
+                    table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                    });
+                }).draw();
+            
+        });
+
+        $("#part-code").blur(function () {
+            $('#part-code').removeClass("error");
+        });
+        $("#part-name-vn").blur(function () {
+            $('#part-name-vn').removeClass("error");
+        });
+        $("#part-name-en").blur(function () {
+            $('#part-name-en').removeClass("error");
+        });
+        $("#department-code").blur(function () {
+            $('#department-code').removeClass("error");
+        });
+
+        function SavePartCode() {
+                var maBoPhan1 = $("#part-code").val();
+                var tenBoPhan = $("#part-name-vn").val();
+                var tenBoPhanA = $("#part-name-en").val();
+                var maPhongBan = $("#department-code").val();
+                var isActive = $('#swiftActive').is(':checked');
+
+                if (maBoPhan1 == "") {
+                    $("#part-code").addClass("error");
+                    $("#part-code").focus();
+                }
+                else if (tenBoPhan == "") {
+                    $("#part-name-vn").addClass("error");
+                    $("#part-name-vn").focus();
+                }
+                else if (tenBoPhanA == "") {
+                    $("#part-name-en").addClass("error");
+                    $("#part-name-en").focus();
+                }
+                else if (maPhongBan == "") {
+                    $("#department-code").addClass("error");
+                    $("#department-code").focus();
+                }
+                else {
+                    var model = {
+                        MaBoPhan1: maBoPhan1,
+                        TenBoPhan: tenBoPhan,
+                        TenBoPhanA: tenBoPhanA,
+                        MaPhongBan: maPhongBan,
+                        Nghi7: isActive,
+                    }
+                    $.ajax({
+                        url: "/HREmployee/PartCodeSave",
+                        type: "POST",
+                        content: "application/json; charset=utf-8",
+                        datatype: "json",
+                        data: model,
+                        success: function (d) {
+                            console.log(d);
+                            if (d == 0) {
+                                alert('@Language.label("DuplicatePartCode")');
+                                return false;
+                            }
+                            else if (d == -1) {
+                                alert('@Language.label("OopsSomethingWentWrong")');
+                                return false;
+                            }
+                            else if (d == 1) {
+                                alert('@Language.label("CommandsCompletedSuccessfully")');
+                                $("#modal-add-part-code").modal("hide");
+                                location.reload();
+                            }
+                            else {
+                                alert('@Language.label("ErrorSave")');
+                                return false;
+                            }
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            alert('@Language.label("OopsSomethingWentWrong")');
+                            location.reload();
+                            return false;
+                        }
+                    });
+                }
+            }
+    </script>
+}
+
+
+

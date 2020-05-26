@@ -1,0 +1,103 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var lstBooking = (List<FramasVietNam.Models.Menu.sp_BookingGet_Result>)ViewBag.lstBooking;
+    string userID = ViewBag.userID;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            @Language.label("Booking")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">@Language.label("Booking")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <div style="margin-bottom:10px">
+                        <a class="btn btn-primary" href="@Url.Action("BookingAdd","Booking")">@Language.label("Add")</a>
+                        @*@Html.ActionLinkRole("Add", Language.label("Add"), "BookingAdd", "Booking", new { @class = "btn btn-primary" })*@
+                    </div>
+                </div>
+            </div>
+
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="ion ion-clipboard"></i>
+                    <h3 class="box-title">@Language.label("ToDoList")</h3>
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <div style="overflow-x:auto;">
+                        @using (Html.BeginForm("Booking", "Booking", FormMethod.Post))
+                        {
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>@Language.label("Num")</th>
+                                        <th>@Language.label("User")</th>
+                                        <th>@Language.label("Subject")</th>
+                                        <th>@Language.label("Content")</th>
+                                        <th>@Language.label("StartDate")</th>
+                                        <th>@Language.label("EndDate")</th>
+                                        <th>@Language.label("Change")</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (lstBooking != null)
+                                    {
+                                        int i = 1;
+                                        foreach (var item in lstBooking)
+                                        {
+                                            <tr>
+                                                <td class="text">@i</td>
+                                                <td class="text">@item.Name</td>
+                                                <td class="text">@item.Subject</td>
+                                                <td class="text">@item.Content</td>
+                                                <td class="text">@item.StartDate.ToString("MM/dd/yyyy HH:mm")</td>
+                                                <td class="text">@item.EndDate.ToString("MM/dd/yyyy HH:mm")</td>
+
+                                                <!-- General tools such as edit or delete-->
+                                                <td>
+                                                    @if (item.StartDate > DateTime.Now)
+                                                    {
+                                                        if (mFunction.ToInt(userID) == mFunction.ToInt(item.UserName))
+                                                        {
+                                                            <a class="fa fa-edit label-primary btn-sm" href="@Url.Action("BookingEdit/"+ item.ID,"Booking")"> </a>
+                                                            <a class="fa fa-trash label-danger btn-sm" href="@Url.Action("BookingDel/"+ item.ID,"Booking")" onclick="return confirm('Are you sure?')"> </a>
+                                                            @*@Html.ActionLinkRole("Edit", " ", "BookingEdit/" + item.ID, "Booking", new { @class = "fa fa-edit label-primary btn-sm" })*@
+                                                            @*@Html.ActionLinkRole("Delete", " ", "BookingDel/" + item.ID, "Booking", new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })*@
+                                                        }
+                                                    }
+                                                </td>
+                                            </tr>
+                                            i++;
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        }
+
+                        <!-- /.to do something-->
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>

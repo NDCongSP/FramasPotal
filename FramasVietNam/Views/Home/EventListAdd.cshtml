@@ -1,0 +1,102 @@
+﻿@using FramasVietNam.Common
+@{
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    DateTime DateNow = (DateTime)ViewBag.DateNow;
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("EventList","Home")"></a>
+            @Language.label("Add")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("EventList")</a></li>
+            <li class="active">@Language.label("Add")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            @using (Html.BeginForm("EventListAdd", "Home", FormMethod.Post))
+            {
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div style="margin-bottom:10px">
+                            @Html.ButtonRoles("Save", "EventList", "Home", Language.label("Save"), new { @class = "btn btn-primary" })
+                        </div>
+                    </div>
+                </div>
+                //Data Parent
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="ion ion-clipboard"></i>
+                        <h3 class="box-title"></h3>
+                    </div>
+                    <div class="box-body">
+                        <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                        <div class="form-group">
+                            <label>@Language.label("EventDay"): <code>(*)</code></label>
+                            <input name="EventDay" type='text' class="form-control" id='EventDay' placeholder="@Language.label("EventDay")" value="@DateNow" />
+                        </div>
+                        <div class="form-group">
+                            <label> @Language.label("Title") 1 EG: <code>(*)</code></label>
+                            @Html.TextBox("Title1_EG", null, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>@Language.label("Title") 1 GR: <code>(*)</code></label>
+                            @Html.TextBox("Title1_GR", null, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label> @Language.label("Title") 1 VN: <code>(*)</code></label>
+                            @Html.TextBox("Title1_VN", null, new { @class = "form-control" })
+                        </div>
+                        <div>
+                            <label>@Language.label("Title") 2 EG: <code>(*)</code></label>
+                            @Html.TextBox("Title2_EG", null, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label> @Language.label("Title") 2 GR: <code>(*)</code></label>
+                            @Html.TextBox("Title2_GR", null, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>@Language.label("Title") 2 VN: <code>(*)</code></label>
+                            @Html.TextBox("Title2_VN", null, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>@Language.label("Title") 3 EG: <code>(*)</code></label>
+                            @Html.TextBox("Title3_EG", null, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label> @Language.label("Title") 3 GR: <code>(*)</code></label>
+                            @Html.TextBox("Title3_GR", null, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>@Language.label("Title") 3 VN: <code>(*)</code></label>
+                            @Html.TextBox("Title3_VN", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#EventDay').datetimepicker({
+            format: 'MM/DD/YYYY HH:mm a',
+        });
+    });
+</script>

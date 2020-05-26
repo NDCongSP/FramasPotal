@@ -1,0 +1,478 @@
+﻿@using FramasVietNam.Common
+@model IEnumerable<FramasVietNam.Models.SCP.show_data_category_Result>
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            OverView Caculation Category
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">OverView Caculation Category</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div>
+                        <span class="text-danger"> @ViewBag.err</span>
+                    </div>
+
+                    <div class="form-group">
+                        @using (Html.BeginForm("ShowDataCategory", "SCP", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="col-md-2">
+                                @Html.DropDownList("dropdownlistYear", new List<SelectListItem>
+                                       {
+                                        new SelectListItem {Text = "2018", Value = "2018"},
+                                        new SelectListItem {Text = "2019", Value = "2019"},
+                                        new SelectListItem {Text = "2020", Value = "2020"},
+                                        new SelectListItem {Text = "2021", Value = "2021"},
+                                        new SelectListItem {Text = "2022", Value = "2022"},
+                                       }, "--- Select year ---", new { @class = "form-control"})
+                            </div>
+                            <div class="col-md-2">
+                                @Html.DropDownList("dropdownlistmonth", new List<SelectListItem>
+                                      {
+                                        new SelectListItem {Text = "All", Value = "0"},
+                                        new SelectListItem {Text = "January", Value = "01"},
+                                        new SelectListItem {Text = "February", Value = "02"},
+                                        new SelectListItem {Text = "March", Value = "03"},
+                                        new SelectListItem {Text = "April", Value = "04"},
+                                        new SelectListItem {Text = "May", Value = "05"},
+                                        new SelectListItem {Text = "June", Value = "06"},
+                                        new SelectListItem {Text = "July", Value = "07"},
+                                        new SelectListItem {Text = "August", Value = "08"},
+
+                                        new SelectListItem {Text = "September", Value = "09"},
+                                        new SelectListItem {Text = "October", Value = "10"},
+                                        new SelectListItem {Text = "November", Value = "11"},
+                                        new SelectListItem {Text = "December", Value = "12"},
+
+                                      }, "--- Select month ---", new { @class = "form-control"})
+                            </div>
+
+                            <div class="col-md-4">
+                                @*<button type="submit" class="btn btn-primary">Show data</button>*@
+
+
+                                &nbsp; &nbsp;<button type="submit" class="btn btn-primary">Show data</button>
+
+
+                            </div>
+                        }
+
+                    </div>
+
+                    @*<div class="col-md-2">
+                            <Button id="previewBtn" class="btn btn-primary reportBtn" onclick="PrintReport('inline');">Preview Report</Button>
+
+                        </div>*@
+                    <br />
+                    <br />
+
+                    <div class="container">
+                        <div class="row">
+                            <div style="overflow-x:auto;">
+                                <table border="1" id="headerTable" style="width:100%">
+                                    <thead>
+                                        <tr bgcolor="#A5A4A3">
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.Year)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.MONTH)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.CATOGERY)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.Material_Shipped_From_Country)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.Order_Quantity)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.Shipped_Quantity)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.Reject_Quantity)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.RFT)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.SDP)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.MDP)
+                                            </th>
+                                            <th align="center">
+                                                @Html.Label("0<PML<=7")
+                                            </th>
+                                            <th align="center">
+                                                @Html.Label("7<PML<=14")
+                                            </th>
+                                            <th align="center">
+                                                @Html.Label("14<PML<=23")
+                                            </th>
+                                            <th align="center">
+                                                @Html.Label("23<PML<=30")
+                                            </th>
+                                            <th align="center">
+                                                @Html.Label("30<PML<=45")
+                                            </th>
+                                            <th align="center">
+                                                @Html.Label("45<PML")
+                                            </th>
+                                            <th align="center">
+                                                @Html.Label("% PML<=7")
+                                            </th>
+                                            <th align="center">
+                                                @Html.Label("% PML<=14")
+                                            </th>
+                                            <th align="center">
+                                                @Html.Label("% PML<=23")
+                                            </th>
+                                            <th align="center">
+                                                @Html.Label("% PML<=30")
+                                            </th>
+                                            <th align="center">
+                                                @Html.Label("% PML<=45")
+                                            </th>
+                                            <th align="center">
+                                                @Html.Label("% PML>45")
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.SCP)
+                                            </th>
+                                    </thead>
+                                    <tbody id="tbody">
+                                        @foreach (var item in Model)
+                                        {
+                                            if (item.MONTH == "Total" & item.Material_Shipped_From_Country == "Total")
+                                            {
+                                                <tr bgcolor="#A5A4A3">
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Year)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.MONTH)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.CATOGERY)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Material_Shipped_From_Country)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Order_Quantity)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Shipped_Quantity)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Reject_Quantity)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.RFT)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SDP)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.MDP)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C0_PML__7)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C7_PML__14)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C14_PML__23)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C23_PML__30)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C30_PML__45)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C45_PML)
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML__7)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML__14)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML__23)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML__30)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML__45)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML_45)
+                                                    </td>
+
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SCP)
+                                                    </td>
+                                                </tr>
+                                            }
+                                            else if (item.MONTH == "Total" || item.CATOGERY == "Total" || item.Material_Shipped_From_Country == "Total")
+                                            {
+                                                <tr bgcolor="#D7D7D7">
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Year)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.MONTH)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.CATOGERY)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Material_Shipped_From_Country)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Order_Quantity)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Shipped_Quantity)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Reject_Quantity)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.RFT)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SDP)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.MDP)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C0_PML__7)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C7_PML__14)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C14_PML__23)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C23_PML__30)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C30_PML__45)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C45_PML)
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML__7)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML__14)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML__23)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML__30)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML__45)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML_45)
+                                                    </td>
+
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SCP)
+                                                    </td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Year)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.MONTH)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.CATOGERY)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Material_Shipped_From_Country)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Order_Quantity)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Shipped_Quantity)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Reject_Quantity)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.RFT)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SDP)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.MDP)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C0_PML__7)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C7_PML__14)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C14_PML__23)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C23_PML__30)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C30_PML__45)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C45_PML)
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML__7)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML__14)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML__23)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML__30)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML__45)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.C__PML_45)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SCP)
+                                                    </td>
+                                                </tr>
+
+                                            }
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                @*<div class="col-md-2">
+                                        <Button id="previewBtn" class="btn btn-primary reportBtn" onclick="PrintReport('inline');">Preview Report</Button>
+                                    </div>*@
+                                <div class="col-md-1">
+                                    <Button id="excelBtn" class="btn btn-info reportBtn" onclick="fnExcelReport();">Export to Excel</Button>
+                                    @*<input class="btn btn-info reportBtn" value="Export to Excel" onclick="fnExcelReport();" />*@
+                                    <iframe id="txtArea1" style="display:none"></iframe>
+                                </div>
+
+                                <div class="col-md-1">
+                                    <Button id="pdfBtn" class="btn btn-info reportBtn" onclick="PrintReport('pdf');">Export to PDF</Button>
+                                </div>
+                                <div class="col-md-1">
+                                    <Button id="wordBtn" class="btn btn-info reportBtn" onclick="PrintReport('word');">Export to Word</Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @section scripts{
+                        <script>
+                            function fnExcelReport() {
+                                var tab_text = '<table border="1px" style="font-size:20px" ">';
+                                var textRange;
+                                var j = 0;
+                                var tab = document.getElementById('headerTable'); // id of table
+                                var lines = tab.rows.length;
+
+                                // the first headline of the table
+                                if (lines > 0) {
+                                    tab_text = tab_text + '<tr bgcolor="#DFDFDF">' + tab.rows[0].innerHTML + '</tr>';
+                                }
+
+                                // table data lines, loop starting from 1
+                                for (j = 1; j < lines; j++) {
+                                    tab_text = tab_text + "<tr>" + tab.rows[j].innerHTML + "</tr>";
+                                }
+
+                                tab_text = tab_text + "</table>";
+                                tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");             //remove if u want links in your table
+                                tab_text = tab_text.replace(/<img[^>]*>/gi, "");                 // remove if u want images in your table
+                                tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, "");    // reomves input params
+                                // console.log(tab_text); // aktivate so see the result (press F12 in browser)
+
+                                var ua = window.navigator.userAgent;
+                                var msie = ua.indexOf("MSIE ");
+
+                                // if Internet Explorer
+                                if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+                                    txtArea1.document.open("txt/html", "replace");
+                                    txtArea1.document.write(tab_text);
+                                    txtArea1.document.close();
+                                    txtArea1.focus();
+                                    sa = txtArea1.document.execCommand("SaveAs", true, "DataTableExport.xls");
+                                }
+                                else // other browser not tested on IE 11
+                                    sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+                                return (sa);
+                            }
+                        </script>
+                    }
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>

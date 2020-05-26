@@ -1,0 +1,72 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Finger.cshtml";
+    ViewBag.Title = "Index";
+}
+<br />
+<div style="text-align:center">M1</div>
+<div class="notification-icon" style="margin-top:10px; align-items:center;text-align:center">
+    <span class="glyphicon glyphicon-user " style="font-size:25px"></span>
+    <span class="badge" id="ntCnt"></span>
+</div>
+<div id="divNotificaion">
+</div>
+
+@section scripts{
+    @Scripts.Render("~/Scripts/jquery.signalR-2.2.2.min.js")
+    <script src="~/signalr/Hubs/"></script>
+}
+
+<script>
+    $(document).ready(function () {
+        debugger
+        // Proxy created on the fly
+        var hub = $.connection.myHub;
+
+
+        // Declare a function on the hub hub so the server can invoke it
+        hub.client.displayStatus = function () {
+            debugger
+            getData();
+        };
+
+        // Start the connection
+        $.connection.hub.start();
+        getData();
+
+        function getData() {
+            var divNotificaion = $('#divNotificaion');
+            $.ajax({
+                url: '/LoginFinger/GetNotificationLoginM1',
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+                    debugger
+                    data = $.parseJSON(data);
+                    if (data.length > 0) {
+                        divNotificaion.empty();
+                        //// set Count
+                        $('#ntCnt').text(data.length);
+                        $('#txt').val(data.length);
+
+                        var strID = "";
+                        ///Make notification html
+                        for (var i = 0; i < data.length; i++) {
+                            var notification = '<div class="alert alert-success alert-dismissable">' +
+                                'Machine: ' + data[i].MachineNumber + ' - User: ' + data[i].IndRegID +
+                                '</div>'
+                            divNotificaion.append(notification);
+                        }
+                        //alert('Finger scan success: User name-' + data[0].IndRegID);
+                        debugger
+                        if (data.length > 0) {
+                            debugger
+                            window.location.href = '/Account/LoginM1';
+                        }
+                    }
+                },
+                error: function (r, e, w) {
+                }
+            });
+        }
+    })
+</script>

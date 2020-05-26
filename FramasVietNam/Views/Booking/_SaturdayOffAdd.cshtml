@@ -1,0 +1,51 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"]  = "FVN";
+    Layout             = "~/Views/Shared/_Adminlte.cshtml";
+    string strUserID   = mFunction.ToString(ViewBag.strUserID);
+    string strDeptID   = mFunction.ToString(ViewBag.strDeptID);
+    string strDeptName = mFunction.ToString(ViewBag.strDeptName);
+}
+<div class="modal fade" id="SaturdayOffAdd">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("SaturdayOffAdd", "Booking", FormMethod.Post))
+            {
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">@Language.label("Add")</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        @Language.label("Department")
+                        @Html.TextBox("Department", strDeptID, new { @class = "hidden" })
+                        @Html.TextBox("DepartmentName", strDeptName, new { @class = "form-control", @readonly = "true" })
+                    </div>
+                    <div class="form-group">
+                        @Language.label("User")
+                        @Html.TextBox("User", strUserID, new { @class = "form-control", @placeholder = @Language.label("User"), @readonly = "true" })
+                    </div>
+                    <div class="form-group">
+                        @Language.label("Date") (*)
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input name="DateOff" type='text' class="form-control" id="DateOff" readonly placeholder="@Language.label("StartDate")" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Language.label("Content")
+                        <textarea class="form-control" name="Content" id="Content" placeholder="@Language.label("Content")"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    @Html.ButtonRoles("Save", "SaturdayOff", "Booking", Language.label("Save"), new { @class = "btn btn-success" })
+                </div>
+            }
+        </div>
+    </div>
+</div>

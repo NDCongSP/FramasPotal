@@ -1,0 +1,172 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var dates = ViewBag.dates;
+    string date_str = mFunction.ToString(ViewBag.date_str);
+
+    var lst_mealSchedule = (List<FramasVietNam.Models.Meal.sp_MealSchedule_GetByDay_Result>)ViewBag.lst_mealSchedule;
+    var lst_mealSchedule_1 = lst_mealSchedule.Where(m => m.ShiftWorkID == 1).ToList();
+    var lst_mealSchedule_2 = lst_mealSchedule.Where(m => m.ShiftWorkID == 2).ToList();
+    var lst_mealSchedule_3 = lst_mealSchedule.Where(m => m.ShiftWorkID == 3).ToList();
+    var lst_mealSchedule_4 = lst_mealSchedule.Where(m => m.ShiftWorkID == 4).ToList();
+    var lst_mealSchedule_5 = lst_mealSchedule.Where(m => m.ShiftWorkID == 5).ToList();
+
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("MenusChedule", "MealControlCanteen")"></a>
+            @Language.label("Edit")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("MealSchedule")</a></li>
+            <li class="active">@Language.label("Edit")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row" style="min-height:906px; margin:2px">
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <div style="margin-bottom:10px">
+                        @Html.ActionLinkRole("Add", "MenusChedule", "MealControlCanteen",  Language.label("Add"), "MenusCheduleAdd", "MealControlCanteen", new { strdate = date_str }, new { @class = "btn btn-primary" })
+                    </div>
+                </div>
+            </div>
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="ion ion-clipboard"></i>
+                    <h3 class="box-title">@Language.label("List") @date_str</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>@Language.label("Num")</th>
+                                <th>@Language.label("Shift")</th>
+                                <th>@Language.label("Code")</th>
+                                <th>@Language.label("Name")</th>
+                                <th>@Language.label("Change")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int i = 1;
+                                if (lst_mealSchedule_1 != null)
+                                {
+                                    foreach (var item in lst_mealSchedule_1)
+                                    {
+                                        <tr>
+                                            <td class="text">@i</td>
+                                            <td class="text">Hành chính</td>
+                                            <td class="text">@item.MenuMealCode</td>
+                                            <td class="text">@item.MenuMealName</td>
+                                            <!-- General tools such as edit or delete-->
+                                            <td>
+                                                @Html.ActionLinkRole("Delete", "MenusChedule", "MealControlCanteen", " ", "MenusCheduleDel", "MealControlCanteen", new { day = date_str, shift = item.ShiftWorkID, Meal = item.MenuMealID }, new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+
+                                if (lst_mealSchedule_2 != null)
+                                {
+                                    foreach (var item in lst_mealSchedule_2)
+                                    {
+                                        <tr>
+                                            <td class="text">@i</td>
+                                            <td class="text">Hành chính OT</td>
+                                            <td class="text">@item.MenuMealCode</td>
+                                            <td class="text">@item.MenuMealName</td>
+                                            <!-- General tools such as edit or delete-->
+                                            <td>
+                                                @Html.ActionLinkRole("Delete", "MenusChedule", "MealControlCanteen", " ", "MenusCheduleDel", "MealControlCanteen", new { day = date_str, shift = item.ShiftWorkID, Meal = item.MenuMealID }, new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+
+                                if (lst_mealSchedule_3 != null)
+                                {
+                                    foreach (var item in lst_mealSchedule_3)
+                                    {
+                                        <tr>
+                                            <td class="text">@i</td>
+                                            <td class="text">Ca 1</td>
+                                            <td class="text">@item.MenuMealCode</td>
+                                            <td class="text">@item.MenuMealName</td>
+                                            <!-- General tools such as edit or delete-->
+                                            <td>
+                                                @Html.ActionLinkRole("Delete", "MenusChedule", "MealControlCanteen", " ", "MenusCheduleDel", "MealControlCanteen", new { day = date_str, shift = item.ShiftWorkID, Meal = item.MenuMealID }, new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+
+                                if (lst_mealSchedule_4 != null)
+                                {
+                                    foreach (var item in lst_mealSchedule_4)
+                                    {
+                                        <tr>
+                                            <td class="text">@i</td>
+                                            <td class="text">Ca 2</td>
+                                            <td class="text">@item.MenuMealCode</td>
+                                            <td class="text">@item.MenuMealName</td>
+                                            <!-- General tools such as edit or delete-->
+                                            <td>
+                                                @Html.ActionLinkRole("Delete", "MenusChedule", "MealControlCanteen", " ", "MenusCheduleDel", "MealControlCanteen", new { day = date_str, shift = item.ShiftWorkID, Meal = item.MenuMealID }, new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+
+                                if (lst_mealSchedule_5 != null)
+                                {
+                                    foreach (var item in lst_mealSchedule_5)
+                                    {
+                                        <tr>
+                                            <td class="text">@i</td>
+                                            <td class="text">Ca 3</td>
+                                            <td class="text">@item.MenuMealCode</td>
+                                            <td class="text">@item.MenuMealName</td>
+                                            <!-- General tools such as edit or delete-->
+                                            <td>
+                                                @Html.ActionLinkRole("Delete", "MenusChedule", "MealControlCanteen", " ", "MenusCheduleDel", "MealControlCanteen", new { day = date_str, shift = item.ShiftWorkID, Meal = item.MenuMealID }, new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+
+    </section>
+    <!-- /.content -->
+</div>
+
+

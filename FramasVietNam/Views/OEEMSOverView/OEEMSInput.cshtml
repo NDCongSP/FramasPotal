@@ -1,0 +1,377 @@
+﻿@using FramasVietNam.Common
+@model FramasVietNam.Models.OEEMS.get_OEEMSHeaderByDistanceDate_Result
+
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var _lstOverView = (List<FramasVietNam.Models.OEEMS.get_OEEMSHeaderByDistanceDate_Result>)ViewBag.lstOverView;
+    //var _lsttblProject = (List<FramasVietNam.Models.OEEMS.tblProject>)ViewBag.lsttblProject;
+    //var _lsttblWorkPiece = (List<FramasVietNam.Models.OEEMS.tblWorkpiece>)ViewBag.lsttblWorkPiece;
+    //var _tblWorkpieceProcess = (List<FramasVietNam.Models.OEEMS.sp_tblWorkpieceProcess_Get_Result>)ViewBag.tblWorkpieceProcess;
+    //string _Key = mFunction.ToString(ViewBag._Key);
+    //string _Keywp = mFunction.ToString(ViewBag._Keywp);
+    string _dtdate = mFunction.ToString(ViewBag.dtDateSearch);
+}
+
+@*@if (ViewBag.MessageComplete != null)
+    {
+        <script type="text/javascript" charset="utf-8">
+        window.onload = function () {
+            alert("@Html.Raw(ViewBag.MessageComplete)");
+            ViewBag.MessageComplete = null;
+            window.close();
+        };
+        </script>
+    }*@
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            OEE MoldShop Input
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">OEE MoldShop Input</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        @using (Html.BeginForm("OEEMSInput", "OEEMSOverView", FormMethod.Post, new { @MessageComplete = "" }))
+        {
+            ViewBag.MessageComplete = null;
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <div class="col-xs-4">
+                                <!-- Date range -->
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" class="form-control pull-right" name="reservation" id="reservation" value="@ViewBag.dtDateSearch">
+                                </div>
+                                <!-- /.form group -->
+                            </div>
+                            <div class="col-xs-2">
+                                <input class="btn btn-primary btn" type="submit" name="Search" value="Search" />
+                                @*@Html.ActionLinkRole("Search", "OEEMSInput", "OEEMSOverView", "Search", "OEEMSInput", "OEEMSOverView",  new { @class = "btn btn-primary", title = "Search Project" })*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="min-height:100%; margin:2px">
+                @*Buttom Add --*@
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div style="margin-bottom:10px">
+                            @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AddModal">Add</button>*@                            
+                            @Html.ActionLinkRole("Add", "OEEMSInput", "OEEMSOverView", " Add", "OEEMSAddPopup", "OEEMSOverView", new { dtdate = _dtdate }, new { @class = "modal-link btn btn-primary", title = "Add Project", data_toggle = "modal", data_target = "#AddModal" })
+                        </div>
+                    </div>
+                </div>
+                @*/.Buttom Add*@
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <div class="col-xs-4">
+                                    @*@Html.ActionLink("Add", "OEEMSAddPopup", "OEEMSOverView", new { dtdate = _dtdate }, new { @class = "modal-link btn btn-primary" })*@
+                                    <h3 class="box-title"> @ViewBag.titleview</h3>
+                                </div>
+                                @*<div class="box-tools">
+                                        <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
+                                            <input type="text" name="table_search" class="form-control pull-right" placeholder="search">
+                                            <div class="input-group-btn">
+                                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                            </div>
+
+                            <!-- /.box-header -->
+                            <div class="box-body table-responsive no-padding">
+                                <table id="tablecontent" class="table table-bordered table-striped" @*class="table table-hover"*@>
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th width="auto">Project Name</th>
+                                            <th>Date</th>
+                                            <th>Component Name</th>
+                                            <th>Size Name</th>
+                                            <th>Plan Time</th>
+                                            <th>Real Time</th>
+                                            <th>Down Time</th>
+                                            <th>OEE</th>
+                                            <th>Status</th>
+                                            <th>Add % Complete</th>
+                                            <th>Change</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (_lstOverView != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var item in _lstOverView)
+                                            {
+                                                <tr>
+                                                    <td></td>
+                                                    <td class="text">@item.ProjectName</td>
+                                                    <td class="text">@item.OEEDate.Value.ToString("MM/dd/yyyy")</td>
+                                                    <td class="text">@item.CompName</td>
+                                                    <td class="text">@item.SizeName</td>
+                                                    <td class="text" align="right">@item.PlanTime</td>
+                                                    <td class="text" align="right">@item.RealTime</td>
+                                                    <td class="text" align="right">@item.DownTime</td>
+
+                                                    @if ((@item.RealTime - @item.DownTime) > 0 && @item.PlanTime * 100 / (@item.RealTime - @item.DownTime) <= 30)
+                                                    {
+                                                        <td><span class="label label-danger">@item.OEE</span></td>
+                                                    }
+                                                    else if ((@item.RealTime - @item.DownTime) > 0 && (@item.PlanTime * 100 / (@item.RealTime - @item.DownTime) > 30) && (@item.PlanTime * 100 / (@item.RealTime - @item.DownTime) <= 50))
+                                                    {
+                                                        <td><span class="label label-warning">@item.OEE</span></td>
+                                                    }
+                                                    else if ((@item.RealTime - @item.DownTime) > 0 && (@item.PlanTime * 100 / (@item.RealTime - @item.DownTime) > 50) && (@item.PlanTime * 100 / (@item.RealTime - @item.DownTime) <= 70))
+                                                    {
+                                                        <td><span class="label label-primary">@item.OEE</span></td>
+                                                    }
+                                                    else if ((@item.RealTime - @item.DownTime) == 0)
+                                                    {
+                                                        <td><span class="label label-danger">@item.OEE</span></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td><span class="label label-success">@item.OEE</span></td>
+                                                    }
+
+                                                    @if (@item.Status == 0)
+                                                    {
+                                                        <td><span class="label label-danger">Uncomplete</span></td>
+                                                    }
+                                                    else if (@item.Status == 1)
+                                                    {
+                                                        <td><span class="label label-success">Complete</span></td>
+                                                    }
+                                                    else if (@item.Status == 2)
+                                                    {
+                                                        <td><span class="label label-warning">Running Downtime</span></td>
+                                                    }
+                                                    else if (@item.Status == 3)
+                                                    {
+                                                        <td><span class="label label-info">Running Realtime</span></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td><span class="label label-default">Non</span></td>
+                                                    }
+
+                                                    <td align="center">
+                                                        @Html.ActionLinkRole("Add", "OEEMSInput", "OEEMSOverView", " ", "OEEMSInputAddComLoad", "OEEMSOverView", new { OEEID = item.OEEID, dtdate = _dtdate }, new { @class = "modal-link3 fa fa-plus label-success btn-sm", title = "Add % Complete", data_toggle = "" })
+                                                    </td>
+
+                                                    <td align="center">
+                                                        @Html.ActionLinkRole("Edit", "OEEMSInput", "OEEMSOverView", " ", "OEEMSInputChangeProcess", "OEEMSOverView", new { OEEID = item.OEEID, dtdate = _dtdate }, new { @class = "modal-link1 fa fa-exchange label-info btn-sm", title = "Change process" })
+                                                        @Html.ActionLinkRole("Edit", "OEEMSInput", "OEEMSOverView", " ", "OEEMSInputEditLoad", "OEEMSOverView", new { OEEID = item.OEEID, dtdate = _dtdate }, new { @class = "modal-link2 fa fa-edit label-primary btn-sm", title = "Edit Project" })
+
+                                                        @if (@item.Status != 1)
+                                                        {
+                                                            @Html.ActionLinkRole("Edit", "OEEMSInput", "OEEMSOverView", " ", "OEEMSInputStop", "OEEMSOverView", new { OEEID = item.OEEID, dtdate = _dtdate }, new { @class = "fa fa-stop label-warning btn-sm", title = "End Project", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                                        }
+                                                        @Html.ActionLinkRole("Delete", "OEEMSInput", "OEEMSOverView", " ", "OEEMSInputDelete", "OEEMSOverView", new { OEEID = item.OEEID, dtdate = _dtdate }, new { @class = "fa fa-trash label-danger btn-sm", title = "Delete Project", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                                    </td>
+                                                </tr>
+                                                i++;
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                </div>
+
+            </div>
+        }
+
+    </section>
+    <!-- /.content -->
+</div>
+<link rel="stylesheet" href="~/Content/adminlte/dist/css/AdminLTE.min.css">
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2()
+        //Date range picker
+        $('#reservation').daterangepicker()
+        //Date range picker with time picker
+        $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'MM/DD/YYYY hh:mm A' } })
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        })
+    })
+</script>
+
+@section Styles{
+    <link rel="stylesheet" href="~/Content/adminlte/components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+}
+
+@section Scripts{
+    <!-- DataTables -->
+    <script src="~/Content/adminlte/components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/adminlte/components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        //$(function () {
+        //    $('#example1').DataTable()
+        //})
+
+        $(document).ready(function () {
+
+            // Setup - add a text input to each footer cell
+            $('#tablecontent thead tr').clone(true).appendTo('#tablecontent thead');
+            $('#tablecontent thead tr:eq(1) th').each(function (i) {
+                if (i > 0) {
+                    var title = $(this).text();
+                    if (title != "Change" && title != "OEE" && title != "Add % Complete" && title != "Status" && title != "Plan Time" && title != "Real Time" && title != "Down Time") {
+                        $(this).html('<input type="text"/>');
+
+                        $('input', this).on('keyup change', function () {
+                            if (table.column(i).search() !== this.value) {
+                                table
+                                    .column(i)
+                                    .search(this.value)
+                                    .draw();
+                            }  
+                        });
+                    }
+                    else {
+                        $(this).html('');
+                    }
+
+                }
+            });
+
+            var table = $('#tablecontent').DataTable({
+                "displayLength": 25,
+                orderCellsTop: true,
+                fixedHeader: true,
+                'paging': true,
+                'lengthChange': false,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true
+            });
+            table.on('order.dt search.dt', function () {
+                table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+        });
+    </script>
+}
+
+<div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-content" style="background-color:transparent">
+
+    </div>
+</div>
+<div id="modal-container1" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-content"  style="background-color:transparent">
+
+    </div>
+</div>
+<div id="modal-container2" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-content"  style="background-color:transparent">
+
+    </div>
+</div>
+<div id="modal-container3" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-content"  style="background-color:transparent">
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        // Initialize numeric spinner input boxes
+        //$(".numeric-spinner").spinedit();
+
+        // Initalize modal dialog
+        // attach modal-container bootstrap attributes to links with .modal-link class.
+        // when a link is clicked with these attributes, bootstrap will display the href content in a modal dialog.
+        $('body').on('click', '.modal-link', function (e) {
+            e.preventDefault();
+            $(this).attr('data-target', '#modal-container');
+            $(this).attr('data-toggle', 'modal');
+        });
+
+        $('body').on('click', '.modal-link1', function (e) {
+            e.preventDefault();
+            $(this).attr('data-target', '#modal-container1');
+            $(this).attr('data-toggle', 'modal');
+        });
+
+        $('body').on('click', '.modal-link2', function (e) {
+            e.preventDefault();
+            $(this).attr('data-target', '#modal-container2');
+            $(this).attr('data-toggle', 'modal');
+        });
+
+        $('body').on('click', '.modal-link3', function (e) {
+            e.preventDefault();
+            $(this).attr('data-target', '#modal-container3');
+            $(this).attr('data-toggle', 'modal');
+        });
+        // Attach listener to .modal-close-btn's so that when the button is pressed the modal dialog disappears
+        $('body').on('click', '.modal-close-btn', function () {
+            $(this).removeData('bs.modal');
+            $('#modal-container').modal('hide');
+        });
+
+        //clear modal cache, so that new content can be loaded
+        $('#modal-container').on('hidden.bs.modal', function () {
+            $('#modal-container').modal('hide');
+            $(this).removeData('bs.modal');
+           // document.location.reload();
+        });
+        //clear modal cache, so that new content can be loaded
+        $('#modal-container1').on('hidden.bs.modal', function () {
+            $('#modal-container1').modal('hide');
+            $(this).removeData('bs.modal');
+           // document.location.reload();
+        });
+        //clear modal cache, so that new content can be loaded
+        $('#modal-container2').on('hidden.bs.modal', function () {
+            $('#modal-container2').modal('hide');
+            $(this).removeData('bs.modal');
+            $('#modal-container2 .modal-body').removeData();
+           // document.location.reload();
+        });
+        //clear modal cache, so that new content can be loaded
+        $('#modal-container3').on('hidden.bs.modal', function () {
+            $('#modal-container3').modal('hide');
+            $(this).removeData('bs.modal');
+            //document.location.reload();
+        });
+
+        $('#CancelModal').on('click', function () {
+            $('#modal-container').modal('hide');
+            $(this).removeData('bs.modal');
+            return false;
+        });
+
+    });
+</script>

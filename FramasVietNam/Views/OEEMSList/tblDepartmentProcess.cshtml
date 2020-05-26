@@ -1,0 +1,228 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var _lsttblDepartmentProcess = (List<FramasVietNam.Models.OEEMS.sp_tblDepartmentProcess_Get_Result>)ViewBag.lsttblDepartmentProcess;
+    var _lstMaBoPhan = (List<FramasVietNam.Models.HumanResource.MaBoPhan>)ViewBag.lstMaBoPhan;
+    var _lsttblProcess = (List<FramasVietNam.Models.OEEMS.tblProcess>)ViewBag.lsttblProcess;
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            Department Process List
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">Department Process List</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <div style="margin-bottom:10px">
+                        @Html.ActionLinkRole("Add", "TblDepartmentProcess", "OEEMSList", Language.label("Add"), new { @class = "btn btn-primary", data_toggle = "modal", data_target = "#modal-default" })
+                    </div>
+                </div>
+            </div>
+
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="ion ion-clipboard"></i>
+                    <h3 class="box-title">@Language.label("List")</h3>
+                    <div class="box-tools pull-right">
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="departmentProcess" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Department</th>
+                                <th>Process</th>
+                                <th>@Language.label("Change")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (_lsttblDepartmentProcess != null)
+                            {
+                                int i = 1;
+                                foreach (var item in _lsttblDepartmentProcess)
+                                {
+                                    <tr>
+                                        <td class="text"></td>
+                                        <td class="text">@item.TenBoPhanA</td>
+                                        <td class="text">@item.ProcessName</td>
+                                        <!-- General tools such as edit or delete-->
+                                        <td>
+                                            @Html.ActionLinkRole("Delete", "TblDepartmentProcess", "OEEMSList", " ", "TblDepartmentProcessDel", "OEEMSList", new { _ProcessID = @item.ProcessID, _DepartmentID = @item.DepartmentID }, new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+@*Popup add*@
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color:azure">
+            @using (Html.BeginForm("TblDepartmentProcessSave", "OEEMSList", FormMethod.Post))
+            {
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">@Language.label("Add")</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <span>Department</span><code>(*)</code>
+                        <select name="txtDepartmentID" id="txtDepartmentID" class="form-control select2" data-placeholder="Select a deppartment">
+                            <option value=""></option>
+                            @if (_lstMaBoPhan != null)
+                            {
+                                foreach (var item in _lstMaBoPhan)
+                                {
+                                    <option value="@item.MaBoPhan1">@item.TenBoPhanA</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <span>Process</span><code>(*)</code>
+                        <select name="txtProcessID" id="txtProcessID" class="form-control">
+                            @if (_lsttblProcess != null)
+                            {
+                                foreach (var item in _lsttblProcess)
+                                {
+                                    <option value="@item.ProcessID">@item.ProcessName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    @Html.ButtonRoles("Save", "TblDepartmentProcess", "OEEMSList", Language.label("Save"), new { @class = "btn btn-success" })
+                </div>
+
+                <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                @*<ul class="todo-list">
+                        <li style="background-color:azure">
+                            <h2>@Language.label("Add")</h2>
+                            <br />
+                            Department (*)
+                            <select name="txtDepartmentID" id="txtDepartmentID" class="form-control">
+                                @if (_lstMaBoPhan != null)
+                                {
+                                    foreach (var item in _lstMaBoPhan)
+                                    {
+                                        <option value="@item.MaBoPhan1">@item.TenBoPhanA</option>
+                                    }
+                                }
+                            </select>
+                            Process (*)
+                            <select name="txtProcessID" id="txtProcessID" class="form-control">
+                                @if (_lsttblProcess != null)
+                                {
+                                    foreach (var item in _lsttblProcess)
+                                    {
+                                        <option value="@item.ProcessID">@item.ProcessName</option>
+                                    }
+                                }
+                            </select>
+                            <br />
+
+                            @Html.ButtonRoles("Save", "TblDepartmentProcess", "OEEMSList", Language.label("Save"), new { @class = "btn btn-success btn-sm" })
+                        </li>
+                    </ul>*@
+            }
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@section styles {
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            //Call js select2
+            $(".select2").select2();
+
+            //Call js data table
+            $('#departmentProcess thead tr').clone(true).appendTo('#departmentProcess thead');
+            $('#departmentProcess thead tr:eq(1) th').each(function (i) {
+                if (i > 0) {
+                    var title = $(this).text();
+                    if (title != "Change" && title != "OEE" && title != "Status") {
+                        $(this).html('<input type="text" />');
+
+                        $('input', this).on('keyup change', function () {
+                            if (table.column(i).search() !== this.value) {
+                                table
+                                    .column(i)
+                                    .search(this.value)
+                                    .draw();
+                            }
+                        });
+                    }
+                    else {
+                        $(this).html('');
+                    }
+                }
+            });
+
+            var table = $('#departmentProcess').DataTable({
+                "displayLength": 25,
+                orderCellsTop: true,
+                fixedHeader: true,
+                'paging': true,
+                'lengthChange': false,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false
+            });
+
+            table.on('order.dt search.dt', function () {
+                table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+        });
+    </script>
+}

@@ -1,0 +1,107 @@
+﻿@using FramasVietNam.Common
+@model FramasVietNam.Models.OEEMS.tblProject
+    @{
+        ViewData["Title"] = "FVN";
+        Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var _lsttblCustomers = (List<FramasVietNam.Models.OEEMS.tblCustomer>)ViewBag.lsttblCustomers;
+    var _lsttblCategory = (List<FramasVietNam.Models.OEEMS.tblCategory>)ViewBag.lsttblCategory;
+    }
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+        </script>
+    }
+
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                <a class="fa fa-fw fa-mail-reply" href="@Url.Action("TblProject","OEEMSList")"></a>
+                @Language.label("Edit")
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i>Projects</a></li>
+                <li class="active">@Language.label("Edit")</li>
+            </ol>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="row" style="min-height:906px; margin:2px">
+                <!-- TO DO List -->
+                <div class="box box-primary">
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        @using (Html.BeginForm("TblProjectEdit", "OEEMSList", FormMethod.Post))
+                        {
+                            <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                        <ul class="todo-list">
+                            +@Language.label("Edit")
+                            <li>
+                                @Language.label("Code")
+                                @Html.TextBoxFor(m => Model.ProjectID, new { @class = "form-control", @placeholder = Language.label("Code"), @readonly = "true" })
+                            </li>
+
+                            <li>
+                                @Language.label("Name")
+                                @Html.TextBoxFor(m => Model.ProjectName, new { @class = "form-control", @placeholder = "Name" })
+                            </li>
+
+                            <li>
+                                Category ID
+                                @*@Html.TextBoxFor(m => Model.CategoryID, new { @class = "form-control", type = "number", @placeholder = "Controller" })*@
+                                <select name="txtCategoryID" id="txtCategoryID" class="form-control">
+                                    @if (_lsttblCategory != null)
+                                    {
+                                        foreach (var item in _lsttblCategory)
+                                        {
+                                            if (item.CategoryID == Model.CategoryID)
+                                            {
+                                                <option selected value="@item.CategoryID">@item.CategoryName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.CategoryID">@item.CategoryName</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </li>
+
+                            <li>
+                                Customer ID
+                                @*@Html.TextBoxFor(m => Model.CustomerID, new { @class = "form-control", type = "number", @placeholder = "Controller" })*@
+                                <select name="txtCustomerID" id="txtCustomerID" class="form-control">
+                                    @if (_lsttblCustomers != null)
+                                    {
+                                        foreach (var item in _lsttblCustomers)
+                                        {
+                                            if (item.CustID == Model.CustomerID)
+                                            {
+                                                <option selected value="@item.CustID">@item.CustName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.CustID">@item.CustName</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </li>
+
+                            <li>
+                                @Html.ButtonRoles("Save", "TblProject", "OEEMSList", Language.label("Save"), new { @class = "btn btn-success btn-sm" })
+                            </li>
+                        </ul>
+                        }
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>

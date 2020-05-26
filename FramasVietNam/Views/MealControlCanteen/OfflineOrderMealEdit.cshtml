@@ -1,0 +1,115 @@
+﻿@model FramasVietNam.Models.Meal.sp_OrderMealOffline_Get_Result
+@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+
+    var lstMeal = (List<FramasVietNam.Models.Meal.sp_MealSchedule_GetByDay_Result>)ViewBag.lstMeal;
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+    window.onload = function () {
+        alert("@Html.Raw(ViewBag.Message)");
+    };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("OfflineOrderMeal","MealControlCanteen")"></a>
+            @Language.label("Add")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("OfflineOrderMeal")</a></li>
+            <li class="active">@Language.label("Add")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    @using (Html.BeginForm("OfflineOrderMealEdit", "MealControlCanteen", FormMethod.Post))
+                    {
+
+                        <ul class="todo-list">
+
+                            <li>
+                                @Html.ButtonRoles("Save", "OfflineOrderMeal", "MealControlCanteen", Language.label("Save"), new { @class = "btn btn-success btn-sm" })
+                            </li>
+
+                            <li>
+                                @Language.label("User") (*)
+
+                                @Html.TextBox("User", Model.TenNhanVien, new { @class = "form-control", @placeholder = "Description", @readonly = "readonly" })
+
+                            </li>
+
+                            <li>
+                                @Language.label("Date") (*)
+                                <input name="DateAdd" type='text' class="form-control" id='DateAdd' placeholder="@Language.label("StartDate")" value="@Model.DateAdd" readonly="readonly" />
+                            </li>
+
+                            <li>
+                                @Language.label("Shift") (*)
+
+                                @Html.TextBox("Shift", Model.ShiftWorkName, new { @class = "form-control", @placeholder = "Description", @readonly = "readonly" })
+                                @Html.TextBox("ShiftID", Model.ShiftWorkID, new { @class = "hidden" })
+
+                            </li>
+
+                            <li>
+                                @Language.label("Meal") (*)
+
+                                <select name="Meal" id="Meal" class="select2-dropdown" style="width:100%">
+                                    <option selected value="0">---------choose data---------</option>
+                                    @if (lstMeal != null)
+                                    {
+                                        foreach (var item in lstMeal)
+                                        {
+                                            if (item.MenuMealID == Model.MenuMealID)
+                                            {
+                                                <option selected value="@item.MenuMealID">@item.ShiftWorkName - @item.MenuMealName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.MenuMealID">@item.ShiftWorkName - @item.MenuMealName</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </li>
+
+                        </ul>
+
+                    }
+                </div>
+
+
+
+
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+<script>
+
+    //format date time picker
+    $(function () {
+        $('#DateAdd').datetimepicker({
+            format: 'MM/DD/YYYY',
+        });
+    });
+
+</script>
+

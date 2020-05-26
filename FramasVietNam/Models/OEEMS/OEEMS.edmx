@@ -1,0 +1,2851 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="OEEMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblCategory">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="100" />
+          <Property Name="CategoryS" Type="int" />
+        </EntityType>
+        <EntityType Name="tblComp">
+          <Key>
+            <PropertyRef Name="CompID" />
+          </Key>
+          <Property Name="CompID" Type="int" Nullable="false" />
+          <Property Name="CompName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MainComp" Type="tinyint" />
+          <Property Name="Actice" Type="bit" />
+          <Property Name="Sort" Type="int" />
+        </EntityType>
+        <EntityType Name="tblCustomers">
+          <Key>
+            <PropertyRef Name="CustID" />
+          </Key>
+          <Property Name="CustID" Type="int" Nullable="false" />
+          <Property Name="CustName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblDepartmentProcess">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+            <PropertyRef Name="ProcessID" />
+          </Key>
+          <Property Name="DepartmentID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ProcessID" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="tblDownTime">
+          <Key>
+            <PropertyRef Name="DTID" />
+          </Key>
+          <Property Name="DTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupID" Type="int" Nullable="false" />
+          <Property Name="DTName" Type="nvarchar" MaxLength="500" />
+          <Property Name="Note" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tblGroupDT">
+          <Key>
+            <PropertyRef Name="GDTID" />
+          </Key>
+          <Property Name="GDTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OEEMS_HOANC.dbo.tblLog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tblLog">
+          <Key>
+            <PropertyRef Name="F000" />
+            <PropertyRef Name="F001" />
+          </Key>
+          <Property Name="F000" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="F001" Type="datetime" Nullable="false" />
+          <Property Name="F002" Type="varchar" MaxLength="250" />
+          <Property Name="F003" Type="nvarchar" MaxLength="1024" />
+          <Property Name="F004" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="tblOEEMS_DownTime">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OEEID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DTID" Type="int" Nullable="false" />
+          <Property Name="EMPID" Type="varchar" MaxLength="20" />
+          <Property Name="WorkPieceID" Type="int" Nullable="false" />
+          <Property Name="ProcessID" Type="int" Nullable="false" />
+          <Property Name="FromTime" Type="datetime" />
+          <Property Name="ToTime" Type="datetime" />
+          <Property Name="Note" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblOEEMS_Employee">
+          <Key>
+            <PropertyRef Name="OEEID" />
+            <PropertyRef Name="EMPID" />
+            <PropertyRef Name="WorkPieceID" />
+            <PropertyRef Name="ProcessID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OEEID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EMPID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="WorkPieceID" Type="int" Nullable="false" />
+          <Property Name="ProcessID" Type="int" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="100" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblOEEMS_Header">
+          <Key>
+            <PropertyRef Name="OEEID" />
+          </Key>
+          <Property Name="OEEID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OEEDate" Type="datetime" />
+          <Property Name="ProjectID" Type="varchar" MaxLength="20" />
+          <Property Name="CompID" Type="int" />
+          <Property Name="SizeID" Type="int" />
+          <Property Name="PlanTime" Type="int" />
+          <Property Name="RealTime" Type="int" />
+          <Property Name="DownTime" Type="int" />
+          <Property Name="OEE" Type="float" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OEEMS_HOANC.dbo.tblOEEMS_PercentComplete' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tblOEEMS_PercentComplete">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="OEEID" />
+            <PropertyRef Name="WeedOfYear" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OEEID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateOfWeek" Type="date" />
+          <Property Name="WeedOfYear" Type="int" Nullable="false" />
+          <Property Name="PercentCom" Type="float" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="100" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblOEEMS_Process">
+          <Key>
+            <PropertyRef Name="OEEID" />
+            <PropertyRef Name="ProcessID" />
+            <PropertyRef Name="WorkPieceID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OEEID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProcessID" Type="int" Nullable="false" />
+          <Property Name="WorkPieceID" Type="int" Nullable="false" />
+          <Property Name="PlanTime" Type="int" Nullable="false" />
+          <Property Name="RealTime" Type="int" />
+          <Property Name="DownTime" Type="int" />
+          <Property Name="OEE" Type="float" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OEEMS_HOANC.dbo.tblOEEMS_RealTime' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tblOEEMS_RealTime">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="OEEID" />
+            <PropertyRef Name="EMPID" />
+            <PropertyRef Name="WorkPieceID" />
+            <PropertyRef Name="ProcessID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OEEID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EMPID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="WorkPieceID" Type="int" Nullable="false" />
+          <Property Name="ProcessID" Type="int" Nullable="false" />
+          <Property Name="FromTime" Type="datetime" />
+          <Property Name="ToTime" Type="datetime" />
+          <Property Name="Note" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsDownTime" Type="bit" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblOEEMS_Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="StatusName" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tblProcess">
+          <Key>
+            <PropertyRef Name="ProcessID" />
+          </Key>
+          <Property Name="ProcessID" Type="int" Nullable="false" />
+          <Property Name="ProcessName" Type="nvarchar" MaxLength="50" />
+          <Property Name="EndofProcess" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblProject">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Name="ProjectID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="150" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="10" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblProjectComp">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+            <PropertyRef Name="CompID" />
+          </Key>
+          <Property Name="ProjectID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CompID" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="tblProjectSize">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+            <PropertyRef Name="SizeID" />
+          </Key>
+          <Property Name="ProjectID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="SizeID" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblSize">
+          <Key>
+            <PropertyRef Name="SizeID" />
+          </Key>
+          <Property Name="SizeID" Type="int" Nullable="false" />
+          <Property Name="SizeName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblVersionTablet">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Version" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="DateUpdate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblWorkpiece">
+          <Key>
+            <PropertyRef Name="WorkpieceID" />
+          </Key>
+          <Property Name="WorkpieceID" Type="int" Nullable="false" />
+          <Property Name="WorkpieceName" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tblWorkpieceProcess">
+          <Key>
+            <PropertyRef Name="WorkpieceID" />
+            <PropertyRef Name="ProcessID" />
+          </Key>
+          <Property Name="WorkpieceID" Type="int" Nullable="false" />
+          <Property Name="ProcessID" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <Association Name="FK_tblDepartmentProcess_tblProcess">
+          <End Role="tblProcess" Type="Self.tblProcess" Multiplicity="1" />
+          <End Role="tblDepartmentProcess" Type="Self.tblDepartmentProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProcess">
+              <PropertyRef Name="ProcessID" />
+            </Principal>
+            <Dependent Role="tblDepartmentProcess">
+              <PropertyRef Name="ProcessID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDownTime_tblProcess">
+          <End Role="tblProcess" Type="Self.tblProcess" Multiplicity="1" />
+          <End Role="tblDownTime" Type="Self.tblDownTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProcess">
+              <PropertyRef Name="ProcessID" />
+            </Principal>
+            <Dependent Role="tblDownTime">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_DownTime_tblDownTime">
+          <End Role="tblDownTime" Type="Self.tblDownTime" Multiplicity="1" />
+          <End Role="tblOEEMS_DownTime" Type="Self.tblOEEMS_DownTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDownTime">
+              <PropertyRef Name="DTID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_DownTime">
+              <PropertyRef Name="DTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_DownTime_tblOEEMS_Process">
+          <End Role="tblOEEMS_Process" Type="Self.tblOEEMS_Process" Multiplicity="1" />
+          <End Role="tblOEEMS_DownTime" Type="Self.tblOEEMS_DownTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOEEMS_Process">
+              <PropertyRef Name="OEEID" />
+              <PropertyRef Name="ProcessID" />
+              <PropertyRef Name="WorkPieceID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_DownTime">
+              <PropertyRef Name="OEEID" />
+              <PropertyRef Name="ProcessID" />
+              <PropertyRef Name="WorkPieceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_Employee_tblOEEMS_Process1">
+          <End Role="tblOEEMS_Process" Type="Self.tblOEEMS_Process" Multiplicity="1" />
+          <End Role="tblOEEMS_Employee" Type="Self.tblOEEMS_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOEEMS_Process">
+              <PropertyRef Name="OEEID" />
+              <PropertyRef Name="ProcessID" />
+              <PropertyRef Name="WorkPieceID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_Employee">
+              <PropertyRef Name="OEEID" />
+              <PropertyRef Name="ProcessID" />
+              <PropertyRef Name="WorkPieceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_Header_tblComp">
+          <End Role="tblComp" Type="Self.tblComp" Multiplicity="0..1" />
+          <End Role="tblOEEMS_Header" Type="Self.tblOEEMS_Header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblComp">
+              <PropertyRef Name="CompID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_Header">
+              <PropertyRef Name="CompID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_Header_tblOEEMS_Status">
+          <End Role="tblOEEMS_Status" Type="Self.tblOEEMS_Status" Multiplicity="0..1" />
+          <End Role="tblOEEMS_Header" Type="Self.tblOEEMS_Header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOEEMS_Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_Header">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_Header_tblProject">
+          <End Role="tblProject" Type="Self.tblProject" Multiplicity="0..1" />
+          <End Role="tblOEEMS_Header" Type="Self.tblOEEMS_Header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_Header">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_Header_tblSize">
+          <End Role="tblSize" Type="Self.tblSize" Multiplicity="0..1" />
+          <End Role="tblOEEMS_Header" Type="Self.tblOEEMS_Header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSize">
+              <PropertyRef Name="SizeID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_Header">
+              <PropertyRef Name="SizeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_PercentComplete_tblOEEMS_Header">
+          <End Role="tblOEEMS_Header" Type="Self.tblOEEMS_Header" Multiplicity="1" />
+          <End Role="tblOEEMS_PercentComplete" Type="Self.tblOEEMS_PercentComplete" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOEEMS_Header">
+              <PropertyRef Name="OEEID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_PercentComplete">
+              <PropertyRef Name="OEEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_Process_tblOEEMS_Header">
+          <End Role="tblOEEMS_Header" Type="Self.tblOEEMS_Header" Multiplicity="1" />
+          <End Role="tblOEEMS_Process" Type="Self.tblOEEMS_Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOEEMS_Header">
+              <PropertyRef Name="OEEID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_Process">
+              <PropertyRef Name="OEEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_Process_tblOEEMS_Status">
+          <End Role="tblOEEMS_Status" Type="Self.tblOEEMS_Status" Multiplicity="1" />
+          <End Role="tblOEEMS_Process" Type="Self.tblOEEMS_Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOEEMS_Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_Process">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_Process_tblWorkpieceProcess1">
+          <End Role="tblWorkpieceProcess" Type="Self.tblWorkpieceProcess" Multiplicity="1" />
+          <End Role="tblOEEMS_Process" Type="Self.tblOEEMS_Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblWorkpieceProcess">
+              <PropertyRef Name="WorkpieceID" />
+              <PropertyRef Name="ProcessID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_Process">
+              <PropertyRef Name="WorkPieceID" />
+              <PropertyRef Name="ProcessID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_RealTime_tblOEEMS_Employee">
+          <End Role="tblOEEMS_Employee" Type="Self.tblOEEMS_Employee" Multiplicity="1" />
+          <End Role="tblOEEMS_RealTime" Type="Self.tblOEEMS_RealTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOEEMS_Employee">
+              <PropertyRef Name="OEEID" />
+              <PropertyRef Name="EMPID" />
+              <PropertyRef Name="WorkPieceID" />
+              <PropertyRef Name="ProcessID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_RealTime">
+              <PropertyRef Name="OEEID" />
+              <PropertyRef Name="EMPID" />
+              <PropertyRef Name="WorkPieceID" />
+              <PropertyRef Name="ProcessID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_tblCategory">
+          <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="0..1" />
+          <End Role="tblProject" Type="Self.tblProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCategory">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="tblProject">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_tblCustomers">
+          <End Role="tblCustomers" Type="Self.tblCustomers" Multiplicity="0..1" />
+          <End Role="tblProject" Type="Self.tblProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomers">
+              <PropertyRef Name="CustID" />
+            </Principal>
+            <Dependent Role="tblProject">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProjectComp_tblComp">
+          <End Role="tblComp" Type="Self.tblComp" Multiplicity="1" />
+          <End Role="tblProjectComp" Type="Self.tblProjectComp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblComp">
+              <PropertyRef Name="CompID" />
+            </Principal>
+            <Dependent Role="tblProjectComp">
+              <PropertyRef Name="CompID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProjectComp_tblProject">
+          <End Role="tblProject" Type="Self.tblProject" Multiplicity="1" />
+          <End Role="tblProjectComp" Type="Self.tblProjectComp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="tblProjectComp">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProjectSize_tblProject">
+          <End Role="tblProject" Type="Self.tblProject" Multiplicity="1" />
+          <End Role="tblProjectSize" Type="Self.tblProjectSize" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="tblProjectSize">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProjectSize_tblSize">
+          <End Role="tblSize" Type="Self.tblSize" Multiplicity="1" />
+          <End Role="tblProjectSize" Type="Self.tblProjectSize" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSize">
+              <PropertyRef Name="SizeID" />
+            </Principal>
+            <Dependent Role="tblProjectSize">
+              <PropertyRef Name="SizeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblWorkpieceProcess_tblProcess">
+          <End Role="tblProcess" Type="Self.tblProcess" Multiplicity="1" />
+          <End Role="tblWorkpieceProcess" Type="Self.tblWorkpieceProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProcess">
+              <PropertyRef Name="ProcessID" />
+            </Principal>
+            <Dependent Role="tblWorkpieceProcess">
+              <PropertyRef Name="ProcessID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblWorkpieceProcess_tblWorkpiece">
+          <End Role="tblWorkpiece" Type="Self.tblWorkpiece" Multiplicity="1" />
+          <End Role="tblWorkpieceProcess" Type="Self.tblWorkpieceProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblWorkpiece">
+              <PropertyRef Name="WorkpieceID" />
+            </Principal>
+            <Dependent Role="tblWorkpieceProcess">
+              <PropertyRef Name="WorkpieceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="get_CboProjectExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProjectID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_CboProjectExistsData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProjectID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_data_dropdown" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="paraone" Type="varchar" Mode="In" />
+          <Parameter Name="paratwo" Type="varchar" Mode="In" />
+          <Parameter Name="parathree" Type="varchar" Mode="In" />
+          <Parameter Name="parafour" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMS_DownTimeByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="WorkPieceID" Type="varchar" Mode="In" />
+          <Parameter Name="ProcessID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMS_EmployeeByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="WorkPieceID" Type="varchar" Mode="In" />
+          <Parameter Name="ProcessID" Type="varchar" Mode="In" />
+          <Parameter Name="EMPID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMS_ProcessByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMS_ProcessSUMByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMS_RealTime_Emp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="WorkPieceID" Type="varchar" Mode="In" />
+          <Parameter Name="ProcessID" Type="varchar" Mode="In" />
+          <Parameter Name="EMPID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMS_RealTimeByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="WorkPieceID" Type="varchar" Mode="In" />
+          <Parameter Name="ProcessID" Type="varchar" Mode="In" />
+          <Parameter Name="EMPID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMS_ResultDistanceDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEDateFrom" Type="varchar" Mode="In" />
+          <Parameter Name="OEEDateTo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMS_ResultDTDistanceDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEDateFrom" Type="varchar" Mode="In" />
+          <Parameter Name="OEEDateTo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMS_ResultProcessDistanceDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEDateFrom" Type="varchar" Mode="In" />
+          <Parameter Name="OEEDateTo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMSHeaderByDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEDate" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMSHeaderByDistanceDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEDateFrom" Type="varchar" Mode="In" />
+          <Parameter Name="OEEDateTo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMSHeaderByDistanceDate_new" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEDateFrom" Type="varchar" Mode="In" />
+          <Parameter Name="OEEDateTo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMSHeaderByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMSHeaderByStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="get_OEEMSWeekByDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEDate" Type="varchar" Mode="In" />
+          <Parameter Name="Chk" Type="int" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMSWeekByDate_1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEDate" Type="varchar" Mode="In" />
+          <Parameter Name="Chk" Type="int" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMSWeekProcessByDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEDate" Type="varchar" Mode="In" />
+          <Parameter Name="Chk" Type="int" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMSWeekProcessByDate_1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEDate" Type="varchar" Mode="In" />
+          <Parameter Name="Chk" Type="int" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMSWeekWorkpieceByDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEDate" Type="varchar" Mode="In" />
+          <Parameter Name="Chk" Type="int" Mode="In" />
+        </Function>
+        <Function Name="get_OEEMSWeekWorkpieceByDate_1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEDate" Type="varchar" Mode="In" />
+          <Parameter Name="Chk" Type="int" Mode="In" />
+        </Function>
+        <Function Name="LOG_UPDATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="V_F000" Type="varchar" Mode="In" />
+          <Parameter Name="V_F002" Type="varchar" Mode="In" />
+          <Parameter Name="V_F003" Type="nvarchar" Mode="In" />
+          <Parameter Name="V_F004" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ActionLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ActionName" Type="varchar" Mode="In" />
+          <Parameter Name="ControllerName" Type="varchar" Mode="In" />
+          <Parameter Name="Method" Type="varchar" Mode="In" />
+          <Parameter Name="Content" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Detail" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="Date" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_DelOEEMS_DownTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="DTID" Type="varchar" Mode="In" />
+          <Parameter Name="WorkPieceID" Type="varchar" Mode="In" />
+          <Parameter Name="ProcessID" Type="varchar" Mode="In" />
+          <Parameter Name="FromTime" Type="varchar" Mode="In" />
+          <Parameter Name="ToTime" Type="varchar" Mode="In" />
+          <Parameter Name="Note" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_DelOEEMS_emp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="EMPID" Type="varchar" Mode="In" />
+          <Parameter Name="WorkPieceID" Type="varchar" Mode="In" />
+          <Parameter Name="ProcessID" Type="varchar" Mode="In" />
+          <Parameter Name="Note" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_DelOEEMS_Header" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="OEEDate" Type="datetime" Mode="In" />
+          <Parameter Name="ProjectID" Type="varchar" Mode="In" />
+          <Parameter Name="CompID" Type="varchar" Mode="In" />
+          <Parameter Name="SizeID" Type="varchar" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_DelOEEMS_Process" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="ProcessID" Type="varchar" Mode="In" />
+          <Parameter Name="WorkPieceID" Type="varchar" Mode="In" />
+          <Parameter Name="PlanTime" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_DelOEEMS_RealTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="EMPID" Type="varchar" Mode="In" />
+          <Parameter Name="WorkPieceID" Type="varchar" Mode="In" />
+          <Parameter Name="ProcessID" Type="varchar" Mode="In" />
+          <Parameter Name="FromTime" Type="varchar" Mode="In" />
+          <Parameter Name="ToTime" Type="varchar" Mode="In" />
+          <Parameter Name="Note" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_DelProject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProjectID" Type="varchar" Mode="In" />
+          <Parameter Name="ProjectName" Type="nvarchar" Mode="In" />
+          <Parameter Name="CategoryID" Type="varchar" Mode="In" />
+          <Parameter Name="CustomerID" Type="varchar" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_EndOEEMS_Header" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_EndOEEMS_Header_auto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_EndOEEMS_Process" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="ProcessID" Type="varchar" Mode="In" />
+          <Parameter Name="WorkPieceID" Type="varchar" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_EndOEEMS_Process_auto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="ProcessID" Type="varchar" Mode="In" />
+          <Parameter Name="WorkPieceID" Type="varchar" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_InsLogUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="TabletName" Type="varchar" Mode="In" />
+          <Parameter Name="SeriNo" Type="varchar" Mode="In" />
+          <Parameter Name="IMEI" Type="varchar" Mode="In" />
+          <Parameter Name="Status" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="sp_InsOEEMS_DownTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="DTID" Type="varchar" Mode="In" />
+          <Parameter Name="WorkPieceID" Type="varchar" Mode="In" />
+          <Parameter Name="ProcessID" Type="varchar" Mode="In" />
+          <Parameter Name="FromTime" Type="varchar" Mode="In" />
+          <Parameter Name="ToTime" Type="varchar" Mode="In" />
+          <Parameter Name="Note" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_InsOEEMS_Emp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="EMPID" Type="varchar" Mode="In" />
+          <Parameter Name="WorkPieceID" Type="varchar" Mode="In" />
+          <Parameter Name="ProcessID" Type="varchar" Mode="In" />
+          <Parameter Name="Note" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_InsOEEMS_Header" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="OEEDate" Type="datetime" Mode="In" />
+          <Parameter Name="ProjectID" Type="varchar" Mode="In" />
+          <Parameter Name="CompID" Type="varchar" Mode="In" />
+          <Parameter Name="SizeID" Type="varchar" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_InsOEEMS_PercentComplete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="WeedOfYear" Type="int" Mode="In" />
+          <Parameter Name="PercentCom" Type="float" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_InsOEEMS_Process" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="ProcessID" Type="int" Mode="In" />
+          <Parameter Name="WorkPieceID" Type="int" Mode="In" />
+          <Parameter Name="PlanTime" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_InsOEEMS_RealTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="EMPID" Type="varchar" Mode="In" />
+          <Parameter Name="WorkPieceID" Type="varchar" Mode="In" />
+          <Parameter Name="ProcessID" Type="varchar" Mode="In" />
+          <Parameter Name="FromTime" Type="varchar" Mode="In" />
+          <Parameter Name="ToTime" Type="varchar" Mode="In" />
+          <Parameter Name="Note" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_InsProject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProjectID" Type="varchar" Mode="In" />
+          <Parameter Name="ProjectName" Type="nvarchar" Mode="In" />
+          <Parameter Name="CategoryID" Type="varchar" Mode="In" />
+          <Parameter Name="CustomerID" Type="varchar" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_tblDepartmentProcess_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_tblDownTime_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_tblProject_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_tblProjectComp_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_tblProjectSize_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_tblWorkpiece_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_tblWorkpieceProcess_edit_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_tblWorkpieceProcess_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_udpOEEMS_ChangeProcess" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OEEID" Type="varchar" Mode="In" />
+          <Parameter Name="WorkPieceID" Type="int" Mode="In" />
+          <Parameter Name="ProcessIDOld" Type="int" Mode="In" />
+          <Parameter Name="ProcessIDNew" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="WeekOfMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="now_day" Type="datetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="OEEMSModelStoreContainer">
+          <EntitySet Name="tblCategory" EntityType="Self.tblCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblComp" EntityType="Self.tblComp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCustomers" EntityType="Self.tblCustomers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDepartmentProcess" EntityType="Self.tblDepartmentProcess" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDownTime" EntityType="Self.tblDownTime" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblGroupDT" EntityType="Self.tblGroupDT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOEEMS_DownTime" EntityType="Self.tblOEEMS_DownTime" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOEEMS_Employee" EntityType="Self.tblOEEMS_Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOEEMS_Header" EntityType="Self.tblOEEMS_Header" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOEEMS_Process" EntityType="Self.tblOEEMS_Process" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOEEMS_Status" EntityType="Self.tblOEEMS_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProcess" EntityType="Self.tblProcess" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProject" EntityType="Self.tblProject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProjectComp" EntityType="Self.tblProjectComp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProjectSize" EntityType="Self.tblProjectSize" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSize" EntityType="Self.tblSize" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblVersionTablet" EntityType="Self.tblVersionTablet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblWorkpiece" EntityType="Self.tblWorkpiece" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblWorkpieceProcess" EntityType="Self.tblWorkpieceProcess" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblLog" EntityType="Self.tblLog" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tblLog].[F000] AS [F000], 
+    [tblLog].[F001] AS [F001], 
+    [tblLog].[F002] AS [F002], 
+    [tblLog].[F003] AS [F003], 
+    [tblLog].[F004] AS [F004]
+    FROM [dbo].[tblLog] AS [tblLog]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tblOEEMS_PercentComplete" EntityType="Self.tblOEEMS_PercentComplete" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tblOEEMS_PercentComplete].[ID] AS [ID], 
+    [tblOEEMS_PercentComplete].[OEEID] AS [OEEID], 
+    [tblOEEMS_PercentComplete].[DateOfWeek] AS [DateOfWeek], 
+    [tblOEEMS_PercentComplete].[WeedOfYear] AS [WeedOfYear], 
+    [tblOEEMS_PercentComplete].[PercentCom] AS [PercentCom], 
+    [tblOEEMS_PercentComplete].[CreateUser] AS [CreateUser], 
+    [tblOEEMS_PercentComplete].[CreateDate] AS [CreateDate]
+    FROM [dbo].[tblOEEMS_PercentComplete] AS [tblOEEMS_PercentComplete]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tblOEEMS_RealTime" EntityType="Self.tblOEEMS_RealTime" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tblOEEMS_RealTime].[ID] AS [ID], 
+    [tblOEEMS_RealTime].[OEEID] AS [OEEID], 
+    [tblOEEMS_RealTime].[EMPID] AS [EMPID], 
+    [tblOEEMS_RealTime].[WorkPieceID] AS [WorkPieceID], 
+    [tblOEEMS_RealTime].[ProcessID] AS [ProcessID], 
+    [tblOEEMS_RealTime].[FromTime] AS [FromTime], 
+    [tblOEEMS_RealTime].[ToTime] AS [ToTime], 
+    [tblOEEMS_RealTime].[Note] AS [Note], 
+    [tblOEEMS_RealTime].[IsDownTime] AS [IsDownTime], 
+    [tblOEEMS_RealTime].[CreateUser] AS [CreateUser], 
+    [tblOEEMS_RealTime].[CreateDate] AS [CreateDate]
+    FROM [dbo].[tblOEEMS_RealTime] AS [tblOEEMS_RealTime]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_tblDepartmentProcess_tblProcess" Association="Self.FK_tblDepartmentProcess_tblProcess">
+            <End Role="tblProcess" EntitySet="tblProcess" />
+            <End Role="tblDepartmentProcess" EntitySet="tblDepartmentProcess" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDownTime_tblProcess" Association="Self.FK_tblDownTime_tblProcess">
+            <End Role="tblProcess" EntitySet="tblProcess" />
+            <End Role="tblDownTime" EntitySet="tblDownTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_DownTime_tblDownTime" Association="Self.FK_tblOEEMS_DownTime_tblDownTime">
+            <End Role="tblDownTime" EntitySet="tblDownTime" />
+            <End Role="tblOEEMS_DownTime" EntitySet="tblOEEMS_DownTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_DownTime_tblOEEMS_Process" Association="Self.FK_tblOEEMS_DownTime_tblOEEMS_Process">
+            <End Role="tblOEEMS_Process" EntitySet="tblOEEMS_Process" />
+            <End Role="tblOEEMS_DownTime" EntitySet="tblOEEMS_DownTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_Employee_tblOEEMS_Process1" Association="Self.FK_tblOEEMS_Employee_tblOEEMS_Process1">
+            <End Role="tblOEEMS_Process" EntitySet="tblOEEMS_Process" />
+            <End Role="tblOEEMS_Employee" EntitySet="tblOEEMS_Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_Header_tblComp" Association="Self.FK_tblOEEMS_Header_tblComp">
+            <End Role="tblComp" EntitySet="tblComp" />
+            <End Role="tblOEEMS_Header" EntitySet="tblOEEMS_Header" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_Header_tblOEEMS_Status" Association="Self.FK_tblOEEMS_Header_tblOEEMS_Status">
+            <End Role="tblOEEMS_Status" EntitySet="tblOEEMS_Status" />
+            <End Role="tblOEEMS_Header" EntitySet="tblOEEMS_Header" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_Header_tblProject" Association="Self.FK_tblOEEMS_Header_tblProject">
+            <End Role="tblProject" EntitySet="tblProject" />
+            <End Role="tblOEEMS_Header" EntitySet="tblOEEMS_Header" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_Header_tblSize" Association="Self.FK_tblOEEMS_Header_tblSize">
+            <End Role="tblSize" EntitySet="tblSize" />
+            <End Role="tblOEEMS_Header" EntitySet="tblOEEMS_Header" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_PercentComplete_tblOEEMS_Header" Association="Self.FK_tblOEEMS_PercentComplete_tblOEEMS_Header">
+            <End Role="tblOEEMS_Header" EntitySet="tblOEEMS_Header" />
+            <End Role="tblOEEMS_PercentComplete" EntitySet="tblOEEMS_PercentComplete" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_Process_tblOEEMS_Header" Association="Self.FK_tblOEEMS_Process_tblOEEMS_Header">
+            <End Role="tblOEEMS_Header" EntitySet="tblOEEMS_Header" />
+            <End Role="tblOEEMS_Process" EntitySet="tblOEEMS_Process" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_Process_tblOEEMS_Status" Association="Self.FK_tblOEEMS_Process_tblOEEMS_Status">
+            <End Role="tblOEEMS_Status" EntitySet="tblOEEMS_Status" />
+            <End Role="tblOEEMS_Process" EntitySet="tblOEEMS_Process" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_Process_tblWorkpieceProcess1" Association="Self.FK_tblOEEMS_Process_tblWorkpieceProcess1">
+            <End Role="tblWorkpieceProcess" EntitySet="tblWorkpieceProcess" />
+            <End Role="tblOEEMS_Process" EntitySet="tblOEEMS_Process" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_RealTime_tblOEEMS_Employee" Association="Self.FK_tblOEEMS_RealTime_tblOEEMS_Employee">
+            <End Role="tblOEEMS_Employee" EntitySet="tblOEEMS_Employee" />
+            <End Role="tblOEEMS_RealTime" EntitySet="tblOEEMS_RealTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_tblCategory" Association="Self.FK_tblProject_tblCategory">
+            <End Role="tblCategory" EntitySet="tblCategory" />
+            <End Role="tblProject" EntitySet="tblProject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_tblCustomers" Association="Self.FK_tblProject_tblCustomers">
+            <End Role="tblCustomers" EntitySet="tblCustomers" />
+            <End Role="tblProject" EntitySet="tblProject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProjectComp_tblComp" Association="Self.FK_tblProjectComp_tblComp">
+            <End Role="tblComp" EntitySet="tblComp" />
+            <End Role="tblProjectComp" EntitySet="tblProjectComp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProjectComp_tblProject" Association="Self.FK_tblProjectComp_tblProject">
+            <End Role="tblProject" EntitySet="tblProject" />
+            <End Role="tblProjectComp" EntitySet="tblProjectComp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProjectSize_tblProject" Association="Self.FK_tblProjectSize_tblProject">
+            <End Role="tblProject" EntitySet="tblProject" />
+            <End Role="tblProjectSize" EntitySet="tblProjectSize" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProjectSize_tblSize" Association="Self.FK_tblProjectSize_tblSize">
+            <End Role="tblSize" EntitySet="tblSize" />
+            <End Role="tblProjectSize" EntitySet="tblProjectSize" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblWorkpieceProcess_tblProcess" Association="Self.FK_tblWorkpieceProcess_tblProcess">
+            <End Role="tblProcess" EntitySet="tblProcess" />
+            <End Role="tblWorkpieceProcess" EntitySet="tblWorkpieceProcess" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblWorkpieceProcess_tblWorkpiece" Association="Self.FK_tblWorkpieceProcess_tblWorkpiece">
+            <End Role="tblWorkpiece" EntitySet="tblWorkpiece" />
+            <End Role="tblWorkpieceProcess" EntitySet="tblWorkpieceProcess" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OEEMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblComp">
+          <Key>
+            <PropertyRef Name="CompID" />
+          </Key>
+          <Property Name="CompID" Type="Int32" Nullable="false" />
+          <Property Name="CompName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MainComp" Type="Byte" />
+          <Property Name="Actice" Type="Boolean" />
+          <Property Name="Sort" Type="Int32" />
+          <NavigationProperty Name="tblOEEMS_Header" Relationship="Self.FK_tblOEEMS_Header_tblComp" FromRole="tblComp" ToRole="tblOEEMS_Header" />
+          <NavigationProperty Name="tblProjectComps" Relationship="Self.FK_tblProjectComp_tblComp" FromRole="tblComp" ToRole="tblProjectComp" />
+        </EntityType>
+        <EntityType Name="tblCustomer">
+          <Key>
+            <PropertyRef Name="CustID" />
+          </Key>
+          <Property Name="CustID" Type="Int32" Nullable="false" />
+          <Property Name="CustName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblProjects" Relationship="Self.FK_tblProject_tblCustomers" FromRole="tblCustomers" ToRole="tblProject" />
+        </EntityType>
+        <EntityType Name="tblDepartmentProcess">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+            <PropertyRef Name="ProcessID" />
+          </Key>
+          <Property Name="DepartmentID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProcessID" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblProcess" Relationship="Self.FK_tblDepartmentProcess_tblProcess" FromRole="tblDepartmentProcess" ToRole="tblProcess" />
+        </EntityType>
+        <EntityType Name="tblDownTime">
+          <Key>
+            <PropertyRef Name="DTID" />
+          </Key>
+          <Property Name="DTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupID" Type="Int32" Nullable="false" />
+          <Property Name="DTName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblProcess" Relationship="Self.FK_tblDownTime_tblProcess" FromRole="tblDownTime" ToRole="tblProcess" />
+          <NavigationProperty Name="tblOEEMS_DownTime" Relationship="Self.FK_tblOEEMS_DownTime_tblDownTime" FromRole="tblDownTime" ToRole="tblOEEMS_DownTime" />
+        </EntityType>
+        <EntityType Name="tblGroupDT">
+          <Key>
+            <PropertyRef Name="GDTID" />
+          </Key>
+          <Property Name="GDTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblOEEMS_DownTime">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OEEID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DTID" Type="Int32" Nullable="false" />
+          <Property Name="WorkPieceID" Type="Int32" Nullable="false" />
+          <Property Name="ProcessID" Type="Int32" Nullable="false" />
+          <Property Name="FromTime" Type="DateTime" Precision="3" />
+          <Property Name="ToTime" Type="DateTime" Precision="3" />
+          <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblDownTime" Relationship="Self.FK_tblOEEMS_DownTime_tblDownTime" FromRole="tblOEEMS_DownTime" ToRole="tblDownTime" />
+          <NavigationProperty Name="tblOEEMS_Process" Relationship="Self.FK_tblOEEMS_DownTime_tblOEEMS_Process" FromRole="tblOEEMS_DownTime" ToRole="tblOEEMS_Process" />
+          <Property Name="EMPID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblOEEMS_Employee">
+          <Key>
+            <PropertyRef Name="OEEID" />
+            <PropertyRef Name="EMPID" />
+            <PropertyRef Name="WorkPieceID" />
+            <PropertyRef Name="ProcessID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OEEID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EMPID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="WorkPieceID" Type="Int32" Nullable="false" />
+          <Property Name="ProcessID" Type="Int32" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreateUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblOEEMS_Process" Relationship="Self.FK_tblOEEMS_Employee_tblOEEMS_Process1" FromRole="tblOEEMS_Employee" ToRole="tblOEEMS_Process" />
+          <NavigationProperty Name="tblOEEMS_RealTime" Relationship="Self.FK_tblOEEMS_RealTime_tblOEEMS_Employee" FromRole="tblOEEMS_Employee" ToRole="tblOEEMS_RealTime" />
+        </EntityType>
+        <EntityType Name="tblOEEMS_Header">
+          <Key>
+            <PropertyRef Name="OEEID" />
+          </Key>
+          <Property Name="OEEID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OEEDate" Type="DateTime" Precision="3" />
+          <Property Name="ProjectID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CompID" Type="Int32" />
+          <Property Name="SizeID" Type="Int32" />
+          <Property Name="PlanTime" Type="Int32" />
+          <Property Name="RealTime" Type="Int32" />
+          <Property Name="DownTime" Type="Int32" />
+          <Property Name="OEE" Type="Double" />
+          <Property Name="CreateUser" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+          <NavigationProperty Name="tblComp" Relationship="Self.FK_tblOEEMS_Header_tblComp" FromRole="tblOEEMS_Header" ToRole="tblComp" />
+          <NavigationProperty Name="tblOEEMS_Status" Relationship="Self.FK_tblOEEMS_Header_tblOEEMS_Status" FromRole="tblOEEMS_Header" ToRole="tblOEEMS_Status" />
+          <NavigationProperty Name="tblProject" Relationship="Self.FK_tblOEEMS_Header_tblProject" FromRole="tblOEEMS_Header" ToRole="tblProject" />
+          <NavigationProperty Name="tblSize" Relationship="Self.FK_tblOEEMS_Header_tblSize" FromRole="tblOEEMS_Header" ToRole="tblSize" />
+          <NavigationProperty Name="tblOEEMS_Process" Relationship="Self.FK_tblOEEMS_Process_tblOEEMS_Header" FromRole="tblOEEMS_Header" ToRole="tblOEEMS_Process" />
+          <NavigationProperty Name="tblOEEMS_PercentComplete" Relationship="OEEMSModel.FK_tblOEEMS_PercentComplete_tblOEEMS_Header" FromRole="tblOEEMS_Header" ToRole="tblOEEMS_PercentComplete" />
+        </EntityType>
+        <EntityType Name="tblOEEMS_Process">
+          <Key>
+            <PropertyRef Name="OEEID" />
+            <PropertyRef Name="ProcessID" />
+            <PropertyRef Name="WorkPieceID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OEEID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProcessID" Type="Int32" Nullable="false" />
+          <Property Name="WorkPieceID" Type="Int32" Nullable="false" />
+          <Property Name="PlanTime" Type="Int32" Nullable="false" />
+          <Property Name="RealTime" Type="Int32" />
+          <Property Name="DownTime" Type="Int32" />
+          <Property Name="OEE" Type="Double" />
+          <Property Name="CreateUser" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblOEEMS_DownTime" Relationship="Self.FK_tblOEEMS_DownTime_tblOEEMS_Process" FromRole="tblOEEMS_Process" ToRole="tblOEEMS_DownTime" />
+          <NavigationProperty Name="tblOEEMS_Employee" Relationship="Self.FK_tblOEEMS_Employee_tblOEEMS_Process1" FromRole="tblOEEMS_Process" ToRole="tblOEEMS_Employee" />
+          <NavigationProperty Name="tblOEEMS_Header" Relationship="Self.FK_tblOEEMS_Process_tblOEEMS_Header" FromRole="tblOEEMS_Process" ToRole="tblOEEMS_Header" />
+          <NavigationProperty Name="tblOEEMS_Status" Relationship="Self.FK_tblOEEMS_Process_tblOEEMS_Status" FromRole="tblOEEMS_Process" ToRole="tblOEEMS_Status" />
+          <NavigationProperty Name="tblWorkpieceProcess" Relationship="Self.FK_tblOEEMS_Process_tblWorkpieceProcess1" FromRole="tblOEEMS_Process" ToRole="tblWorkpieceProcess" />
+        </EntityType>
+        <EntityType Name="tblOEEMS_Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="StatusName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblOEEMS_Header" Relationship="Self.FK_tblOEEMS_Header_tblOEEMS_Status" FromRole="tblOEEMS_Status" ToRole="tblOEEMS_Header" />
+          <NavigationProperty Name="tblOEEMS_Process" Relationship="Self.FK_tblOEEMS_Process_tblOEEMS_Status" FromRole="tblOEEMS_Status" ToRole="tblOEEMS_Process" />
+        </EntityType>
+        <EntityType Name="tblProcess">
+          <Key>
+            <PropertyRef Name="ProcessID" />
+          </Key>
+          <Property Name="ProcessID" Type="Int32" Nullable="false" />
+          <Property Name="ProcessName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EndofProcess" Type="Boolean" />
+          <NavigationProperty Name="tblDepartmentProcesses" Relationship="Self.FK_tblDepartmentProcess_tblProcess" FromRole="tblProcess" ToRole="tblDepartmentProcess" />
+          <NavigationProperty Name="tblDownTimes" Relationship="Self.FK_tblDownTime_tblProcess" FromRole="tblProcess" ToRole="tblDownTime" />
+          <NavigationProperty Name="tblWorkpieceProcesses" Relationship="Self.FK_tblWorkpieceProcess_tblProcess" FromRole="tblProcess" ToRole="tblWorkpieceProcess" />
+        </EntityType>
+        <EntityType Name="tblProject">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Name="ProjectID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProjectName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="CreateUser" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblCustomer" Relationship="Self.FK_tblProject_tblCustomers" FromRole="tblProject" ToRole="tblCustomers" />
+          <NavigationProperty Name="tblOEEMS_Header" Relationship="Self.FK_tblOEEMS_Header_tblProject" FromRole="tblProject" ToRole="tblOEEMS_Header" />
+          <NavigationProperty Name="tblProjectComps" Relationship="Self.FK_tblProjectComp_tblProject" FromRole="tblProject" ToRole="tblProjectComp" />
+          <NavigationProperty Name="tblProjectSizes" Relationship="Self.FK_tblProjectSize_tblProject" FromRole="tblProject" ToRole="tblProjectSize" />
+          <NavigationProperty Name="tblCategory" Relationship="OEEMSModel.FK_tblProject_tblCategory" FromRole="tblProject" ToRole="tblCategory" />
+        </EntityType>
+        <EntityType Name="tblProjectComp">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+            <PropertyRef Name="CompID" />
+          </Key>
+          <Property Name="ProjectID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CompID" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblComp" Relationship="Self.FK_tblProjectComp_tblComp" FromRole="tblProjectComp" ToRole="tblComp" />
+          <NavigationProperty Name="tblProject" Relationship="Self.FK_tblProjectComp_tblProject" FromRole="tblProjectComp" ToRole="tblProject" />
+        </EntityType>
+        <EntityType Name="tblProjectSize">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+            <PropertyRef Name="SizeID" />
+          </Key>
+          <Property Name="ProjectID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SizeID" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblProject" Relationship="Self.FK_tblProjectSize_tblProject" FromRole="tblProjectSize" ToRole="tblProject" />
+          <NavigationProperty Name="tblSize" Relationship="Self.FK_tblProjectSize_tblSize" FromRole="tblProjectSize" ToRole="tblSize" />
+        </EntityType>
+        <EntityType Name="tblSize">
+          <Key>
+            <PropertyRef Name="SizeID" />
+          </Key>
+          <Property Name="SizeID" Type="Int32" Nullable="false" />
+          <Property Name="SizeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblOEEMS_Header" Relationship="Self.FK_tblOEEMS_Header_tblSize" FromRole="tblSize" ToRole="tblOEEMS_Header" />
+          <NavigationProperty Name="tblProjectSizes" Relationship="Self.FK_tblProjectSize_tblSize" FromRole="tblSize" ToRole="tblProjectSize" />
+        </EntityType>
+        <EntityType Name="tblVersionTablet">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Version" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblWorkpiece">
+          <Key>
+            <PropertyRef Name="WorkpieceID" />
+          </Key>
+          <Property Name="WorkpieceID" Type="Int32" Nullable="false" />
+          <Property Name="WorkpieceName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblWorkpieceProcesses" Relationship="Self.FK_tblWorkpieceProcess_tblWorkpiece" FromRole="tblWorkpiece" ToRole="tblWorkpieceProcess" />
+        </EntityType>
+        <EntityType Name="tblWorkpieceProcess">
+          <Key>
+            <PropertyRef Name="WorkpieceID" />
+            <PropertyRef Name="ProcessID" />
+          </Key>
+          <Property Name="WorkpieceID" Type="Int32" Nullable="false" />
+          <Property Name="ProcessID" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblOEEMS_Process" Relationship="Self.FK_tblOEEMS_Process_tblWorkpieceProcess1" FromRole="tblWorkpieceProcess" ToRole="tblOEEMS_Process" />
+          <NavigationProperty Name="tblProcess" Relationship="Self.FK_tblWorkpieceProcess_tblProcess" FromRole="tblWorkpieceProcess" ToRole="tblProcess" />
+          <NavigationProperty Name="tblWorkpiece" Relationship="Self.FK_tblWorkpieceProcess_tblWorkpiece" FromRole="tblWorkpieceProcess" ToRole="tblWorkpiece" />
+        </EntityType>
+        <EntityType Name="tblLog">
+          <Key>
+            <PropertyRef Name="F000" />
+            <PropertyRef Name="F001" />
+          </Key>
+          <Property Name="F000" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="F001" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="F002" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="F003" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="F004" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblOEEMS_PercentComplete">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="OEEID" />
+            <PropertyRef Name="WeedOfYear" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OEEID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateOfWeek" Type="DateTime" Precision="0" />
+          <Property Name="WeedOfYear" Type="Int32" Nullable="false" />
+          <Property Name="PercentCom" Type="Double" />
+          <Property Name="CreateUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblOEEMS_Header" Relationship="OEEMSModel.FK_tblOEEMS_PercentComplete_tblOEEMS_Header" FromRole="tblOEEMS_PercentComplete" ToRole="tblOEEMS_Header" />
+        </EntityType>
+        <EntityType Name="tblOEEMS_RealTime">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="OEEID" />
+            <PropertyRef Name="EMPID" />
+            <PropertyRef Name="WorkPieceID" />
+            <PropertyRef Name="ProcessID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OEEID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EMPID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="WorkPieceID" Type="Int32" Nullable="false" />
+          <Property Name="ProcessID" Type="Int32" Nullable="false" />
+          <Property Name="FromTime" Type="DateTime" Precision="3" />
+          <Property Name="ToTime" Type="DateTime" Precision="3" />
+          <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreateUser" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblOEEMS_Employee" Relationship="Self.FK_tblOEEMS_RealTime_tblOEEMS_Employee" FromRole="tblOEEMS_RealTime" ToRole="tblOEEMS_Employee" />
+          <Property Name="IsDownTime" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_tblOEEMS_Header_tblComp">
+          <End Role="tblComp" Type="Self.tblComp" Multiplicity="0..1" />
+          <End Role="tblOEEMS_Header" Type="Self.tblOEEMS_Header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblComp">
+              <PropertyRef Name="CompID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_Header">
+              <PropertyRef Name="CompID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProjectComp_tblComp">
+          <End Role="tblComp" Type="Self.tblComp" Multiplicity="1" />
+          <End Role="tblProjectComp" Type="Self.tblProjectComp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblComp">
+              <PropertyRef Name="CompID" />
+            </Principal>
+            <Dependent Role="tblProjectComp">
+              <PropertyRef Name="CompID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_tblCustomers">
+          <End Role="tblCustomers" Type="Self.tblCustomer" Multiplicity="0..1" />
+          <End Role="tblProject" Type="Self.tblProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomers">
+              <PropertyRef Name="CustID" />
+            </Principal>
+            <Dependent Role="tblProject">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDepartmentProcess_tblProcess">
+          <End Role="tblProcess" Type="Self.tblProcess" Multiplicity="1" />
+          <End Role="tblDepartmentProcess" Type="Self.tblDepartmentProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProcess">
+              <PropertyRef Name="ProcessID" />
+            </Principal>
+            <Dependent Role="tblDepartmentProcess">
+              <PropertyRef Name="ProcessID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDownTime_tblProcess">
+          <End Role="tblProcess" Type="Self.tblProcess" Multiplicity="1" />
+          <End Role="tblDownTime" Type="Self.tblDownTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProcess">
+              <PropertyRef Name="ProcessID" />
+            </Principal>
+            <Dependent Role="tblDownTime">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_DownTime_tblDownTime">
+          <End Role="tblDownTime" Type="Self.tblDownTime" Multiplicity="1" />
+          <End Role="tblOEEMS_DownTime" Type="Self.tblOEEMS_DownTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDownTime">
+              <PropertyRef Name="DTID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_DownTime">
+              <PropertyRef Name="DTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_DownTime_tblOEEMS_Process">
+          <End Role="tblOEEMS_Process" Type="Self.tblOEEMS_Process" Multiplicity="1" />
+          <End Role="tblOEEMS_DownTime" Type="Self.tblOEEMS_DownTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOEEMS_Process">
+              <PropertyRef Name="OEEID" />
+              <PropertyRef Name="ProcessID" />
+              <PropertyRef Name="WorkPieceID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_DownTime">
+              <PropertyRef Name="OEEID" />
+              <PropertyRef Name="ProcessID" />
+              <PropertyRef Name="WorkPieceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_Employee_tblOEEMS_Process1">
+          <End Role="tblOEEMS_Process" Type="Self.tblOEEMS_Process" Multiplicity="1" />
+          <End Role="tblOEEMS_Employee" Type="Self.tblOEEMS_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOEEMS_Process">
+              <PropertyRef Name="OEEID" />
+              <PropertyRef Name="ProcessID" />
+              <PropertyRef Name="WorkPieceID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_Employee">
+              <PropertyRef Name="OEEID" />
+              <PropertyRef Name="ProcessID" />
+              <PropertyRef Name="WorkPieceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_RealTime_tblOEEMS_Employee">
+          <End Role="tblOEEMS_Employee" Type="Self.tblOEEMS_Employee" Multiplicity="1" />
+          <End Role="tblOEEMS_RealTime" Type="Self.tblOEEMS_RealTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOEEMS_Employee">
+              <PropertyRef Name="OEEID" />
+              <PropertyRef Name="EMPID" />
+              <PropertyRef Name="WorkPieceID" />
+              <PropertyRef Name="ProcessID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_RealTime">
+              <PropertyRef Name="OEEID" />
+              <PropertyRef Name="EMPID" />
+              <PropertyRef Name="WorkPieceID" />
+              <PropertyRef Name="ProcessID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_Header_tblOEEMS_Status">
+          <End Role="tblOEEMS_Status" Type="Self.tblOEEMS_Status" Multiplicity="0..1" />
+          <End Role="tblOEEMS_Header" Type="Self.tblOEEMS_Header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOEEMS_Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_Header">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_Header_tblProject">
+          <End Role="tblProject" Type="Self.tblProject" Multiplicity="0..1" />
+          <End Role="tblOEEMS_Header" Type="Self.tblOEEMS_Header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_Header">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_Header_tblSize">
+          <End Role="tblSize" Type="Self.tblSize" Multiplicity="0..1" />
+          <End Role="tblOEEMS_Header" Type="Self.tblOEEMS_Header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSize">
+              <PropertyRef Name="SizeID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_Header">
+              <PropertyRef Name="SizeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_Process_tblOEEMS_Header">
+          <End Role="tblOEEMS_Header" Type="Self.tblOEEMS_Header" Multiplicity="1" />
+          <End Role="tblOEEMS_Process" Type="Self.tblOEEMS_Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOEEMS_Header">
+              <PropertyRef Name="OEEID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_Process">
+              <PropertyRef Name="OEEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_Process_tblOEEMS_Status">
+          <End Role="tblOEEMS_Status" Type="Self.tblOEEMS_Status" Multiplicity="1" />
+          <End Role="tblOEEMS_Process" Type="Self.tblOEEMS_Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOEEMS_Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_Process">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOEEMS_Process_tblWorkpieceProcess1">
+          <End Role="tblWorkpieceProcess" Type="Self.tblWorkpieceProcess" Multiplicity="1" />
+          <End Role="tblOEEMS_Process" Type="Self.tblOEEMS_Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblWorkpieceProcess">
+              <PropertyRef Name="WorkpieceID" />
+              <PropertyRef Name="ProcessID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_Process">
+              <PropertyRef Name="WorkPieceID" />
+              <PropertyRef Name="ProcessID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblWorkpieceProcess_tblProcess">
+          <End Role="tblProcess" Type="Self.tblProcess" Multiplicity="1" />
+          <End Role="tblWorkpieceProcess" Type="Self.tblWorkpieceProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProcess">
+              <PropertyRef Name="ProcessID" />
+            </Principal>
+            <Dependent Role="tblWorkpieceProcess">
+              <PropertyRef Name="ProcessID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProjectComp_tblProject">
+          <End Role="tblProject" Type="Self.tblProject" Multiplicity="1" />
+          <End Role="tblProjectComp" Type="Self.tblProjectComp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="tblProjectComp">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProjectSize_tblProject">
+          <End Role="tblProject" Type="Self.tblProject" Multiplicity="1" />
+          <End Role="tblProjectSize" Type="Self.tblProjectSize" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="tblProjectSize">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProjectSize_tblSize">
+          <End Role="tblSize" Type="Self.tblSize" Multiplicity="1" />
+          <End Role="tblProjectSize" Type="Self.tblProjectSize" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSize">
+              <PropertyRef Name="SizeID" />
+            </Principal>
+            <Dependent Role="tblProjectSize">
+              <PropertyRef Name="SizeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblWorkpieceProcess_tblWorkpiece">
+          <End Role="tblWorkpiece" Type="Self.tblWorkpiece" Multiplicity="1" />
+          <End Role="tblWorkpieceProcess" Type="Self.tblWorkpieceProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblWorkpiece">
+              <PropertyRef Name="WorkpieceID" />
+            </Principal>
+            <Dependent Role="tblWorkpieceProcess">
+              <PropertyRef Name="WorkpieceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OEEMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblComps" EntityType="Self.tblComp" />
+          <EntitySet Name="tblCustomers" EntityType="Self.tblCustomer" />
+          <EntitySet Name="tblDepartmentProcesses" EntityType="Self.tblDepartmentProcess" />
+          <EntitySet Name="tblDownTimes" EntityType="Self.tblDownTime" />
+          <EntitySet Name="tblGroupDTs" EntityType="Self.tblGroupDT" />
+          <EntitySet Name="tblOEEMS_DownTime" EntityType="Self.tblOEEMS_DownTime" />
+          <EntitySet Name="tblOEEMS_Employee" EntityType="Self.tblOEEMS_Employee" />
+          <EntitySet Name="tblOEEMS_Header" EntityType="Self.tblOEEMS_Header" />
+          <EntitySet Name="tblOEEMS_Process" EntityType="Self.tblOEEMS_Process" />
+          <EntitySet Name="tblOEEMS_Status" EntityType="Self.tblOEEMS_Status" />
+          <EntitySet Name="tblProcesses" EntityType="Self.tblProcess" />
+          <EntitySet Name="tblProjects" EntityType="Self.tblProject" />
+          <EntitySet Name="tblProjectComps" EntityType="Self.tblProjectComp" />
+          <EntitySet Name="tblProjectSizes" EntityType="Self.tblProjectSize" />
+          <EntitySet Name="tblSizes" EntityType="Self.tblSize" />
+          <EntitySet Name="tblVersionTablets" EntityType="Self.tblVersionTablet" />
+          <EntitySet Name="tblWorkpieces" EntityType="Self.tblWorkpiece" />
+          <EntitySet Name="tblWorkpieceProcesses" EntityType="Self.tblWorkpieceProcess" />
+          <EntitySet Name="tblLogs" EntityType="Self.tblLog" />
+          <EntitySet Name="tblOEEMS_PercentComplete" EntityType="Self.tblOEEMS_PercentComplete" />
+          <EntitySet Name="tblOEEMS_RealTime" EntityType="Self.tblOEEMS_RealTime" />
+          <AssociationSet Name="FK_tblOEEMS_Header_tblComp" Association="Self.FK_tblOEEMS_Header_tblComp">
+            <End Role="tblComp" EntitySet="tblComps" />
+            <End Role="tblOEEMS_Header" EntitySet="tblOEEMS_Header" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProjectComp_tblComp" Association="Self.FK_tblProjectComp_tblComp">
+            <End Role="tblComp" EntitySet="tblComps" />
+            <End Role="tblProjectComp" EntitySet="tblProjectComps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_tblCustomers" Association="Self.FK_tblProject_tblCustomers">
+            <End Role="tblCustomers" EntitySet="tblCustomers" />
+            <End Role="tblProject" EntitySet="tblProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDepartmentProcess_tblProcess" Association="Self.FK_tblDepartmentProcess_tblProcess">
+            <End Role="tblProcess" EntitySet="tblProcesses" />
+            <End Role="tblDepartmentProcess" EntitySet="tblDepartmentProcesses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDownTime_tblProcess" Association="Self.FK_tblDownTime_tblProcess">
+            <End Role="tblProcess" EntitySet="tblProcesses" />
+            <End Role="tblDownTime" EntitySet="tblDownTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_DownTime_tblDownTime" Association="Self.FK_tblOEEMS_DownTime_tblDownTime">
+            <End Role="tblDownTime" EntitySet="tblDownTimes" />
+            <End Role="tblOEEMS_DownTime" EntitySet="tblOEEMS_DownTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_DownTime_tblOEEMS_Process" Association="Self.FK_tblOEEMS_DownTime_tblOEEMS_Process">
+            <End Role="tblOEEMS_Process" EntitySet="tblOEEMS_Process" />
+            <End Role="tblOEEMS_DownTime" EntitySet="tblOEEMS_DownTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_Employee_tblOEEMS_Process1" Association="Self.FK_tblOEEMS_Employee_tblOEEMS_Process1">
+            <End Role="tblOEEMS_Process" EntitySet="tblOEEMS_Process" />
+            <End Role="tblOEEMS_Employee" EntitySet="tblOEEMS_Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_RealTime_tblOEEMS_Employee" Association="Self.FK_tblOEEMS_RealTime_tblOEEMS_Employee">
+            <End Role="tblOEEMS_Employee" EntitySet="tblOEEMS_Employee" />
+            <End Role="tblOEEMS_RealTime" EntitySet="tblOEEMS_RealTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_Header_tblOEEMS_Status" Association="Self.FK_tblOEEMS_Header_tblOEEMS_Status">
+            <End Role="tblOEEMS_Status" EntitySet="tblOEEMS_Status" />
+            <End Role="tblOEEMS_Header" EntitySet="tblOEEMS_Header" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_Header_tblProject" Association="Self.FK_tblOEEMS_Header_tblProject">
+            <End Role="tblProject" EntitySet="tblProjects" />
+            <End Role="tblOEEMS_Header" EntitySet="tblOEEMS_Header" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_Header_tblSize" Association="Self.FK_tblOEEMS_Header_tblSize">
+            <End Role="tblSize" EntitySet="tblSizes" />
+            <End Role="tblOEEMS_Header" EntitySet="tblOEEMS_Header" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_Process_tblOEEMS_Header" Association="Self.FK_tblOEEMS_Process_tblOEEMS_Header">
+            <End Role="tblOEEMS_Header" EntitySet="tblOEEMS_Header" />
+            <End Role="tblOEEMS_Process" EntitySet="tblOEEMS_Process" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_Process_tblOEEMS_Status" Association="Self.FK_tblOEEMS_Process_tblOEEMS_Status">
+            <End Role="tblOEEMS_Status" EntitySet="tblOEEMS_Status" />
+            <End Role="tblOEEMS_Process" EntitySet="tblOEEMS_Process" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOEEMS_Process_tblWorkpieceProcess1" Association="Self.FK_tblOEEMS_Process_tblWorkpieceProcess1">
+            <End Role="tblWorkpieceProcess" EntitySet="tblWorkpieceProcesses" />
+            <End Role="tblOEEMS_Process" EntitySet="tblOEEMS_Process" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblWorkpieceProcess_tblProcess" Association="Self.FK_tblWorkpieceProcess_tblProcess">
+            <End Role="tblProcess" EntitySet="tblProcesses" />
+            <End Role="tblWorkpieceProcess" EntitySet="tblWorkpieceProcesses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProjectComp_tblProject" Association="Self.FK_tblProjectComp_tblProject">
+            <End Role="tblProject" EntitySet="tblProjects" />
+            <End Role="tblProjectComp" EntitySet="tblProjectComps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProjectSize_tblProject" Association="Self.FK_tblProjectSize_tblProject">
+            <End Role="tblProject" EntitySet="tblProjects" />
+            <End Role="tblProjectSize" EntitySet="tblProjectSizes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProjectSize_tblSize" Association="Self.FK_tblProjectSize_tblSize">
+            <End Role="tblSize" EntitySet="tblSizes" />
+            <End Role="tblProjectSize" EntitySet="tblProjectSizes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblWorkpieceProcess_tblWorkpiece" Association="Self.FK_tblWorkpieceProcess_tblWorkpiece">
+            <End Role="tblWorkpiece" EntitySet="tblWorkpieces" />
+            <End Role="tblWorkpieceProcess" EntitySet="tblWorkpieceProcesses" />
+          </AssociationSet>
+          <FunctionImport Name="get_CboProjectExists" ReturnType="Collection(OEEMSModel.get_CboProjectExists_Result)">
+          <Parameter Name="ProjectID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_CboProjectExistsData" ReturnType="Collection(OEEMSModel.get_CboProjectExistsData_Result)">
+          <Parameter Name="ProjectID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_data_dropdown" ReturnType="Collection(OEEMSModel.get_data_dropdown_Result)">
+            <Parameter Name="paraone" Mode="In" Type="String" />
+            <Parameter Name="paratwo" Mode="In" Type="String" />
+            <Parameter Name="parathree" Mode="In" Type="String" />
+            <Parameter Name="parafour" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMS_DownTimeByID">
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="WorkPieceID" Mode="In" Type="String" />
+            <Parameter Name="ProcessID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMS_EmployeeByID">
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="WorkPieceID" Mode="In" Type="String" />
+            <Parameter Name="ProcessID" Mode="In" Type="String" />
+            <Parameter Name="EMPID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMS_ProcessByID" ReturnType="Collection(OEEMSModel.get_OEEMS_ProcessByID_Result)">
+          <Parameter Name="OEEID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMS_ProcessSUMByID" ReturnType="Collection(OEEMSModel.get_OEEMS_ProcessSUMByID_Result)">
+          <Parameter Name="OEEID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMS_RealTime_Emp" ReturnType="Collection(OEEMSModel.get_OEEMS_RealTime_Emp_Result)">
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="WorkPieceID" Mode="In" Type="String" />
+            <Parameter Name="ProcessID" Mode="In" Type="String" />
+            <Parameter Name="EMPID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMS_RealTimeByID">
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="WorkPieceID" Mode="In" Type="String" />
+            <Parameter Name="ProcessID" Mode="In" Type="String" />
+            <Parameter Name="EMPID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMS_ResultDistanceDate" ReturnType="Collection(OEEMSModel.get_OEEMS_ResultDistanceDate_Result)">
+            <Parameter Name="OEEDateFrom" Mode="In" Type="String" />
+            <Parameter Name="OEEDateTo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMS_ResultDTDistanceDate" ReturnType="Collection(OEEMSModel.get_OEEMS_ResultDTDistanceDate_Result)">
+            <Parameter Name="OEEDateFrom" Mode="In" Type="String" />
+            <Parameter Name="OEEDateTo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMS_ResultProcessDistanceDate" ReturnType="Collection(OEEMSModel.get_OEEMS_ResultProcessDistanceDate_Result)">
+            <Parameter Name="OEEDateFrom" Mode="In" Type="String" />
+            <Parameter Name="OEEDateTo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMSHeaderByDate" ReturnType="Collection(OEEMSModel.get_OEEMSHeaderByDate_Result)">
+          <Parameter Name="OEEDate" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMSHeaderByDistanceDate" ReturnType="Collection(OEEMSModel.get_OEEMSHeaderByDistanceDate_Result)">
+            <Parameter Name="OEEDateFrom" Mode="In" Type="String" />
+            <Parameter Name="OEEDateTo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMSHeaderByID" ReturnType="Collection(OEEMSModel.get_OEEMSHeaderByID_Result)">
+          <Parameter Name="OEEID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMSHeaderByStatus" ReturnType="Collection(OEEMSModel.get_OEEMSHeaderByStatus_Result)" />
+          <FunctionImport Name="get_OEEMSWeekByDate" ReturnType="Collection(OEEMSModel.get_OEEMSWeekByDate_Result)">
+            <Parameter Name="OEEDate" Mode="In" Type="String" />
+            <Parameter Name="Chk" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMSWeekByDate_Hung" ReturnType="Collection(OEEMSModel.get_OEEMSWeekByDate_Hung_Result)">
+            <Parameter Name="OEEDate" Mode="In" Type="String" />
+            <Parameter Name="Chk" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMSWeekProcessByDate" ReturnType="Collection(OEEMSModel.get_OEEMSWeekProcessByDate_Result)">
+            <Parameter Name="OEEDate" Mode="In" Type="String" />
+            <Parameter Name="Chk" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="LOG_UPDATE">
+            <Parameter Name="V_F000" Mode="In" Type="String" />
+            <Parameter Name="V_F002" Mode="In" Type="String" />
+            <Parameter Name="V_F003" Mode="In" Type="String" />
+            <Parameter Name="V_F004" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ActionLog">
+            <Parameter Name="ActionName" Mode="In" Type="String" />
+            <Parameter Name="ControllerName" Mode="In" Type="String" />
+            <Parameter Name="Method" Mode="In" Type="String" />
+            <Parameter Name="Content" Mode="In" Type="String" />
+            <Parameter Name="Detail" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DelOEEMS_DownTime" ReturnType="Collection(String)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="DTID" Mode="In" Type="String" />
+            <Parameter Name="WorkPieceID" Mode="In" Type="String" />
+            <Parameter Name="ProcessID" Mode="In" Type="String" />
+            <Parameter Name="FromTime" Mode="In" Type="String" />
+            <Parameter Name="ToTime" Mode="In" Type="String" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DelOEEMS_emp">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="EMPID" Mode="In" Type="String" />
+            <Parameter Name="WorkPieceID" Mode="In" Type="String" />
+            <Parameter Name="ProcessID" Mode="In" Type="String" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DelOEEMS_Header" ReturnType="Collection(String)">
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="OEEDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ProjectID" Mode="In" Type="String" />
+            <Parameter Name="CompID" Mode="In" Type="String" />
+            <Parameter Name="SizeID" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DelOEEMS_Process" ReturnType="Collection(String)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="ProcessID" Mode="In" Type="String" />
+            <Parameter Name="WorkPieceID" Mode="In" Type="String" />
+            <Parameter Name="PlanTime" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DelOEEMS_RealTime" ReturnType="Collection(String)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="EMPID" Mode="In" Type="String" />
+            <Parameter Name="WorkPieceID" Mode="In" Type="String" />
+            <Parameter Name="ProcessID" Mode="In" Type="String" />
+            <Parameter Name="FromTime" Mode="In" Type="String" />
+            <Parameter Name="ToTime" Mode="In" Type="String" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DelProject" ReturnType="Collection(String)">
+            <Parameter Name="ProjectID" Mode="In" Type="String" />
+            <Parameter Name="ProjectName" Mode="In" Type="String" />
+            <Parameter Name="CategoryID" Mode="In" Type="String" />
+            <Parameter Name="CustomerID" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EndOEEMS_Header" ReturnType="Collection(String)">
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EndOEEMS_Header_auto" ReturnType="Collection(String)">
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EndOEEMS_Process" ReturnType="Collection(String)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="ProcessID" Mode="In" Type="String" />
+            <Parameter Name="WorkPieceID" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EndOEEMS_Process_auto" ReturnType="Collection(String)">
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="ProcessID" Mode="In" Type="String" />
+            <Parameter Name="WorkPieceID" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsLogUser">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="TabletName" Mode="In" Type="String" />
+            <Parameter Name="SeriNo" Mode="In" Type="String" />
+            <Parameter Name="IMEI" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsOEEMS_DownTime" ReturnType="Collection(String)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="DTID" Mode="In" Type="String" />
+            <Parameter Name="WorkPieceID" Mode="In" Type="String" />
+            <Parameter Name="ProcessID" Mode="In" Type="String" />
+            <Parameter Name="FromTime" Mode="In" Type="String" />
+            <Parameter Name="ToTime" Mode="In" Type="String" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsOEEMS_Emp" ReturnType="Collection(String)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="EMPID" Mode="In" Type="String" />
+            <Parameter Name="WorkPieceID" Mode="In" Type="String" />
+            <Parameter Name="ProcessID" Mode="In" Type="String" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsOEEMS_Header" ReturnType="Collection(String)">
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="OEEDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ProjectID" Mode="In" Type="String" />
+            <Parameter Name="CompID" Mode="In" Type="String" />
+            <Parameter Name="SizeID" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsOEEMS_PercentComplete" ReturnType="Collection(String)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="WeedOfYear" Mode="In" Type="Int32" />
+            <Parameter Name="PercentCom" Mode="In" Type="Double" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsOEEMS_Process" ReturnType="Collection(String)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="ProcessID" Mode="In" Type="Int32" />
+            <Parameter Name="WorkPieceID" Mode="In" Type="Int32" />
+            <Parameter Name="PlanTime" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsOEEMS_RealTime" ReturnType="Collection(String)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="EMPID" Mode="In" Type="String" />
+            <Parameter Name="WorkPieceID" Mode="In" Type="String" />
+            <Parameter Name="ProcessID" Mode="In" Type="String" />
+            <Parameter Name="FromTime" Mode="In" Type="String" />
+            <Parameter Name="ToTime" Mode="In" Type="String" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsProject" ReturnType="Collection(String)">
+            <Parameter Name="ProjectID" Mode="In" Type="String" />
+            <Parameter Name="ProjectName" Mode="In" Type="String" />
+            <Parameter Name="CategoryID" Mode="In" Type="String" />
+            <Parameter Name="CustomerID" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_tblDepartmentProcess_Get" ReturnType="Collection(OEEMSModel.sp_tblDepartmentProcess_Get_Result)" />
+          <FunctionImport Name="sp_tblDownTime_Get" ReturnType="Collection(OEEMSModel.sp_tblDownTime_Get_Result)" />
+          <FunctionImport Name="sp_tblProject_Get" ReturnType="Collection(OEEMSModel.sp_tblProject_Get_Result)" />
+          <FunctionImport Name="sp_tblProjectComp_Get" ReturnType="Collection(OEEMSModel.sp_tblProjectComp_Get_Result)" />
+          <FunctionImport Name="sp_tblProjectSize_Get" ReturnType="Collection(OEEMSModel.sp_tblProjectSize_Get_Result)" />
+          <FunctionImport Name="sp_tblWorkpiece_Get" ReturnType="Collection(OEEMSModel.sp_tblWorkpiece_Get_Result)" />
+          <FunctionImport Name="sp_tblWorkpieceProcess_edit_Get" ReturnType="Collection(OEEMSModel.sp_tblWorkpieceProcess_edit_Get_Result)">
+          <Parameter Name="OEEID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_tblWorkpieceProcess_Get" ReturnType="Collection(OEEMSModel.sp_tblWorkpieceProcess_Get_Result)" />
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="get_OEEMSHeaderByDistanceDate_new" ReturnType="Collection(OEEMSModel.get_OEEMSHeaderByDistanceDate_new_Result)">
+            <Parameter Name="OEEDateFrom" Mode="In" Type="String" />
+            <Parameter Name="OEEDateTo" Mode="In" Type="String" />
+          </FunctionImport>
+          <AssociationSet Name="FK_tblOEEMS_PercentComplete_tblOEEMS_Header" Association="OEEMSModel.FK_tblOEEMS_PercentComplete_tblOEEMS_Header">
+            <End Role="tblOEEMS_Header" EntitySet="tblOEEMS_Header" />
+            <End Role="tblOEEMS_PercentComplete" EntitySet="tblOEEMS_PercentComplete" />
+          </AssociationSet>
+          <FunctionImport Name="sp_udpOEEMS_ChangeProcess" ReturnType="Collection(String)">
+            <Parameter Name="OEEID" Mode="In" Type="String" />
+            <Parameter Name="WorkPieceID" Mode="In" Type="Int32" />
+            <Parameter Name="ProcessIDOld" Mode="In" Type="Int32" />
+            <Parameter Name="ProcessIDNew" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="tblCategories" EntityType="OEEMSModel.tblCategory" />
+          <AssociationSet Name="FK_tblProject_tblCategory" Association="OEEMSModel.FK_tblProject_tblCategory">
+            <End Role="tblCategory" EntitySet="tblCategories" />
+            <End Role="tblProject" EntitySet="tblProjects" />
+          </AssociationSet>
+          <FunctionImport Name="get_OEEMSWeekByDate_1" ReturnType="Collection(OEEMSModel.get_OEEMSWeekByDate_1_Result)">
+            <Parameter Name="OEEDate" Mode="In" Type="String" />
+            <Parameter Name="Chk" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMSWeekProcessByDate_1" ReturnType="Collection(OEEMSModel.get_OEEMSWeekProcessByDate_1_Result)">
+            <Parameter Name="OEEDate" Mode="In" Type="String" />
+            <Parameter Name="Chk" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMSWeekWorkpieceByDate" ReturnType="Collection(OEEMSModel.get_OEEMSWeekWorkpieceByDate_Result)">
+            <Parameter Name="OEEDate" Mode="In" Type="String" />
+            <Parameter Name="Chk" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="get_OEEMSWeekWorkpieceByDate_1" ReturnType="Collection(OEEMSModel.get_OEEMSWeekWorkpieceByDate_1_Result)">
+            <Parameter Name="OEEDate" Mode="In" Type="String" />
+            <Parameter Name="Chk" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="get_CboProjectExists_Result">
+          <Property Type="String" Name="ProjectID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="CategoryID" Nullable="true" />
+          <Property Type="Int32" Name="CustomerID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="get_CboProjectExistsData_Result">
+          <Property Type="String" Name="ProjectID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="CategoryID" Nullable="true" />
+          <Property Type="Int32" Name="CustomerID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="get_data_dropdown_Result">
+          <Property Type="Int32" Name="CompID" Nullable="false" />
+          <Property Type="String" Name="CompName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="get_OEEMS_ProcessByID_Result">
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="OEEID" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ProcessID" Nullable="false" />
+          <Property Type="Int32" Name="WorkPieceID" Nullable="false" />
+          <Property Type="Int32" Name="PlanTime" Nullable="false" />
+          <Property Type="Int32" Name="Status" Nullable="false" />
+          <Property Type="Int32" Name="DownTime" Nullable="true" />
+          <Property Type="Int32" Name="RealTime" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_OEEMS_ProcessSUMByID_Result">
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="OEEID" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ProcessID" Nullable="false" />
+          <Property Type="Int32" Name="WorkPieceID" Nullable="false" />
+          <Property Type="Int32" Name="PlanTime" Nullable="false" />
+          <Property Type="Int32" Name="Status" Nullable="false" />
+          <Property Type="Int32" Name="RealTime" Nullable="true" />
+          <Property Type="Int32" Name="DownTime" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="get_OEEMS_RealTime_Emp_Result">
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="OEEID" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EMPID" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="WorkPieceID" Nullable="false" />
+          <Property Type="Int32" Name="ProcessID" Nullable="false" />
+          <Property Type="DateTime" Name="FromTime" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="ToTime" Nullable="true" />
+          <Property Type="Int32" Name="TotalTime" Nullable="false" />
+          <Property Type="String" Name="Note" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="get_OEEMS_ResultDistanceDate_Result">
+          <Property Type="String" Name="ProjectID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ProjectNAME" Nullable="true" MaxLength="150" />
+          <Property Type="Decimal" Name="PlanTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="RealTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DownTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="OEE" Nullable="true" MaxLength="31" />
+        </ComplexType>
+        <ComplexType Name="get_OEEMS_ResultDTDistanceDate_Result">
+          <Property Type="String" Name="DTName" Nullable="true" MaxLength="500" />
+          <Property Type="Decimal" Name="PlanTime" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="get_OEEMS_ResultProcessDistanceDate_Result">
+          <Property Type="Int32" Name="ProcessID" Nullable="true" />
+          <Property Type="String" Name="ProcessName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="PlanTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="RealTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DownTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="OEE" Nullable="true" MaxLength="31" />
+        </ComplexType>
+        <ComplexType Name="get_OEEMSHeaderByDate_Result">
+          <Property Type="String" Name="OEEID" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="OEEDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ProjectID" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="CompID" Nullable="true" />
+          <Property Type="Int32" Name="SizeID" Nullable="true" />
+          <Property Type="Decimal" Name="PlanTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="RealTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DownTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="OEE" Nullable="true" MaxLength="31" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="get_OEEMSHeaderByDistanceDate_Result">
+          <Property Type="Int64" Name="STT" Nullable="true" />
+          <Property Type="String" Name="OEEID" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="OEEDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ProjectID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="CompID" Nullable="true" />
+          <Property Type="Int32" Name="SizeID" Nullable="true" />
+          <Property Type="String" Name="CompName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SizeName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="PlanTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="RealTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DownTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="OEE" Nullable="true" MaxLength="31" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="get_OEEMSHeaderByID_Result">
+          <Property Type="String" Name="OEEID" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="OEEDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ProjectID" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="CompID" Nullable="true" />
+          <Property Type="Int32" Name="SizeID" Nullable="true" />
+          <Property Type="Decimal" Name="PlanTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="RealTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DownTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="OEE" Nullable="true" MaxLength="31" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="get_OEEMSHeaderByStatus_Result">
+          <Property Type="String" Name="OEEID" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="OEEDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ProjectID" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="CompID" Nullable="true" />
+          <Property Type="Int32" Name="SizeID" Nullable="true" />
+          <Property Type="Decimal" Name="Column1" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="RealTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DownTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="OEE" Nullable="true" MaxLength="31" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="get_OEEMSWeekByDate_Result">
+          <Property Type="Int64" Name="STT" Nullable="true" />
+          <Property Type="String" Name="OEEID" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="OEEDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ProjectID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="CompID" Nullable="true" />
+          <Property Type="Int32" Name="SizeID" Nullable="true" />
+          <Property Type="String" Name="CompName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SizeName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="PlanTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="RealTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DownTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="OEE" Nullable="true" MaxLength="31" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+          <Property Type="Double" Name="PercentCom" Nullable="true" />
+          <Property Type="Decimal" Name="PlanTimeAll" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="get_OEEMSWeekByDate_Hung_Result">
+          <Property Type="Int64" Name="STT" Nullable="true" />
+          <Property Type="String" Name="OEEID" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="OEEDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ProjectID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="CompID" Nullable="true" />
+          <Property Type="Int32" Name="SizeID" Nullable="true" />
+          <Property Type="String" Name="CompName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SizeName" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="PlanTime" Nullable="true" />
+          <Property Type="Int32" Name="RealTime" Nullable="false" />
+          <Property Type="Int32" Name="DownTime" Nullable="false" />
+          <Property Type="String" Name="OEE" Nullable="true" MaxLength="31" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="get_OEEMSWeekProcessByDate_Result">
+          <Property Type="Int32" Name="ProcessID" Nullable="true" />
+          <Property Type="String" Name="ProcessName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="PlanTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="RealTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DownTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="OEE" Nullable="true" MaxLength="31" />
+        </ComplexType>
+        <ComplexType Name="sp_tblDepartmentProcess_Get_Result">
+          <Property Type="String" Name="DepartmentID" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="ProcessID" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="TenBoPhanA" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProcessName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_tblDownTime_Get_Result">
+          <Property Type="Int32" Name="DTID" Nullable="false" />
+          <Property Type="Int32" Name="GroupID" Nullable="false" />
+          <Property Type="String" Name="DTName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Note" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="GroupName" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="sp_tblProject_Get_Result">
+          <Property Type="String" Name="ProjectID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="CategoryID" Nullable="true" />
+          <Property Type="Int32" Name="CustomerID" Nullable="true" />
+          <Property Type="String" Name="CreateUser" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="sp_tblProjectComp_Get_Result">
+          <Property Type="Int32" Name="CompID" Nullable="false" />
+          <Property Type="String" Name="ProjectID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="CompName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_tblProjectSize_Get_Result">
+          <Property Type="Int32" Name="SizeID" Nullable="false" />
+          <Property Type="String" Name="ProjectID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="SizeName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_tblWorkpiece_Get_Result">
+          <Property Type="Int32" Name="WorkpieceID" Nullable="false" />
+          <Property Type="String" Name="WorkpieceName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="sp_tblWorkpieceProcess_edit_Get_Result">
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="WorkpieceID" Nullable="false" />
+          <Property Type="Int32" Name="ProcessID" Nullable="false" />
+          <Property Type="String" Name="WorkpieceName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ProcessName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="PlanTime" Nullable="false" />
+          <Property Type="String" Name="OEEID" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="RealTime" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_tblWorkpieceProcess_Get_Result">
+          <Property Type="Int32" Name="WorkpieceID" Nullable="false" />
+          <Property Type="Int32" Name="ProcessID" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="WorkpieceName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ProcessName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="plantime" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_OEEMSHeaderByDistanceDate_new_Result">
+          <Property Type="Int64" Name="STT" Nullable="true" />
+          <Property Type="String" Name="OEEID" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="OEEDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ProjectID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="CompID" Nullable="true" />
+          <Property Type="Int32" Name="SizeID" Nullable="true" />
+          <Property Type="String" Name="CompName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SizeName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="PlanTimeAll" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="PlanTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="RealTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DownTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="OEE" Nullable="true" MaxLength="31" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+          <Property Type="Double" Name="PercentCom" Nullable="true" />
+        </ComplexType>
+        <Association Name="FK_tblOEEMS_PercentComplete_tblOEEMS_Header">
+          <End Type="OEEMSModel.tblOEEMS_Header" Role="tblOEEMS_Header" Multiplicity="1" />
+          <End Type="OEEMSModel.tblOEEMS_PercentComplete" Role="tblOEEMS_PercentComplete" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOEEMS_Header">
+              <PropertyRef Name="OEEID" />
+            </Principal>
+            <Dependent Role="tblOEEMS_PercentComplete">
+              <PropertyRef Name="OEEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblCategory">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="CategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryS" Type="Int32" />
+          <NavigationProperty Name="tblProjects" Relationship="OEEMSModel.FK_tblProject_tblCategory" FromRole="tblCategory" ToRole="tblProject" />
+        </EntityType>
+        <Association Name="FK_tblProject_tblCategory">
+          <End Type="OEEMSModel.tblCategory" Role="tblCategory" Multiplicity="0..1" />
+          <End Type="OEEMSModel.tblProject" Role="tblProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCategory">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="tblProject">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="get_OEEMSWeekByDate_1_Result">
+          <Property Type="Int64" Name="STT" Nullable="true" />
+          <Property Type="String" Name="OEEID" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="OEEDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ProjectID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="CompID" Nullable="true" />
+          <Property Type="Int32" Name="SizeID" Nullable="true" />
+          <Property Type="String" Name="CompName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SizeName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="PlanTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="RealTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DownTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="OEE" Nullable="true" MaxLength="31" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+          <Property Type="Double" Name="PercentCom" Nullable="true" />
+          <Property Type="Decimal" Name="PlanTimeAll" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="get_OEEMSWeekProcessByDate_1_Result">
+          <Property Type="Int32" Name="ProcessID" Nullable="true" />
+          <Property Type="String" Name="ProcessName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="PlanTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="RealTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DownTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="OEE" Nullable="true" MaxLength="31" />
+        </ComplexType>
+        <ComplexType Name="get_OEEMSWeekWorkpieceByDate_Result">
+          <Property Type="String" Name="WorkpieceName" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="PlanTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="RealTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DownTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="OEE" Nullable="true" MaxLength="31" />
+          <Property Type="Int32" Name="WorkpieceID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="get_OEEMSWeekWorkpieceByDate_1_Result">
+          <Property Type="Int32" Name="WorkpieceID" Nullable="true" />
+          <Property Type="String" Name="WorkpieceName" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="PlanTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="RealTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DownTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="OEE" Nullable="true" MaxLength="31" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OEEMSModelStoreContainer" CdmEntityContainer="OEEMSEntities">
+          <EntitySetMapping Name="tblComps">
+            <EntityTypeMapping TypeName="OEEMSModel.tblComp">
+              <MappingFragment StoreEntitySet="tblComp">
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+                <ScalarProperty Name="CompName" ColumnName="CompName" />
+                <ScalarProperty Name="MainComp" ColumnName="MainComp" />
+                <ScalarProperty Name="Actice" ColumnName="Actice" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCustomers">
+            <EntityTypeMapping TypeName="OEEMSModel.tblCustomer">
+              <MappingFragment StoreEntitySet="tblCustomers">
+                <ScalarProperty Name="CustID" ColumnName="CustID" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDepartmentProcesses">
+            <EntityTypeMapping TypeName="OEEMSModel.tblDepartmentProcess">
+              <MappingFragment StoreEntitySet="tblDepartmentProcess">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDownTimes">
+            <EntityTypeMapping TypeName="OEEMSModel.tblDownTime">
+              <MappingFragment StoreEntitySet="tblDownTime">
+                <ScalarProperty Name="DTID" ColumnName="DTID" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="DTName" ColumnName="DTName" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblGroupDTs">
+            <EntityTypeMapping TypeName="OEEMSModel.tblGroupDT">
+              <MappingFragment StoreEntitySet="tblGroupDT">
+                <ScalarProperty Name="GDTID" ColumnName="GDTID" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOEEMS_DownTime">
+            <EntityTypeMapping TypeName="OEEMSModel.tblOEEMS_DownTime">
+              <MappingFragment StoreEntitySet="tblOEEMS_DownTime">
+                <ScalarProperty Name="EMPID" ColumnName="EMPID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OEEID" ColumnName="OEEID" />
+                <ScalarProperty Name="DTID" ColumnName="DTID" />
+                <ScalarProperty Name="WorkPieceID" ColumnName="WorkPieceID" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="FromTime" ColumnName="FromTime" />
+                <ScalarProperty Name="ToTime" ColumnName="ToTime" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOEEMS_Employee">
+            <EntityTypeMapping TypeName="OEEMSModel.tblOEEMS_Employee">
+              <MappingFragment StoreEntitySet="tblOEEMS_Employee">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OEEID" ColumnName="OEEID" />
+                <ScalarProperty Name="EMPID" ColumnName="EMPID" />
+                <ScalarProperty Name="WorkPieceID" ColumnName="WorkPieceID" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOEEMS_Header">
+            <EntityTypeMapping TypeName="OEEMSModel.tblOEEMS_Header">
+              <MappingFragment StoreEntitySet="tblOEEMS_Header">
+                <ScalarProperty Name="OEEID" ColumnName="OEEID" />
+                <ScalarProperty Name="OEEDate" ColumnName="OEEDate" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+                <ScalarProperty Name="OEE" ColumnName="OEE" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOEEMS_Process">
+            <EntityTypeMapping TypeName="OEEMSModel.tblOEEMS_Process">
+              <MappingFragment StoreEntitySet="tblOEEMS_Process">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OEEID" ColumnName="OEEID" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="WorkPieceID" ColumnName="WorkPieceID" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+                <ScalarProperty Name="OEE" ColumnName="OEE" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOEEMS_Status">
+            <EntityTypeMapping TypeName="OEEMSModel.tblOEEMS_Status">
+              <MappingFragment StoreEntitySet="tblOEEMS_Status">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProcesses">
+            <EntityTypeMapping TypeName="OEEMSModel.tblProcess">
+              <MappingFragment StoreEntitySet="tblProcess">
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="ProcessName" ColumnName="ProcessName" />
+                <ScalarProperty Name="EndofProcess" ColumnName="EndofProcess" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProjects">
+            <EntityTypeMapping TypeName="OEEMSModel.tblProject">
+              <MappingFragment StoreEntitySet="tblProject">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProjectComps">
+            <EntityTypeMapping TypeName="OEEMSModel.tblProjectComp">
+              <MappingFragment StoreEntitySet="tblProjectComp">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProjectSizes">
+            <EntityTypeMapping TypeName="OEEMSModel.tblProjectSize">
+              <MappingFragment StoreEntitySet="tblProjectSize">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSizes">
+            <EntityTypeMapping TypeName="OEEMSModel.tblSize">
+              <MappingFragment StoreEntitySet="tblSize">
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+                <ScalarProperty Name="SizeName" ColumnName="SizeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblVersionTablets">
+            <EntityTypeMapping TypeName="OEEMSModel.tblVersionTablet">
+              <MappingFragment StoreEntitySet="tblVersionTablet">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DateUpdate" ColumnName="DateUpdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblWorkpieces">
+            <EntityTypeMapping TypeName="OEEMSModel.tblWorkpiece">
+              <MappingFragment StoreEntitySet="tblWorkpiece">
+                <ScalarProperty Name="WorkpieceID" ColumnName="WorkpieceID" />
+                <ScalarProperty Name="WorkpieceName" ColumnName="WorkpieceName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblWorkpieceProcesses">
+            <EntityTypeMapping TypeName="OEEMSModel.tblWorkpieceProcess">
+              <MappingFragment StoreEntitySet="tblWorkpieceProcess">
+                <ScalarProperty Name="WorkpieceID" ColumnName="WorkpieceID" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblLogs">
+            <EntityTypeMapping TypeName="OEEMSModel.tblLog">
+              <MappingFragment StoreEntitySet="tblLog">
+                <ScalarProperty Name="F000" ColumnName="F000" />
+                <ScalarProperty Name="F001" ColumnName="F001" />
+                <ScalarProperty Name="F002" ColumnName="F002" />
+                <ScalarProperty Name="F003" ColumnName="F003" />
+                <ScalarProperty Name="F004" ColumnName="F004" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOEEMS_PercentComplete">
+            <EntityTypeMapping TypeName="OEEMSModel.tblOEEMS_PercentComplete">
+              <MappingFragment StoreEntitySet="tblOEEMS_PercentComplete">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OEEID" ColumnName="OEEID" />
+                <ScalarProperty Name="DateOfWeek" ColumnName="DateOfWeek" />
+                <ScalarProperty Name="WeedOfYear" ColumnName="WeedOfYear" />
+                <ScalarProperty Name="PercentCom" ColumnName="PercentCom" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOEEMS_RealTime">
+            <EntityTypeMapping TypeName="OEEMSModel.tblOEEMS_RealTime">
+              <MappingFragment StoreEntitySet="tblOEEMS_RealTime">
+                <ScalarProperty Name="IsDownTime" ColumnName="IsDownTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OEEID" ColumnName="OEEID" />
+                <ScalarProperty Name="EMPID" ColumnName="EMPID" />
+                <ScalarProperty Name="WorkPieceID" ColumnName="WorkPieceID" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="FromTime" ColumnName="FromTime" />
+                <ScalarProperty Name="ToTime" ColumnName="ToTime" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="get_CboProjectExists" FunctionName="OEEMSModel.Store.get_CboProjectExists">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_CboProjectExists_Result">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_CboProjectExistsData" FunctionName="OEEMSModel.Store.get_CboProjectExistsData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_CboProjectExistsData_Result">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_data_dropdown" FunctionName="OEEMSModel.Store.get_data_dropdown">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_data_dropdown_Result">
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+                <ScalarProperty Name="CompName" ColumnName="CompName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_OEEMS_DownTimeByID" FunctionName="OEEMSModel.Store.get_OEEMS_DownTimeByID" />
+          <FunctionImportMapping FunctionImportName="get_OEEMS_EmployeeByID" FunctionName="OEEMSModel.Store.get_OEEMS_EmployeeByID" />
+          <FunctionImportMapping FunctionImportName="get_OEEMS_ProcessByID" FunctionName="OEEMSModel.Store.get_OEEMS_ProcessByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_OEEMS_ProcessByID_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OEEID" ColumnName="OEEID" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="WorkPieceID" ColumnName="WorkPieceID" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_OEEMS_ProcessSUMByID" FunctionName="OEEMSModel.Store.get_OEEMS_ProcessSUMByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_OEEMS_ProcessSUMByID_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OEEID" ColumnName="OEEID" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="WorkPieceID" ColumnName="WorkPieceID" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_OEEMS_RealTime_Emp" FunctionName="OEEMSModel.Store.get_OEEMS_RealTime_Emp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_OEEMS_RealTime_Emp_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OEEID" ColumnName="OEEID" />
+                <ScalarProperty Name="EMPID" ColumnName="EMPID" />
+                <ScalarProperty Name="WorkPieceID" ColumnName="WorkPieceID" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="FromTime" ColumnName="FromTime" />
+                <ScalarProperty Name="ToTime" ColumnName="ToTime" />
+                <ScalarProperty Name="TotalTime" ColumnName="TotalTime" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_OEEMS_RealTimeByID" FunctionName="OEEMSModel.Store.get_OEEMS_RealTimeByID" />
+          <FunctionImportMapping FunctionImportName="get_OEEMS_ResultDistanceDate" FunctionName="OEEMSModel.Store.get_OEEMS_ResultDistanceDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_OEEMS_ResultDistanceDate_Result">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ProjectNAME" ColumnName="ProjectNAME" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+                <ScalarProperty Name="OEE" ColumnName="OEE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_OEEMS_ResultDTDistanceDate" FunctionName="OEEMSModel.Store.get_OEEMS_ResultDTDistanceDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_OEEMS_ResultDTDistanceDate_Result">
+                <ScalarProperty Name="DTName" ColumnName="DTName" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_OEEMS_ResultProcessDistanceDate" FunctionName="OEEMSModel.Store.get_OEEMS_ResultProcessDistanceDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_OEEMS_ResultProcessDistanceDate_Result">
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="ProcessName" ColumnName="ProcessName" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+                <ScalarProperty Name="OEE" ColumnName="OEE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_OEEMSHeaderByDate" FunctionName="OEEMSModel.Store.get_OEEMSHeaderByDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_OEEMSHeaderByDate_Result">
+                <ScalarProperty Name="OEEID" ColumnName="OEEID" />
+                <ScalarProperty Name="OEEDate" ColumnName="OEEDate" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+                <ScalarProperty Name="OEE" ColumnName="OEE" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_OEEMSHeaderByDistanceDate" FunctionName="OEEMSModel.Store.get_OEEMSHeaderByDistanceDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_OEEMSHeaderByDistanceDate_Result">
+                <ScalarProperty Name="STT" ColumnName="STT" />
+                <ScalarProperty Name="OEEID" ColumnName="OEEID" />
+                <ScalarProperty Name="OEEDate" ColumnName="OEEDate" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+                <ScalarProperty Name="CompName" ColumnName="CompName" />
+                <ScalarProperty Name="SizeName" ColumnName="SizeName" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+                <ScalarProperty Name="OEE" ColumnName="OEE" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_OEEMSHeaderByID" FunctionName="OEEMSModel.Store.get_OEEMSHeaderByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_OEEMSHeaderByID_Result">
+                <ScalarProperty Name="OEEID" ColumnName="OEEID" />
+                <ScalarProperty Name="OEEDate" ColumnName="OEEDate" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+                <ScalarProperty Name="OEE" ColumnName="OEE" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_OEEMSHeaderByStatus" FunctionName="OEEMSModel.Store.get_OEEMSHeaderByStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_OEEMSHeaderByStatus_Result">
+                <ScalarProperty Name="OEEID" ColumnName="OEEID" />
+                <ScalarProperty Name="OEEDate" ColumnName="OEEDate" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+                <ScalarProperty Name="Column1" ColumnName="Column1" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+                <ScalarProperty Name="OEE" ColumnName="OEE" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_OEEMSWeekByDate" FunctionName="OEEMSModel.Store.get_OEEMSWeekByDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_OEEMSWeekByDate_Result">
+                <ScalarProperty Name="STT" ColumnName="STT" />
+                <ScalarProperty Name="OEEID" ColumnName="OEEID" />
+                <ScalarProperty Name="OEEDate" ColumnName="OEEDate" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+                <ScalarProperty Name="CompName" ColumnName="CompName" />
+                <ScalarProperty Name="SizeName" ColumnName="SizeName" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+                <ScalarProperty Name="OEE" ColumnName="OEE" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PercentCom" ColumnName="PercentCom" />
+                <ScalarProperty Name="PlanTimeAll" ColumnName="PlanTimeAll" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_OEEMSWeekProcessByDate" FunctionName="OEEMSModel.Store.get_OEEMSWeekProcessByDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_OEEMSWeekProcessByDate_Result">
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="ProcessName" ColumnName="ProcessName" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+                <ScalarProperty Name="OEE" ColumnName="OEE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="LOG_UPDATE" FunctionName="OEEMSModel.Store.LOG_UPDATE" />
+          <FunctionImportMapping FunctionImportName="sp_ActionLog" FunctionName="OEEMSModel.Store.sp_ActionLog" />
+          <FunctionImportMapping FunctionImportName="sp_DelOEEMS_DownTime" FunctionName="OEEMSModel.Store.sp_DelOEEMS_DownTime" />
+          <FunctionImportMapping FunctionImportName="sp_DelOEEMS_emp" FunctionName="OEEMSModel.Store.sp_DelOEEMS_emp" />
+          <FunctionImportMapping FunctionImportName="sp_DelOEEMS_Header" FunctionName="OEEMSModel.Store.sp_DelOEEMS_Header" />
+          <FunctionImportMapping FunctionImportName="sp_DelOEEMS_Process" FunctionName="OEEMSModel.Store.sp_DelOEEMS_Process" />
+          <FunctionImportMapping FunctionImportName="sp_DelOEEMS_RealTime" FunctionName="OEEMSModel.Store.sp_DelOEEMS_RealTime" />
+          <FunctionImportMapping FunctionImportName="sp_DelProject" FunctionName="OEEMSModel.Store.sp_DelProject" />
+          <FunctionImportMapping FunctionImportName="sp_EndOEEMS_Header" FunctionName="OEEMSModel.Store.sp_EndOEEMS_Header" />
+          <FunctionImportMapping FunctionImportName="sp_EndOEEMS_Header_auto" FunctionName="OEEMSModel.Store.sp_EndOEEMS_Header_auto" />
+          <FunctionImportMapping FunctionImportName="sp_EndOEEMS_Process" FunctionName="OEEMSModel.Store.sp_EndOEEMS_Process" />
+          <FunctionImportMapping FunctionImportName="sp_EndOEEMS_Process_auto" FunctionName="OEEMSModel.Store.sp_EndOEEMS_Process_auto" />
+          <FunctionImportMapping FunctionImportName="sp_InsLogUser" FunctionName="OEEMSModel.Store.sp_InsLogUser" />
+          <FunctionImportMapping FunctionImportName="sp_InsOEEMS_DownTime" FunctionName="OEEMSModel.Store.sp_InsOEEMS_DownTime" />
+          <FunctionImportMapping FunctionImportName="sp_InsOEEMS_Emp" FunctionName="OEEMSModel.Store.sp_InsOEEMS_Emp" />
+          <FunctionImportMapping FunctionImportName="sp_InsOEEMS_Header" FunctionName="OEEMSModel.Store.sp_InsOEEMS_Header" />
+          <FunctionImportMapping FunctionImportName="sp_InsOEEMS_PercentComplete" FunctionName="OEEMSModel.Store.sp_InsOEEMS_PercentComplete" />
+          <FunctionImportMapping FunctionImportName="sp_InsOEEMS_Process" FunctionName="OEEMSModel.Store.sp_InsOEEMS_Process" />
+          <FunctionImportMapping FunctionImportName="sp_InsOEEMS_RealTime" FunctionName="OEEMSModel.Store.sp_InsOEEMS_RealTime" />
+          <FunctionImportMapping FunctionImportName="sp_InsProject" FunctionName="OEEMSModel.Store.sp_InsProject" />
+          <FunctionImportMapping FunctionImportName="sp_tblDepartmentProcess_Get" FunctionName="OEEMSModel.Store.sp_tblDepartmentProcess_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.sp_tblDepartmentProcess_Get_Result">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TenBoPhanA" ColumnName="TenBoPhanA" />
+                <ScalarProperty Name="ProcessName" ColumnName="ProcessName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_tblDownTime_Get" FunctionName="OEEMSModel.Store.sp_tblDownTime_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.sp_tblDownTime_Get_Result">
+                <ScalarProperty Name="DTID" ColumnName="DTID" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="DTName" ColumnName="DTName" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_tblProject_Get" FunctionName="OEEMSModel.Store.sp_tblProject_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.sp_tblProject_Get_Result">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_tblProjectComp_Get" FunctionName="OEEMSModel.Store.sp_tblProjectComp_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.sp_tblProjectComp_Get_Result">
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="CompName" ColumnName="CompName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_tblProjectSize_Get" FunctionName="OEEMSModel.Store.sp_tblProjectSize_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.sp_tblProjectSize_Get_Result">
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="SizeName" ColumnName="SizeName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_tblWorkpiece_Get" FunctionName="OEEMSModel.Store.sp_tblWorkpiece_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.sp_tblWorkpiece_Get_Result">
+                <ScalarProperty Name="WorkpieceID" ColumnName="WorkpieceID" />
+                <ScalarProperty Name="WorkpieceName" ColumnName="WorkpieceName" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_tblWorkpieceProcess_edit_Get" FunctionName="OEEMSModel.Store.sp_tblWorkpieceProcess_edit_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.sp_tblWorkpieceProcess_edit_Get_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="WorkpieceID" ColumnName="WorkpieceID" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="WorkpieceName" ColumnName="WorkpieceName" />
+                <ScalarProperty Name="ProcessName" ColumnName="ProcessName" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+                <ScalarProperty Name="OEEID" ColumnName="OEEID" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_tblWorkpieceProcess_Get" FunctionName="OEEMSModel.Store.sp_tblWorkpieceProcess_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.sp_tblWorkpieceProcess_Get_Result">
+                <ScalarProperty Name="WorkpieceID" ColumnName="WorkpieceID" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="WorkpieceName" ColumnName="WorkpieceName" />
+                <ScalarProperty Name="ProcessName" ColumnName="ProcessName" />
+                <ScalarProperty Name="plantime" ColumnName="plantime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="OEEMSModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="get_OEEMSHeaderByDistanceDate_new" FunctionName="OEEMSModel.Store.get_OEEMSHeaderByDistanceDate_new">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_OEEMSHeaderByDistanceDate_new_Result">
+                <ScalarProperty Name="STT" ColumnName="STT" />
+                <ScalarProperty Name="OEEID" ColumnName="OEEID" />
+                <ScalarProperty Name="OEEDate" ColumnName="OEEDate" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+                <ScalarProperty Name="CompName" ColumnName="CompName" />
+                <ScalarProperty Name="SizeName" ColumnName="SizeName" />
+                <ScalarProperty Name="PlanTimeAll" ColumnName="PlanTimeAll" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+                <ScalarProperty Name="OEE" ColumnName="OEE" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PercentCom" ColumnName="PercentCom" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_udpOEEMS_ChangeProcess" FunctionName="OEEMSModel.Store.sp_udpOEEMS_ChangeProcess" />
+          <EntitySetMapping Name="tblCategories">
+            <EntityTypeMapping TypeName="OEEMSModel.tblCategory">
+              <MappingFragment StoreEntitySet="tblCategory">
+                <ScalarProperty Name="CategoryS" ColumnName="CategoryS" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="get_OEEMSWeekByDate_1" FunctionName="OEEMSModel.Store.get_OEEMSWeekByDate_1">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_OEEMSWeekByDate_1_Result">
+                <ScalarProperty Name="STT" ColumnName="STT" />
+                <ScalarProperty Name="OEEID" ColumnName="OEEID" />
+                <ScalarProperty Name="OEEDate" ColumnName="OEEDate" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+                <ScalarProperty Name="CompName" ColumnName="CompName" />
+                <ScalarProperty Name="SizeName" ColumnName="SizeName" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+                <ScalarProperty Name="OEE" ColumnName="OEE" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PercentCom" ColumnName="PercentCom" />
+                <ScalarProperty Name="PlanTimeAll" ColumnName="PlanTimeAll" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_OEEMSWeekProcessByDate_1" FunctionName="OEEMSModel.Store.get_OEEMSWeekProcessByDate_1">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_OEEMSWeekProcessByDate_1_Result">
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="ProcessName" ColumnName="ProcessName" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+                <ScalarProperty Name="OEE" ColumnName="OEE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_OEEMSWeekWorkpieceByDate" FunctionName="OEEMSModel.Store.get_OEEMSWeekWorkpieceByDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_OEEMSWeekWorkpieceByDate_Result">
+                <ScalarProperty Name="WorkpieceName" ColumnName="WorkpieceName" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+                <ScalarProperty Name="OEE" ColumnName="OEE" />
+                <ScalarProperty Name="WorkpieceID" ColumnName="WorkpieceID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_OEEMSWeekWorkpieceByDate_1" FunctionName="OEEMSModel.Store.get_OEEMSWeekWorkpieceByDate_1">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OEEMSModel.get_OEEMSWeekWorkpieceByDate_1_Result">
+                <ScalarProperty Name="WorkpieceID" ColumnName="WorkpieceID" />
+                <ScalarProperty Name="WorkpieceName" ColumnName="WorkpieceName" />
+                <ScalarProperty Name="PlanTime" ColumnName="PlanTime" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+                <ScalarProperty Name="DownTime" ColumnName="DownTime" />
+                <ScalarProperty Name="OEE" ColumnName="OEE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

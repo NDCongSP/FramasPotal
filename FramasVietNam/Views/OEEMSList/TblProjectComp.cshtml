@@ -1,0 +1,224 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var _lsttblProjectComp = (List<FramasVietNam.Models.OEEMS.sp_tblProjectComp_Get_Result>)ViewBag.lsttblProjectComp;
+    var _lsttblProject = (List<FramasVietNam.Models.OEEMS.tblProject>)ViewBag.lsttblProject;
+    var _lsttblComp = (List<FramasVietNam.Models.OEEMS.tblComp>)ViewBag.lsttblComp;
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            Project Component List
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">Project Component List</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <div style="margin-bottom:10px">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="ion ion-clipboard"></i>
+                    <h3 class="box-title">@Language.label("List")</h3>
+                    <div class="box-tools pull-right">
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="ProjectComp" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Project</th>
+                                <th>Component</th>
+                                <th>@Language.label("Change")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (_lsttblProjectComp != null)
+                            {
+                                int i = 1;
+                                foreach (var item in _lsttblProjectComp)
+                                {
+                                    <tr>
+                                        <td class="text"></td>
+                                        <td class="text">@item.ProjectName</td>
+                                        <td class="text">@item.CompName</td>
+                                        <!-- General tools such as edit or delete-->
+                                        <td>
+                                            @Html.ActionLinkRole("Delete", "TblProjectComp", "OEEMSList", " ", "TblProjectCompDel", "OEEMSList", new { _CompID = @item.CompID, _ProjectID = @item.ProjectID }, new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+@*Popup add*@
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color:azure">
+            @using (Html.BeginForm("TblProjectCompSave", "OEEMSList", FormMethod.Post))
+            {
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">@Language.label("Add")</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        Project <code>(*)</code>
+                        <select name="txtProjectID" id="txtProjectID" class="form-control">
+                            @if (_lsttblProject != null)
+                            {
+                                foreach (var item in _lsttblProject)
+                                {
+                                    <option value="@item.ProjectID">@item.ProjectName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        Component <code>(*)</code>
+                        <select name="txtCompID" id="txtCompID" class="form-control">
+                            @if (_lsttblComp != null)
+                            {
+                                foreach (var item in _lsttblComp)
+                                {
+                                    <option value="@item.CompID">@item.CompName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    @Html.ButtonRoles("Save", "TblProjectComp", "OEEMSList", Language.label("Save"), new { @class = "btn btn-success" })
+                </div>
+                <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                @*<ul class="todo-list">
+                    <li style="background-color:azure">
+                        <h2>@Language.label("Add")</h2>
+                        <br />
+                        Project (*)
+                        <select name="txtProjectID" id="txtProjectID" class="form-control">
+                            @if (_lsttblProject != null)
+                            {
+                                foreach (var item in _lsttblProject)
+                                {
+                                    <option value="@item.ProjectID">@item.ProjectName</option>
+                                }
+                            }
+                        </select>
+                        Component (*)
+                        <select name="txtCompID" id="txtCompID" class="form-control">
+                            @if (_lsttblComp != null)
+                            {
+                                foreach (var item in _lsttblComp)
+                                {
+                                    <option value="@item.CompID">@item.CompName</option>
+                                }
+                            }
+                        </select>
+                        <br />
+
+                        @Html.ButtonRoles("Save", "TblProjectComp", "OEEMSList", Language.label("Save"), new { @class = "btn btn-success btn-sm" })
+                    </li>
+                </ul>*@
+            }
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section Styles{
+    <link rel="stylesheet" href="~/Content/adminlte/components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+}
+
+@section Scripts{
+    <!-- DataTables -->
+    <script src="~/Content/adminlte/components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/adminlte/components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Setup - add a text input to each footer cell
+            $('#ProjectComp thead tr').clone(true).appendTo('#ProjectComp thead');
+            $('#ProjectComp thead tr:eq(1) th').each(function (i) {
+               if (i > 0) {
+                    var title = $(this).text();
+                    if (title != "Change" && title != "OEE" && title != "Status") {
+                        $(this).html('<input type="text"/>');
+
+                        $('input', this).on('keyup change', function () {
+                            if (table.column(i).search() !== this.value) {
+                                table
+                                    .column(i)
+                                    .search(this.value)
+                                    .draw();
+                            } s
+                        });
+                    }
+                    else {
+                        $(this).html('');
+                    }
+
+                }
+            });
+
+            var table = $('#ProjectComp').DataTable({
+                "displayLength": 25,
+                orderCellsTop: true,
+                fixedHeader: true,
+                 'paging'      : true,
+               'lengthChange': false,
+               'searching'   : true,
+               'ordering'    : true,
+               'info'        : true,
+               'autoWidth'   : false
+            });
+
+            table.on('order.dt search.dt', function () {
+                table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+        });
+    </script>
+}
+

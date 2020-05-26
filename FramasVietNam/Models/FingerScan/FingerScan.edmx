@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FingerScanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_LogFinger_Delivery">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MachineNumber" Type="int" />
+          <Property Name="IndRegID" Type="int" />
+          <Property Name="VerifyMode" Type="int" />
+          <Property Name="InOutMode" Type="int" />
+          <Property Name="DateTimeRecord" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_LogFinger_Login_M1">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MachineNumber" Type="int" />
+          <Property Name="IndRegID" Type="int" />
+          <Property Name="VerifyMode" Type="int" />
+          <Property Name="InOutMode" Type="int" />
+          <Property Name="DateTimeRecord" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_LogFinger_Login_M2">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MachineNumber" Type="int" />
+          <Property Name="IndRegID" Type="int" />
+          <Property Name="VerifyMode" Type="int" />
+          <Property Name="InOutMode" Type="int" />
+          <Property Name="DateTimeRecord" Type="datetime" />
+        </EntityType>
+        <Function Name="sp_ActionLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ActionName" Type="varchar" Mode="In" />
+          <Parameter Name="ControllerName" Type="varchar" Mode="In" />
+          <Parameter Name="Method" Type="varchar" Mode="In" />
+          <Parameter Name="Content" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Detail" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="Date" Type="datetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="FingerScanModelStoreContainer">
+          <EntitySet Name="tbl_LogFinger_Delivery" EntityType="Self.tbl_LogFinger_Delivery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_LogFinger_Login_M1" EntityType="Self.tbl_LogFinger_Login_M1" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_LogFinger_Login_M2" EntityType="Self.tbl_LogFinger_Login_M2" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FingerScanModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_LogFinger_Delivery">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MachineNumber" Type="Int32" />
+          <Property Name="IndRegID" Type="Int32" />
+          <Property Name="VerifyMode" Type="Int32" />
+          <Property Name="InOutMode" Type="Int32" />
+          <Property Name="DateTimeRecord" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_LogFinger_Login_M1">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MachineNumber" Type="Int32" />
+          <Property Name="IndRegID" Type="Int32" />
+          <Property Name="VerifyMode" Type="Int32" />
+          <Property Name="InOutMode" Type="Int32" />
+          <Property Name="DateTimeRecord" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_LogFinger_Login_M2">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MachineNumber" Type="Int32" />
+          <Property Name="IndRegID" Type="Int32" />
+          <Property Name="VerifyMode" Type="Int32" />
+          <Property Name="InOutMode" Type="Int32" />
+          <Property Name="DateTimeRecord" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="FingerScanEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_LogFinger_Delivery" EntityType="Self.tbl_LogFinger_Delivery" />
+          <EntitySet Name="tbl_LogFinger_Login_M1" EntityType="Self.tbl_LogFinger_Login_M1" />
+          <EntitySet Name="tbl_LogFinger_Login_M2" EntityType="Self.tbl_LogFinger_Login_M2" />
+          <FunctionImport Name="sp_ActionLog">
+            <Parameter Name="ActionName" Mode="In" Type="String" />
+            <Parameter Name="ControllerName" Mode="In" Type="String" />
+            <Parameter Name="Method" Mode="In" Type="String" />
+            <Parameter Name="Content" Mode="In" Type="String" />
+            <Parameter Name="Detail" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FingerScanModelStoreContainer" CdmEntityContainer="FingerScanEntities">
+          <EntitySetMapping Name="tbl_LogFinger_Delivery">
+            <EntityTypeMapping TypeName="FingerScanModel.tbl_LogFinger_Delivery">
+              <MappingFragment StoreEntitySet="tbl_LogFinger_Delivery">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MachineNumber" ColumnName="MachineNumber" />
+                <ScalarProperty Name="IndRegID" ColumnName="IndRegID" />
+                <ScalarProperty Name="VerifyMode" ColumnName="VerifyMode" />
+                <ScalarProperty Name="InOutMode" ColumnName="InOutMode" />
+                <ScalarProperty Name="DateTimeRecord" ColumnName="DateTimeRecord" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_LogFinger_Login_M1">
+            <EntityTypeMapping TypeName="FingerScanModel.tbl_LogFinger_Login_M1">
+              <MappingFragment StoreEntitySet="tbl_LogFinger_Login_M1">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MachineNumber" ColumnName="MachineNumber" />
+                <ScalarProperty Name="IndRegID" ColumnName="IndRegID" />
+                <ScalarProperty Name="VerifyMode" ColumnName="VerifyMode" />
+                <ScalarProperty Name="InOutMode" ColumnName="InOutMode" />
+                <ScalarProperty Name="DateTimeRecord" ColumnName="DateTimeRecord" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_LogFinger_Login_M2">
+            <EntityTypeMapping TypeName="FingerScanModel.tbl_LogFinger_Login_M2">
+              <MappingFragment StoreEntitySet="tbl_LogFinger_Login_M2">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MachineNumber" ColumnName="MachineNumber" />
+                <ScalarProperty Name="IndRegID" ColumnName="IndRegID" />
+                <ScalarProperty Name="VerifyMode" ColumnName="VerifyMode" />
+                <ScalarProperty Name="InOutMode" ColumnName="InOutMode" />
+                <ScalarProperty Name="DateTimeRecord" ColumnName="DateTimeRecord" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_ActionLog" FunctionName="FingerScanModel.Store.sp_ActionLog" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

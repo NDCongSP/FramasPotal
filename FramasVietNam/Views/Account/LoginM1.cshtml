@@ -1,0 +1,94 @@
+﻿@using FramasVietNam.Models
+@using FramasVietNam.Common
+@model LoginViewModel
+@{
+    Layout = null;
+    ViewBag.Title = "Log in";
+}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        @Language.label("Login").ToUpper()
+    </title>
+    <link rel="stylesheet" href="~/Content/style.min.css">
+    <link rel="stylesheet" href="~/Content/materialize.min.css">
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Assets/js/materialize.min.js"></script>
+
+
+</head>
+
+<body>
+    <div style="width:100vw; height:100vh">
+        <div style="width: 210px;height: 210px;background-color: white;position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;">
+            <div class="lds-hourglass"></div>
+        </div>
+    </div>
+    <div style="display:none">
+        <div>
+            <h4 class="title-login">
+                @Language.label("Login").ToUpper()
+            </h4>
+            <section id="loginForm">
+                @using (Html.BeginForm("LoginM1", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.Label(Language.label("UserName"), new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label(Language.label("Login"), new { @class = "col-md-2 control-label" })
+                        @*@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })*@
+                        <div class="col-md-10">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="myCheckbox">
+                                @*@Html.CheckBoxFor(m => m.RememberMe)
+                                    @Html.LabelFor(m => m.RememberMe)*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" id="btnSubmit" name="btnSubmit" value="@Language.label("Login")" class="btn btn-default" />
+                        </div>
+                        <div style="height:5px">
+                        </div>
+                        <div class="col-md-offset-2 col-md-10">
+                            @*@Html.ActionLink(Language.label("RegisterAsANewUser"), "Register")*@
+                        </div>
+                        <div class="col-md-offset-2 col-md-10">
+                            @Html.ActionLink(Language.label("ForgotPassword"), "ForgotPassword")
+                        </div>
+                    </div>
+                    <div style="height:10px">
+                    </div>
+                }
+            </section>
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
+        </div>
+    </div>
+</body>
+</html>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnSubmit').trigger('click');
+    });
+</script>
+

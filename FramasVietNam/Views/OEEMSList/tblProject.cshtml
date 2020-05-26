@@ -1,0 +1,189 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var _lsttblProject = (List<FramasVietNam.Models.OEEMS.sp_tblProject_Get_Result>)ViewBag.lsttblProject;
+    var _lsttblCustomers = (List<FramasVietNam.Models.OEEMS.tblCustomer>)ViewBag.lsttblCustomers;
+    var _lsttblCategory = (List<FramasVietNam.Models.OEEMS.tblCategory>)ViewBag.lsttblCategory;
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            Project List
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">Project List</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <div style="margin-bottom:10px">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="ion ion-clipboard"></i>
+                    <h3 class="box-title">@Language.label("List")</h3>
+                    <div class="box-tools pull-right">
+                        <ul class="pagination pagination-sm inline"></ul>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>@Language.label("Num")</th>
+                                <th>@Language.label("Code")</th>
+                                <th>@Language.label("Name")</th>
+                                <th>Category</th>
+                                <th>Customer</th>
+                                <th>@Language.label("Change")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (_lsttblProject != null)
+                            {
+                                int i = 1;
+                                foreach (var item in _lsttblProject)
+                                {
+                                    <tr>
+                                        <td class="text">@i</td>
+                                        <td class="text">@item.ProjectID</td>
+                                        <td class="text">@item.ProjectName</td>
+                                        <td class="text">@item.CategoryName</td>
+                                        <td class="text">@item.CustomerName</td>
+                                        <!-- General tools such as edit or delete-->
+                                        <td>
+                                            @Html.ActionLinkRole("Edit", "TblProject", "OEEMSList", " ", "TblProjectEdit/" + item.ProjectID, "OEEMSList", new { @class = "fa fa-edit label-primary btn-sm" })
+                                            @Html.ActionLinkRole("Delete", "TblProject", "OEEMSList", " ", "TblProjectDel/" + item.ProjectID, "OEEMSList", new { @class = "fa fa-trash label-danger btn-sm", @onclick = "return confirm('" + Language.label("AreYouSure") + "')" })
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+@*Popup add*@
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color:azure">
+            @using (Html.BeginForm("TblProjectSave", "OEEMSList", FormMethod.Post))
+            {
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">@Language.label("Add")</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        @Language.label("Code")<code>(*)</code>
+                        @Html.TextBox("txtProjectID", null, new { @class = "form-control", @placeholder = Language.label("Code") })
+                    </div>
+                    <div class="form-group">
+                        @Language.label("Name") <code>(*)</code>
+                        @Html.TextBox("txtProjectName", null, new { @class = "form-control", @placeholder = "Name" })
+                    </div>
+                    <div class="form-group">
+                        Category
+                        <select name="txtCategoryID" id="txtCategoryID" class="form-control">
+                            @if (_lsttblCategory != null)
+                            {
+                                foreach (var item in _lsttblCategory)
+                                {
+                                    <option value="@item.CategoryID">@item.CategoryName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        Customer
+                        <select name="txtCustomerID" id="txtCustomerID" class="form-control">
+                            @if (_lsttblCustomers != null)
+                            {
+                                foreach (var item in _lsttblCustomers)
+                                {
+                                    <option value="@item.CustID">@item.CustName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    @Html.ButtonRoles("Save", "TblProject", "OEEMSList", Language.label("Save"), new { @class = "btn btn-success" })
+                </div>
+
+                <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                @*<ul class="todo-list">
+                    <li style="background-color:azure">
+                        <h2>@Language.label("Add")</h2>
+                        <br />
+                        @Language.label("Code") (*)
+                        @Html.TextBox("txtProjectID", null, new { @class = "form-control", @placeholder = Language.label("Code") })
+
+                        @Language.label("Name") (*)
+                        @Html.TextBox("txtProjectName", null, new { @class = "form-control", @placeholder = "Name" })
+
+                        Category
+                        <select name="txtCategoryID" id="txtCategoryID" class="form-control">
+                            @if (_lsttblCategory != null)
+                            {
+                                foreach (var item in _lsttblCategory)
+                                {
+                                    <option value="@item.CategoryID">@item.CategoryName</option>
+                                }
+                            }
+                        </select>
+                        Customer
+                        <select name="txtCustomerID" id="txtCustomerID" class="form-control">
+                            @if (_lsttblCustomers != null)
+                            {
+                                foreach (var item in _lsttblCustomers)
+                                {
+                                    <option value="@item.CustID">@item.CustName</option>
+                                }
+                            }
+                        </select>
+                        <br />
+
+                        @Html.ButtonRoles("Save", "TblProject", "OEEMSList", Language.label("Save"), new { @class = "btn btn-success btn-sm" })
+                    </li>
+                </ul>*@
+            }
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

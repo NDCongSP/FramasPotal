@@ -1,0 +1,63 @@
+﻿@using FramasVietNam.Common
+@{
+    Layout = null;
+    string strDeptName = mFunction.ToString(ViewBag.strDeptName);
+    string strDeptID = mFunction.ToString(ViewBag.strDeptID);
+}
+
+@if (Model != null)
+{
+    <div class="modal-content">
+        @using (Html.BeginForm("SaturdayOffEdit", "Booking", FormMethod.Post))
+        {
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">@Language.label("Add")</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    @Language.label("Department")
+                    @Html.TextBox("DepartmentName", strDeptName, new { @class = "form-control", @readonly = "true", @disabled = "true"})
+                    
+                </div>
+                <div class="form-group">
+                    @Html.TextBox("ID", strDeptName, new { @class = "form-control hide", @readonly = "true"})
+                    @Html.TextBox("strDeptID", strDeptID, new { @class = "form-control hide", @readonly = "true" })
+                </div>
+                <div class="form-group">
+                    @Language.label("User")
+                    <input type="text" class="form-control" value="@Model.UserName" disabled readonly />
+                </div>
+                <div class="form-group">
+                    @Language.label("Date") (*)
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input name="DateOff" type='text' class="form-control DateOff" id="DateOff" readonly placeholder="@Language.label("StartDate")" value="@Model.DateOff.ToString("MM/dd/yyyy")" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Language.label("Content")
+                    <textarea class="form-control" name="Content" id="Content" placeholder="@Language.label("Content")">@Model.Content</textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                @Html.ButtonRoles("Save", "SaturdayOff", "Booking", Language.label("Save"), new {@class = "btn btn-success" })
+            </div>
+        }
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        //Date picker
+        $('.DateOff').datepicker({
+            autoclose: true,
+            beforeShowDay: onlyTheseWeekDays([6, 6])
+        });
+    });
+</script>

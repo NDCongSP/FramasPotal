@@ -1,0 +1,23 @@
+﻿
+@model DevExpress.XtraReports.UI.XtraReport
+@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Report.cshtml";
+}
+<div class="content-wrapper">
+    <section class="content">
+        <div class="row" style="min-height:906px">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+                <!-- ./col -->
+                @Html.DevExpress().WebDocumentViewer(settings =>
+                {
+                settings.Name = "WebDocumentViewer";
+                settings.MobileMode = false;
+                }).Bind(Model).GetHtml()
+
+            </div>
+        </div>
+    </section>
+</div>

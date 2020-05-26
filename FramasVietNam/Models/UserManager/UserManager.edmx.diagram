@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6c1ea63d5e1f4557927687435c015a8f" Name="Diagram1">
+        <EntityTypeShape EntityType="UserManagerModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagerModel.AspNetButton" Width="1.5" PointX="8.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagerModel.AspNetRoleButton" Width="1.5" PointX="10.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagerModel.AspNetRole" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagerModel.AspNetRolesDev" Width="1.5" PointX="8.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagerModel.AspNetRolesForApp" Width="1.5" PointX="7" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagerModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagerModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagerModel.AspNetUserModuleRole" Width="1.5" PointX="8.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagerModel.AspNetUserRolesForApp" Width="1.5" PointX="8.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagerModel.AspNetUser" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagerModel.sysdiagram" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagerModel.sysLogfileAction" Width="1.5" PointX="5.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagerModel.v_DeptToModule" Width="1.5" PointX="10.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagerModel.v_UserToDept" Width="1.5" PointX="10.75" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="UserManagerModel.FK_AspNetRoleButtons_AspNetButtons" ManuallyRouted="false" />
+        <AssociationConnector Association="UserManagerModel.FK_AspNetRoleButtons_AspNetRolesDev" ManuallyRouted="false" />
+        <AssociationConnector Association="UserManagerModel.FK_AspNetUserRolesForApp_AspNetRolesForApp" ManuallyRouted="false" />
+        <AssociationConnector Association="UserManagerModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="UserManagerModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="UserManagerModel.FK_AspNetUserRolesForApp_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="UserManagerModel.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

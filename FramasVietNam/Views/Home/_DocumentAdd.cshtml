@@ -1,0 +1,46 @@
+﻿
+@using FramasVietNam.Common
+<div class="modal fade" id="documentAdd">
+    <div class="modal-dialog" >
+        @using (Html.BeginForm("DocumentAdd", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">@Language.label("Add")</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        @Language.label("DocumentName")<code>(*)</code>
+                        <input type="text" class="form-control" id="DocName" name="DocName" placeholder="@Language.label("DocumentName")">
+                    </div>
+                    <div class="form-group">
+                        @Language.label("Icon")<code>(*)</code>
+                        <input type="text" class="form-control" id="Icon" name="Icon" value="fa fa-book" placeholder="@Language.label("Icon")">
+                    </div>
+                    <div class="form-group">
+                        @Language.label("File")<code>(*)</code>
+                        <input class="btn btn-primary btn-sm" type="file" name="file" />
+                    </div>
+                    <div class="form-group">
+                        @Language.label("Description")
+                        <textarea class="form-control" id="Description" name="Description" placeholder="@Language.label("Description")"></textarea>
+                    </div>
+                    <div class="form-group">
+                        @Language.label("Active")
+                        <label class="switch">
+                            <input type="checkbox" id="IsActive" name="IsActive" value="true" />
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    @Html.ButtonRoles("Save", "Document", "Home", Language.label("Save"),  new { @class = "btn btn-success", @type = "submit" })
+                </div>
+            </div>
+        }
+        </div>
+</div>

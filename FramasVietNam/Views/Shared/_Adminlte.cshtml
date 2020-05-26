@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Framas Viet Nam - @ViewData["Title"]</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    @Html.DevExpress().GetStyleSheets(
+        new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+    )
+    @Html.DevExpress().GetScripts(
+        new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new Script { ExtensionSuite = ExtensionSuite.Editors },
+        new Script { ExtensionSuite = ExtensionSuite.Report },
+        new Script { ExtensionSuite = ExtensionSuite.GridView }
+    )
+
+    @RenderSection("Styles", required: false)
+
+    @*@section Styles*@
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="~/Content/adminlte/components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Content/adminlte/components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="~/Content/adminlte/components/Ionicons/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Content/adminlte/dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="~/Content/adminlte/dist/css/skins/_all-skins.min.css">
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="~/Content/adminlte/components/morris.js/morris.css">
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="~/Content/adminlte/components/jvectormap/jquery-jvectormap.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="~/Content/adminlte/components/bootstrap-daterangepicker/daterangepicker.css">
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link rel="stylesheet" href="~/Content/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="~/Content/adminlte/plugins/iCheck/all.css">
+    <!-- datatables -->
+    <link rel="stylesheet" href="~/Content/adminlte/components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="~/Content/adminlte/components/plugins/iCheck/all.css">
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="~/Content/adminlte/components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+    <!-- Bootstrap time Picker -->
+    <link rel="stylesheet" href="~/Content/adminlte/plugins/timepicker/bootstrap-timepicker.min.css">
+    @*datetimepicker*@
+    <link rel="stylesheet" href="~/Content/adminlte/components/datetimepicker/bootstrap-datetimepicker.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/Content/adminlte/components/select2/dist/css/select2.min.css">
+
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="~/Content/adminlte/components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <!-- FancyApp -->
+    <link href="~/Content/adminlte/plugins/fancybox/jquery.fancybox.min.css" rel="stylesheet" />
+    <!-- My style -->
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        @Html.Partial("_AdminlteMainHeader")
+        <!-- Left side column. contains the logo and sidebar -->
+        @Html.Partial("_AdminlteMainSidebar")
+        <!-- Content Wrapper. Contains page content -->
+        @RenderBody()
+        <!-- /.content-wrapper -->
+        @Html.Partial("_AdminlteFooter")
+        <!-- Control Sidebar -->
+        @Html.Partial("_AdminlteControlSidebar")
+    </div>
+    <!-- #region Loadding -->
+    <div class="main-loading-delay" style="display:none">
+        <div class="lds-ripple"><div></div><div></div></div>
+    </div>
+    <!-- #endregion -->
+    <!-- ./wrapper -->
+    @*@section Scripts*@
+    @Scripts.Render("~/bundles/jqueryval")
+    <!-- jQuery 3 -->
+    <script src="~/Content/adminlte/components/jquery/dist/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="~/Content/adminlte/components/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>$.widget.bridge('uibutton', $.ui.button);</script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="~/Content/adminlte/components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Morris.js charts -->
+    <script src="~/Content/adminlte/components/raphael/raphael.min.js"></script>
+    <script src="~/Content/adminlte/components/morris.js/morris.min.js"></script>
+    <!-- Sparkline -->
+    <script src="~/Content/adminlte/components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+    <!-- jvectormap -->
+    <script src="~/Content/adminlte/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="~/Content/adminlte/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="~/Content/adminlte/components/jquery-knob/dist/jquery.knob.min.js"></script>
+    <!-- daterangepicker -->
+    <script src="~/Content/adminlte/components/moment/min/moment.min.js"></script>
+    <!-- Bootstrap WYSIHTML5 -->
+    <script src="~/Content/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    <!-- Slimscroll -->
+    <script src="~/Content/adminlte/components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/Content/adminlte/components/fastclick/lib/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Content/adminlte/dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="~/Content/adminlte/dist/js/pages/dashboard.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/Content/adminlte/dist/js/demo.js"></script>
+    <script src="~/Content/adminlte/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- InputMask -->
+    <script src="~/Content/adminlte/plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="~/Content/adminlte/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="~/Content/adminlte/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+
+    <!-- bootstrap datepicker -->
+    <script src="~/Content/adminlte/components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/adminlte/components/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!--add library datetimepicker-->
+    <script src="~/Content/adminlte/components/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+
+    <!-- Select2 -->
+    <script src="~/Content/adminlte/components/select2/dist/js/select2.full.min.js"></script>
+
+    <!-- FancyApp -->
+    <script src="~/Content/adminlte/plugins/fancybox/jquery.fancybox.min.js"></script>
+    <!--End FancyApp -->
+    <!-- DataTables -->
+    <script src="~/Content/adminlte/components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/adminlte/components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example1 thead tr').clone(true).appendTo('#example1 thead');
+            $('#example1 thead tr:eq(1) th').each(function (i) {
+                if (i > 0) {
+                    var title = $(this).text();
+                    if (title != "Change" && title != "OEE" && title != "Status" && title != "Chart" && title != "Sold Quantity" && title != "Amo. Quantity" && title != "Remaining" && title != "Progress" && title != "Percent") {
+                        $(this).html('<input type="text"/>');
+
+                        $('input', this).on('keyup change', function () {
+                            if (table.column(i).search() !== this.value) {
+                                table
+                                    .column(i)
+                                    .search(this.value)
+                                    .draw();
+                            }
+                        });
+                    }
+                    else {
+                        $(this).html('');
+                    }
+                }
+            });
+
+            var table = $('#example1').DataTable({
+                "displayLength": 12,
+                orderCellsTop: true,
+                fixedHeader: true,
+                'paging': true,
+                'lengthChange': false,
+                'searching': false,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false
+            });
+
+            table.on('order.dt search.dt', function () {
+                table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+
+        });
+
+        var Loading = {
+            HideLoading: function (timeDelay = 350, timeOut = 350) {
+                $(".main-loading-delay").delay(timeDelay).fadeOut(timeOut);
+            },
+
+            ShowLoading: function (timeOut = 350) {
+                $(".main-loading-delay").fadeIn(timeOut);
+            }
+        };
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+

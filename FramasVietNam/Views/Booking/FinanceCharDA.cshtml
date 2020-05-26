@@ -1,0 +1,159 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var lstDA = (List<FramasVietNam.Models.VNT86.sp_FinanceDAGet_Result>)ViewBag.lstDA;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+            Finance
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">Finance</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+
+            <!-- /.box -->
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Summarize</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+
+                    <div style="overflow-x:auto;">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10px">#</th>
+                                    <th>Brand</th>
+                                    <th>Product Code</th>
+                                    <th>Product Name</th>
+                                    <th>Sold Quantity</th>
+                                    <th>Amo. Quantity</th>
+                                    <th>Remaining</th>
+                                    <th>Progress</th>
+                                    <th>Percent</th>
+                                    <th style="width: 40px">Chart</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (lstDA != null)
+                                {
+                                    int i = 1;
+                                    foreach (var item in lstDA)
+                                    {
+                                        var _remaining = mFunction.ToDouble(item.AmoQty) - item.Qty;
+                                        <tr>
+                                            <td>@i.ToString()</td>
+                                            <td>@item.Brand</td>
+                                            <td>@item.ProductCode</td>
+                                            <td>@item.ProductName</td>
+                                            <td>@item.Qty</td>
+                                            <td>@item.AmoQty</td>
+                                            <td>@_remaining</td>
+                                            <td>
+                                                <div class="progress progress-xs progress-striped active">
+                                                    @if (item.Percent >= 50)
+                                                    {
+                                                        <div class="progress-bar progress-bar-success" style="width: @item.Percent%"></div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="progress-bar progress-bar-danger" style="width: @item.Percent%"></div>
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @if (item.Percent >= 50)
+                                                {
+                                                    <span class="badge bg-green">@item.Percent%</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-red">@item.Percent%</span>
+                                                }
+                                            </td>
+                                            <td class="text">
+                                                <button class="fa fa-line-chart btn btn-sm btn-primary" onclick="openModal(@item.ProductCode);"></button>
+                                                @*@Html.ButtonRoles("Edit", "UserModuleRole", "Administrator", "", new { @class = "fa fa-line-chart btn btn-sm btn-primary", @onclick = "openModal('" + item.ProductCode + "');" })*@
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                        <!-- /.to do something-->
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+
+        <!-- #region Chỉnh sửa quyền -->
+        <div id='modal-edit-Finace' class='modal Extra-large'>
+            <div class="modal-dialog Extra-largeChild">
+                <div class="modal-content">
+                    <div id='ContentModal'></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+<!-- #endregion -->
+
+@section Styles{
+    <style>
+        .Extra-largeChild {
+            min-width: 80%;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+}
+
+@section Scripts{
+    <script src="~/Content/adminlte/components/Canvasjs/canvasjs.min.js"></script>
+    <script>
+        $(function () {
+            $('#example1').DataTable();
+
+        })
+        var openModal = function (code) {
+            Loading.ShowLoading();
+            var url ='@Url.Action("FinanceChartDetail", "Booking")?productCode='+ code;
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (data) {
+            Loading.HideLoading();
+                    $('#ContentModal').html(data);
+                    $('#modal-edit-Finace').modal(options);
+                    $('#modal-edit-Finace').modal('show');
+                },
+                error: function (e) {
+            Loading.HideLoading();
+                    alert('@Language.label("OopsSomethingWentWrong")');
+                    return false;
+                }
+            });
+        }
+            $("#modal-edit-Finace").on('shown.bs.modal', function () {
+            window.dispatchEvent(new Event('resize'));
+            });
+    </script>
+
+
+}

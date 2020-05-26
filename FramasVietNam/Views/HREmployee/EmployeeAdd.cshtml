@@ -1,0 +1,147 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var lstDepartment = (List<FramasVietNam.Models.HumanResource.MaBoPhan>)ViewBag.lstDepartment;
+    var lstNationality = (List<FramasVietNam.Models.HumanResource.MaQuocGia>)ViewBag.lstNationality;
+    var lstReligion = (List<FramasVietNam.Models.HumanResource.MaTonGiao>)ViewBag.lstReligion;
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+    window.onload = function () {
+        alert("@Html.Raw(ViewBag.Message)");
+    };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Employee","HREmployee")"></a>
+            @Language.label("Add")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Employee")</a></li>
+            <li class="active">@Language.label("Add")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@Language.label("Add")</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                @using (Html.BeginForm("EmployeeAdd", "HREmployee", FormMethod.Post))
+                {
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label>@Language.label("User")<code>(*)</code></label>
+                            @Html.TextBox("User", null, new { @class = "form-control", @placeholder = @Language.label("User") })
+                        </div>
+                        <div class="form-group">
+                            <label>@Language.label("FirstName")<code>(*)</code></label>
+                            @Html.TextBox("FirstName", null, new { @class = "form-control", @placeholder = @Language.label("FirstName") })
+                        </div>
+                        <div class="form-group">
+                            <label>@Language.label("LastName")<code>(*)</code></label>
+                            @Html.TextBox("LastName", null, new { @class = "form-control", @placeholder = @Language.label("LastName") })
+                        </div>
+                        <div class="form-group">
+                            <label>@Language.label("Sex")<code>(*)</code></label>
+                            <select name="Sex" id="Sex" class="form-control" placeholder="@Language.label("Sex")">
+                                <option value="0">@Language.label("Female")</option>
+                                <option value="1">@Language.label("Male")</option>
+                                <option value="2">@Language.label("Other")</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>@Language.label("DateOfBirth")<code>(*)</code></label>
+                            <input name="DateOfBirth" type='text' class="form-control" id='DateOfBirth' placeholder="@Language.label("DateOfBirth")" />
+                        </div>
+                        <div class="form-group">
+                            <label>@Language.label("PlaceOfBirth")</label>
+                            @Html.TextBox("PlaceOfBirth", null, new { @class = "form-control", @placeholder = @Language.label("PlaceOfBirth") })
+                        </div>
+                        <div class="form-group">
+                            <label>@Language.label("Address")</label>
+                            @Html.TextBox("Address", null, new { @class = "form-control", @placeholder = @Language.label("Address") })
+                        </div>
+                        <div class="form-group">
+                            <label>@Language.label("MobilePhone")<code>(*)</code></label>
+                            @Html.TextBox("MobilePhone", null, new { @class = "form-control", @placeholder = @Language.label("MobilePhone") })
+                        </div>
+                        <div class="form-group">
+                            <label> @Language.label("Nationality")</label>
+                            <select name="Nationality" id="Nationality" class="form-control select2" data-placeholder="Select a nationality">
+                                <option value=""></option>
+                                @if (lstNationality != null)
+                                {
+                                    foreach (var item in lstNationality)
+                                    {
+                                        <option value="@item.MaSo">@item.NoiDung</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>@Language.label("Religion")</label>
+                            <select name="Religion" id="Religion" class="form-control">
+                                @if (lstReligion != null)
+                                {
+                                    foreach (var item in lstReligion)
+                                    {
+                                        <option value="@item.MaSo">@item.NoiDung</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                @Language.label("Department") <code> (*) </code>
+                            </label>
+                            <select name="Department" id="Department" class="form-control select2" data-placeholder="Select a department">
+                                <option value=""></option>
+                                @if (lstDepartment != null)
+                                {
+                                    foreach (var item in lstDepartment)
+                                    {
+                                        <option value="@item.MaBoPhan1">@item.TenBoPhanA</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>@Language.label("Shift")<code>(*)</code></label>
+                            <select name="isOfficeHours" id="isOfficeHours" class="form-control">
+                                <option value="0">@Language.label("WorkingByShift")</option>
+                                <option value="1">@Language.label("WorkingByOfficeHours")</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        @Html.ButtonRoles("Save", "Employee", "HREmployee", Language.label("Save"), new { @class = "btn btn-primary" })
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $(".select2").select2();
+
+        $('#DateOfBirth').datetimepicker({
+            format: 'MM/DD/YYYY',
+        });
+
+    });
+</script>

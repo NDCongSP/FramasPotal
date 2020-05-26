@@ -1,0 +1,122 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var dates = ViewBag.dates;
+    string date_str = mFunction.ToString(ViewBag.date_str);
+
+    var lst_mealSchedule = (List<FramasVietNam.Models.Meal.sp_MealSchedule_GetByDay_Result>)ViewBag.lst_mealSchedule;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index", "Function")"></a>
+            @Language.label("MealSchedule")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">@Language.label("MealSchedule")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            @using (Html.BeginForm("MenusCheduleSearch", "MealControlCanteen", FormMethod.Post))
+            {
+                <div class="col-md-2">
+                    <div class="input-group margin">
+                        <div class="input-group-btn">
+                            @Html.ActionLink("<", "MenusChedulePre", "MealControlCanteen", new { dt = @date_str }, new { @class = "btn btn-primary" })
+                        </div>
+                        <!-- /btn-group -->
+                        <input type="text" class="form-control pull-right datepicker" id="dateSearch" name="dateSearch" value="@date_str">
+
+                        <div class="input-group-btn">
+                            @Html.ActionLink(">", "MenusCheduleNext", "MealControlCanteen", new { dt = @date_str }, new { @class = "btn btn-primary" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1" style="margin-top:9px;">
+                    @Html.ButtonRoles("Search", "MenusChedule", "MealControlCanteen", Language.label("Search"), new { @class = "btn btn-primary" })
+                </div>
+            }
+
+            <div class="col-md-12">
+                <!-- The time line -->
+                <ul class="timeline">
+
+                    @* show time line 7 days in week *@
+                    @if (dates != null)
+                    {
+                        foreach (var item in dates)
+                        {
+                            <!-- timeline item -->
+                            <li class="time-label">
+                                <strong style="color: #808080">
+                                    @Language.label(item.DayOfWeek.ToString()): @item.Day-@item.Month-@item.Year
+                                </strong>
+                                @*<h4 style="color:dodgerblue;font-weight: bold">@Language.label(item.DayOfWeek.ToString()): @item.Day-@item.Month-@item.Year</h4>*@
+                                <div class="timeline-item" style="min-height:40px">
+                                    <span class="time"><i class="fa fa-clock-o"></i> @Language.label("List")</span>
+
+                                    @if (item > DateTime.Now)
+                                    {
+                                        @Html.ActionLinkRole("Edit", "MenusChedule", "MealControlCanteen", Language.label("Edit"), "MenusCheduleEdit", "MealControlCanteen", new { strdate = item.ToString("yyyy-MM-dd") }, new { @class = "btn btn-success btn-sm" })
+                                    }
+
+                                    @* show meal for 7 days*@
+                                    @if (lst_mealSchedule != null)
+                                    {
+                                        string _day = item.ToString("yyyyMMdd");
+                                        var lst_Temp = lst_mealSchedule.Where(m => m.Day == _day).OrderBy(o => o.ShiftWorkID).ToList();
+
+                                        <div class="timeline-body">
+                                            @{
+                                                int shift = 0;
+                                                foreach (var meal in lst_Temp)
+                                                {
+                                                    if (shift != meal.ShiftWorkID)
+                                                    {
+                                                        if (meal.ShiftWorkID != 1)
+                                                        {
+                                                            <br />
+                                                        }
+                                                        <text>✎ @meal.ShiftWorkName: [@meal.MenuMealName] </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text> - [@meal.MenuMealName] </text>
+                                                    }
+                                                    shift = meal.ShiftWorkID;
+                                                }
+                                            }
+                                        </div>
+                                    }
+
+                                </div>
+                            </li>
+                            <!-- END timeline item -->
+                        }
+                    }
+                    <li>
+                        <i class="fa fa-clock-o bg-gray"></i>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.col -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        //Date picker
+        $('.datepicker').datetimepicker({
+            "setDate": new Date(),
+            "autoclose": true
+        });
+    </script>
+}

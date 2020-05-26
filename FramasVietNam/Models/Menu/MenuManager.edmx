@@ -1,0 +1,1768 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MenuManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="int" />
+          <Property Name="PCIDAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+          <Property Name="PCIDUpd" Type="varchar" MaxLength="25" />
+          <Property Name="DateUpd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="Image" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="PCIDAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DeptToModule">
+          <Key>
+            <PropertyRef Name="DeptID" />
+            <PropertyRef Name="ModuleID" />
+          </Key>
+          <Property Name="DeptID" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="ModuleID" Type="int" Nullable="false" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="PCIDAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DocName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="50" />
+          <Property Name="FileUrl" Type="nvarchar(max)" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="EventList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventDay" Type="datetime" />
+          <Property Name="Title1_EG" Type="nvarchar" MaxLength="500" />
+          <Property Name="Title1_GR" Type="nvarchar" MaxLength="500" />
+          <Property Name="Title1_VN" Type="nvarchar" MaxLength="500" />
+          <Property Name="Title2_EG" Type="nvarchar" MaxLength="500" />
+          <Property Name="Title2_GR" Type="nvarchar" MaxLength="500" />
+          <Property Name="Title2_VN" Type="nvarchar" MaxLength="500" />
+          <Property Name="Title3_EG" Type="nvarchar" MaxLength="500" />
+          <Property Name="Title3_GR" Type="nvarchar" MaxLength="500" />
+          <Property Name="Title3_VN" Type="nvarchar" MaxLength="500" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="UserAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+          <Property Name="UserUpd" Type="varchar" MaxLength="25" />
+          <Property Name="DateUpd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="FSComputer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="nvarchar" MaxLength="4" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="50" />
+          <Property Name="DepartmentId" Type="nvarchar" MaxLength="10" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="255" />
+          <Property Name="DateMark" Type="datetime" />
+          <Property Name="TotalScore" Type="float" />
+          <Property Name="TotalPercent" Type="float" />
+          <Property Name="Mark1" Type="int" />
+          <Property Name="Factor1" Type="nvarchar" MaxLength="255" />
+          <Property Name="Note1" Type="nvarchar(max)" />
+          <Property Name="Mark2" Type="int" />
+          <Property Name="Factor2" Type="nvarchar" MaxLength="255" />
+          <Property Name="Note2" Type="nvarchar(max)" />
+          <Property Name="Mark3" Type="int" />
+          <Property Name="Factor3" Type="nvarchar" MaxLength="255" />
+          <Property Name="Note3" Type="nvarchar(max)" />
+          <Property Name="Mark4" Type="int" />
+          <Property Name="Factor4" Type="nvarchar" MaxLength="255" />
+          <Property Name="Note4" Type="nvarchar(max)" />
+          <Property Name="Mark5" Type="int" />
+          <Property Name="Factor5" Type="nvarchar" MaxLength="255" />
+          <Property Name="Note5" Type="nvarchar(max)" />
+          <Property Name="Mark6" Type="int" />
+          <Property Name="Factor6" Type="nvarchar" MaxLength="255" />
+          <Property Name="Note6" Type="nvarchar(max)" />
+          <Property Name="Mark7" Type="int" />
+          <Property Name="Factor7" Type="nvarchar" MaxLength="255" />
+          <Property Name="Note7" Type="nvarchar(max)" />
+          <Property Name="Mark8" Type="int" />
+          <Property Name="Factor8" Type="nvarchar" MaxLength="255" />
+          <Property Name="Note8" Type="nvarchar(max)" />
+          <Property Name="Mark9" Type="int" />
+          <Property Name="Factor9" Type="nvarchar" MaxLength="255" />
+          <Property Name="Note9" Type="nvarchar(max)" />
+          <Property Name="Mark10" Type="int" />
+          <Property Name="Factor10" Type="nvarchar" MaxLength="255" />
+          <Property Name="Note10" Type="nvarchar(max)" />
+          <Property Name="Mark11" Type="int" />
+          <Property Name="Factor11" Type="nvarchar" MaxLength="255" />
+          <Property Name="Note11" Type="nvarchar(max)" />
+          <Property Name="Mark12" Type="int" />
+          <Property Name="Factor12" Type="nvarchar" MaxLength="255" />
+          <Property Name="Note12" Type="nvarchar(max)" />
+          <Property Name="Mark13" Type="int" />
+          <Property Name="Factor13" Type="nvarchar" MaxLength="255" />
+          <Property Name="Note13" Type="nvarchar(max)" />
+          <Property Name="Mark14" Type="int" />
+          <Property Name="Factor14" Type="nvarchar" MaxLength="255" />
+          <Property Name="Note14" Type="nvarchar(max)" />
+          <Property Name="Mark15" Type="int" />
+          <Property Name="Factor15" Type="nvarchar" MaxLength="255" />
+          <Property Name="Note15" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="DateAdd" Type="datetime" />
+          <Property Name="UserAdd" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserUpd" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateUpd" Type="datetime" />
+          <Property Name="TotalMark" Type="float" />
+        </EntityType>
+        <EntityType Name="Function">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="URL" Type="varchar" MaxLength="100" />
+          <Property Name="Action" Type="varchar" MaxLength="50" />
+          <Property Name="Controller" Type="varchar" MaxLength="50" />
+          <Property Name="Image" Type="varchar" MaxLength="50" />
+          <Property Name="Color" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="PCIDAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="Image" Type="varchar" MaxLength="50" />
+          <Property Name="Action" Type="varchar" MaxLength="50" />
+          <Property Name="Controller" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="PCIDAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="GroupToFunction">
+          <Key>
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="FunctionalID" />
+          </Key>
+          <Property Name="GroupID" Type="int" Nullable="false" />
+          <Property Name="FunctionalID" Type="int" Nullable="false" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="PCIDAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ListWorkLoad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmployeeId" Type="nvarchar" MaxLength="4" />
+          <Property Name="WorkingHour" Type="float" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="DateWork" Type="datetime" />
+          <Property Name="TotalWorking" Type="float" />
+          <Property Name="Percen" Type="float" />
+          <Property Name="DateAdd" Type="datetime" />
+          <Property Name="UserAdd" Type="nvarchar" MaxLength="50" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="DepartmentId" Type="nvarchar" MaxLength="10" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="MailSupport">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="Mail" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="Image" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="PCIDAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ModuleToGroup">
+          <Key>
+            <PropertyRef Name="ModuleID" />
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="ModuleID" Type="int" Nullable="false" />
+          <Property Name="GroupID" Type="int" Nullable="false" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="PCIDAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title_EG" Type="nvarchar" MaxLength="500" />
+          <Property Name="Title_GR" Type="nvarchar" MaxLength="500" />
+          <Property Name="Title_VN" Type="nvarchar" MaxLength="500" />
+          <Property Name="ShortContent_EG" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ShortContent_GR" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ShortContent_VN" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Content_EG" Type="ntext" />
+          <Property Name="Content_GR" Type="ntext" />
+          <Property Name="Content_VN" Type="ntext" />
+          <Property Name="NewsType" Type="int" />
+          <Property Name="Images" Type="nvarchar(max)" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="UserAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+          <Property Name="UserUpd" Type="varchar" MaxLength="25" />
+          <Property Name="DateUpd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SaturdayOffPlanning">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DepartmentID" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="DateOff" Type="datetime" Nullable="false" />
+          <Property Name="PCIDAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Slider">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Images" Type="nvarchar(max)" />
+          <Property Name="UserUpd" Type="varchar" MaxLength="25" />
+          <Property Name="DateUpd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="sys_Language">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PCIDAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="sys_Translation">
+          <Key>
+            <PropertyRef Name="LanguageID" />
+            <PropertyRef Name="NameID" />
+            <PropertyRef Name="TableName" />
+          </Key>
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="LanguageCode" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="NameID" Type="int" Nullable="false" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="PCIDAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserToDept">
+          <Key>
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="DeptID" />
+          </Key>
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="DeptID" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="PCIDAdd" Type="varchar" MaxLength="25" />
+          <Property Name="DateAdd" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_DeptToModule_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="DeptToModule" Type="Self.DeptToModule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeptToModule">
+              <PropertyRef Name="DeptID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeptToModule_Module">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="DeptToModule" Type="Self.DeptToModule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeptToModule">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupToFunction_Function">
+          <End Role="Function" Type="Self.Function" Multiplicity="1" />
+          <End Role="GroupToFunction" Type="Self.GroupToFunction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Function">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GroupToFunction">
+              <PropertyRef Name="FunctionalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupToFunction_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="1" />
+          <End Role="GroupToFunction" Type="Self.GroupToFunction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GroupToFunction">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ModuleToGroup_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="1" />
+          <End Role="ModuleToGroup" Type="Self.ModuleToGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ModuleToGroup">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ModuleToGroup_Module">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="ModuleToGroup" Type="Self.ModuleToGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ModuleToGroup">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sys_Translation_sys_Language">
+          <End Role="sys_Language" Type="Self.sys_Language" Multiplicity="1" />
+          <End Role="sys_Translation" Type="Self.sys_Translation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sys_Language">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="sys_Translation">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SearchAllTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SearchStr" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ActionLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ActionName" Type="varchar" Mode="In" />
+          <Parameter Name="ControllerName" Type="varchar" Mode="In" />
+          <Parameter Name="Method" Type="varchar" Mode="In" />
+          <Parameter Name="Content" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Detail" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="Date" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_BirthdayEmployeeGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FromDate" Type="varchar" Mode="In" />
+          <Parameter Name="ToDate" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_BookingGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_CheckPermissionUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="User" Type="varchar" Mode="In" />
+          <Parameter Name="Action" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_EventList_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="language" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_Function_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="language" Type="int" Mode="In" />
+          <Parameter Name="GroupID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_Group_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="language" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_MesListWorkLoad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dt" Type="datetime" Mode="In" />
+          <Parameter Name="Dept" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_Module_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="language" Type="int" Mode="In" />
+          <Parameter Name="UserName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ModuleGroupGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="language" Type="int" Mode="In" />
+          <Parameter Name="ModuleID" Type="int" Mode="In" />
+          <Parameter Name="GroupID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_News_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="language" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_NewsDetail_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="language" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_rpt_Function" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_SaturdayOffPlanning_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dt" Type="datetime" Mode="In" />
+          <Parameter Name="Dept" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ShortNews_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="language" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_SliderImage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_SliderImageDel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="image" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SplitStringToTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="string" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="delimiter" Type="char" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="data" Type="nvarchar(max)" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <EntityContainer Name="MenuManagerModelStoreContainer">
+          <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeptToModule" EntityType="Self.DeptToModule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Document" EntityType="Self.Document" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventList" EntityType="Self.EventList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FSComputer" EntityType="Self.FSComputer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Function" EntityType="Self.Function" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GroupToFunction" EntityType="Self.GroupToFunction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ListWorkLoad" EntityType="Self.ListWorkLoad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MailSupport" EntityType="Self.MailSupport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ModuleToGroup" EntityType="Self.ModuleToGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaturdayOffPlanning" EntityType="Self.SaturdayOffPlanning" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_Language" EntityType="Self.sys_Language" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_Translation" EntityType="Self.sys_Translation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserToDept" EntityType="Self.UserToDept" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DeptToModule_Department" Association="Self.FK_DeptToModule_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="DeptToModule" EntitySet="DeptToModule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeptToModule_Module" Association="Self.FK_DeptToModule_Module">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="DeptToModule" EntitySet="DeptToModule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupToFunction_Function" Association="Self.FK_GroupToFunction_Function">
+            <End Role="Function" EntitySet="Function" />
+            <End Role="GroupToFunction" EntitySet="GroupToFunction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupToFunction_Group" Association="Self.FK_GroupToFunction_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="GroupToFunction" EntitySet="GroupToFunction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ModuleToGroup_Group" Association="Self.FK_ModuleToGroup_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="ModuleToGroup" EntitySet="ModuleToGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ModuleToGroup_Module" Association="Self.FK_ModuleToGroup_Module">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="ModuleToGroup" EntitySet="ModuleToGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sys_Translation_sys_Language" Association="Self.FK_sys_Translation_sys_Language">
+            <End Role="sys_Language" EntitySet="sys_Language" />
+            <End Role="sys_Translation" EntitySet="sys_Translation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MenuManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <ComplexType Name="SplitStringToTable_Result">
+          <Property Name="data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </ComplexType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="SplitStringToTable" IsComposable="true" ReturnType="Collection(MenuManagerModel.SplitStringToTable_Result)">
+            <Parameter Name="string" Mode="In" Type="String" />
+            <Parameter Name="delimiter" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SearchAllTables">
+          <Parameter Name="SearchStr" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ActionLog">
+            <Parameter Name="ActionName" Mode="In" Type="String" />
+            <Parameter Name="ControllerName" Mode="In" Type="String" />
+            <Parameter Name="Method" Mode="In" Type="String" />
+            <Parameter Name="Content" Mode="In" Type="String" />
+            <Parameter Name="Detail" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_BirthdayEmployeeGet" ReturnType="Collection(MenuManagerModel.sp_BirthdayEmployeeGet_Result)">
+            <Parameter Name="FromDate" Mode="In" Type="String" />
+            <Parameter Name="ToDate" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_BookingGet" ReturnType="Collection(MenuManagerModel.sp_BookingGet_Result)" />
+          <FunctionImport Name="sp_CheckPermissionUser" ReturnType="Collection(MenuManagerModel.sp_CheckPermissionUser_Result)">
+            <Parameter Name="User" Mode="In" Type="String" />
+            <Parameter Name="Action" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EventList_Get" ReturnType="Collection(MenuManagerModel.sp_EventList_Get_Result)">
+          <Parameter Name="language" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Function_Get" ReturnType="Collection(MenuManagerModel.sp_Function_Get_Result)">
+            <Parameter Name="language" Mode="In" Type="Int32" />
+            <Parameter Name="GroupID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Group_Get" ReturnType="Collection(MenuManagerModel.sp_Group_Get_Result)">
+          <Parameter Name="language" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_MesListWorkLoad" ReturnType="Collection(MenuManagerModel.sp_MesListWorkLoad_Result)">
+            <Parameter Name="dt" Mode="In" Type="DateTime" />
+            <Parameter Name="Dept" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Module_Get" ReturnType="Collection(MenuManagerModel.sp_Module_Get_Result)">
+            <Parameter Name="language" Mode="In" Type="Int32" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ModuleGroupGet" ReturnType="Collection(MenuManagerModel.sp_ModuleGroupGet_Result)">
+            <Parameter Name="language" Mode="In" Type="Int32" />
+            <Parameter Name="ModuleID" Mode="In" Type="Int32" />
+            <Parameter Name="GroupID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_News_Get" ReturnType="Collection(MenuManagerModel.sp_News_Get_Result)">
+          <Parameter Name="language" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_NewsDetail_Get" ReturnType="Collection(MenuManagerModel.sp_NewsDetail_Get_Result)">
+          <Parameter Name="language" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_rpt_Function" ReturnType="Collection(MenuManagerModel.sp_rpt_Function_Result)" />
+          <FunctionImport Name="sp_SaturdayOffPlanning_Get" ReturnType="Collection(MenuManagerModel.sp_SaturdayOffPlanning_Get_Result)">
+            <Parameter Name="dt" Mode="In" Type="DateTime" />
+            <Parameter Name="Dept" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ShortNews_Get" ReturnType="Collection(MenuManagerModel.sp_ShortNews_Get_Result)">
+          <Parameter Name="language" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_SliderImage" ReturnType="Collection(String)" />
+          <FunctionImport Name="sp_SliderImageDel">
+          <Parameter Name="image" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Bookings" EntityType="MenuManagerModel.Booking" />
+          <EntitySet Name="Departments" EntityType="MenuManagerModel.Department" />
+          <EntitySet Name="DeptToModules" EntityType="MenuManagerModel.DeptToModule" />
+          <EntitySet Name="Documents" EntityType="MenuManagerModel.Document" />
+          <EntitySet Name="EventLists" EntityType="MenuManagerModel.EventList" />
+          <EntitySet Name="FSComputers" EntityType="MenuManagerModel.FSComputer" />
+          <EntitySet Name="Functions" EntityType="MenuManagerModel.Function" />
+          <EntitySet Name="Groups" EntityType="MenuManagerModel.Group" />
+          <EntitySet Name="GroupToFunctions" EntityType="MenuManagerModel.GroupToFunction" />
+          <EntitySet Name="ListWorkLoads" EntityType="MenuManagerModel.ListWorkLoad" />
+          <EntitySet Name="MailSupports" EntityType="MenuManagerModel.MailSupport" />
+          <EntitySet Name="Modules" EntityType="MenuManagerModel.Module" />
+          <EntitySet Name="ModuleToGroups" EntityType="MenuManagerModel.ModuleToGroup" />
+          <EntitySet Name="News" EntityType="MenuManagerModel.News" />
+          <EntitySet Name="SaturdayOffPlannings" EntityType="MenuManagerModel.SaturdayOffPlanning" />
+          <EntitySet Name="Sliders" EntityType="MenuManagerModel.Slider" />
+          <EntitySet Name="sys_Language" EntityType="MenuManagerModel.sys_Language" />
+          <EntitySet Name="sys_Translation" EntityType="MenuManagerModel.sys_Translation" />
+          <EntitySet Name="UserToDepts" EntityType="MenuManagerModel.UserToDept" />
+          <AssociationSet Name="FK_DeptToModule_Department" Association="MenuManagerModel.FK_DeptToModule_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="DeptToModule" EntitySet="DeptToModules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeptToModule_Module" Association="MenuManagerModel.FK_DeptToModule_Module">
+            <End Role="Module" EntitySet="Modules" />
+            <End Role="DeptToModule" EntitySet="DeptToModules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupToFunction_Function" Association="MenuManagerModel.FK_GroupToFunction_Function">
+            <End Role="Function" EntitySet="Functions" />
+            <End Role="GroupToFunction" EntitySet="GroupToFunctions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupToFunction_Group" Association="MenuManagerModel.FK_GroupToFunction_Group">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="GroupToFunction" EntitySet="GroupToFunctions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ModuleToGroup_Group" Association="MenuManagerModel.FK_ModuleToGroup_Group">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="ModuleToGroup" EntitySet="ModuleToGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ModuleToGroup_Module" Association="MenuManagerModel.FK_ModuleToGroup_Module">
+            <End Role="Module" EntitySet="Modules" />
+            <End Role="ModuleToGroup" EntitySet="ModuleToGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sys_Translation_sys_Language" Association="MenuManagerModel.FK_sys_Translation_sys_Language">
+            <End Role="sys_Language" EntitySet="sys_Language" />
+            <End Role="sys_Translation" EntitySet="sys_Translation" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="sp_BirthdayEmployeeGet_Result">
+          <Property Type="String" Name="MaSoNhanVien" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="TenNhanVien" Nullable="true" MaxLength="36" />
+          <Property Type="String" Name="NgaySinh" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="TenBoPhanA" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_BookingGet_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="36" />
+          <Property Type="String" Name="Subject" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="Content" Nullable="false" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="EndDate" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="sp_CheckPermissionUser_Result">
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="Action" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_EventList_Get_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="DateTime" Name="EventDay" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Title1" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Title2" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Title3" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="sp_Function_Get_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="TableName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="URL" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Action" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Controller" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Image" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Color" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+          <Property Type="String" Name="PCIDAdd" Nullable="true" MaxLength="25" />
+          <Property Type="DateTime" Name="DateAdd" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="LanguageID" Nullable="false" />
+          <Property Type="String" Name="LanguageCode" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="Title" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="sp_Group_Get_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="TableName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ModuleID" Nullable="false" />
+          <Property Type="String" Name="ModuleCode" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="Action" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Controller" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Image" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+          <Property Type="Int32" Name="LanguageID" Nullable="true" />
+          <Property Type="String" Name="LanguageCode" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Title" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="sp_MesListWorkLoad_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="EmployeeId" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="EmployeeName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TenNhanVien" Nullable="true" MaxLength="36" />
+          <Property Type="String" Name="DepartmentId" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="TenBoPhan" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="WorkingHour" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="DateTime" Name="DateWork" Nullable="true" Precision="23" />
+          <Property Type="Double" Name="TotalWorking" Nullable="true" />
+          <Property Type="Double" Name="Percen" Nullable="true" />
+          <Property Type="DateTime" Name="DateAdd" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="sp_Module_Get_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="TableName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Image" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+          <Property Type="Int32" Name="LanguageID" Nullable="true" />
+          <Property Type="String" Name="LanguageCode" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Title" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="sp_ModuleGroupGet_Result">
+          <Property Type="String" Name="ModuleName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="GroupName" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="sp_News_Get_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Content" Nullable="true" MaxLength="2000" />
+          <Property Type="String" Name="Images" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_NewsDetail_Get_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ShortContent" Nullable="true" MaxLength="2000" />
+          <Property Type="String" Name="Content" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="Images" Nullable="true" />
+          <Property Type="DateTime" Name="DateAdd" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="sp_rpt_Function_Result">
+          <Property Type="Int32" Name="ID" Nullable="true" />
+          <Property Type="String" Name="Code" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="TableName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="URL" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Action" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Controller" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Image" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Color" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+          <Property Type="String" Name="PCIDAdd" Nullable="true" MaxLength="25" />
+          <Property Type="DateTime" Name="DateAdd" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="LanguageID" Nullable="true" />
+          <Property Type="String" Name="LanguageCode" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Title" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="sp_SaturdayOffPlanning_Get_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="TenNhanVien" Nullable="true" MaxLength="36" />
+          <Property Type="String" Name="Content" Nullable="false" />
+          <Property Type="String" Name="DepartmentID" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="TenBoPhan" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TableName" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="DateOff" Nullable="false" Precision="23" />
+          <Property Type="String" Name="PCIDAdd" Nullable="true" MaxLength="25" />
+          <Property Type="DateTime" Name="DateAdd" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="sp_ShortNews_Get_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Content" Nullable="true" MaxLength="2000" />
+          <Property Type="String" Name="Images" Nullable="true" />
+          <Property Type="DateTime" Name="DateAdd" Nullable="true" Precision="23" />
+        </ComplexType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Subject" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="PCIDAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <Property Name="PCIDUpd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateUpd" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="PCIDAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DeptToModules" Relationship="MenuManagerModel.FK_DeptToModule_Department" FromRole="Department" ToRole="DeptToModule" />
+        </EntityType>
+        <EntityType Name="DeptToModule">
+          <Key>
+            <PropertyRef Name="DeptID" />
+            <PropertyRef Name="ModuleID" />
+          </Key>
+          <Property Name="DeptID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="ModuleID" Type="Int32" Nullable="false" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="PCIDAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Department" Relationship="MenuManagerModel.FK_DeptToModule_Department" FromRole="DeptToModule" ToRole="Department" />
+          <NavigationProperty Name="Module" Relationship="MenuManagerModel.FK_DeptToModule_Module" FromRole="DeptToModule" ToRole="Module" />
+        </EntityType>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DocName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Icon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FileUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="EventList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventDay" Type="DateTime" Precision="3" />
+          <Property Name="Title1_EG" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Title1_GR" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Title1_VN" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Title2_EG" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Title2_GR" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Title2_VN" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Title3_EG" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Title3_GR" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Title3_VN" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="UserAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <Property Name="UserUpd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateUpd" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="FSComputer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DateMark" Type="DateTime" Precision="3" />
+          <Property Name="TotalScore" Type="Double" />
+          <Property Name="TotalPercent" Type="Double" />
+          <Property Name="Mark1" Type="Int32" />
+          <Property Name="Factor1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Note1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mark2" Type="Int32" />
+          <Property Name="Factor2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Note2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mark3" Type="Int32" />
+          <Property Name="Factor3" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Note3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mark4" Type="Int32" />
+          <Property Name="Factor4" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Note4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mark5" Type="Int32" />
+          <Property Name="Factor5" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Note5" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mark6" Type="Int32" />
+          <Property Name="Factor6" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Note6" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mark7" Type="Int32" />
+          <Property Name="Factor7" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Note7" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mark8" Type="Int32" />
+          <Property Name="Factor8" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Note8" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mark9" Type="Int32" />
+          <Property Name="Factor9" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Note9" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mark10" Type="Int32" />
+          <Property Name="Factor10" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Note10" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mark11" Type="Int32" />
+          <Property Name="Factor11" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Note11" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mark12" Type="Int32" />
+          <Property Name="Factor12" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Note12" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mark13" Type="Int32" />
+          <Property Name="Factor13" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Note13" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mark14" Type="Int32" />
+          <Property Name="Factor14" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Note14" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mark15" Type="Int32" />
+          <Property Name="Factor15" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Note15" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <Property Name="UserAdd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserUpd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpd" Type="DateTime" Precision="3" />
+          <Property Name="TotalMark" Type="Double" />
+        </EntityType>
+        <EntityType Name="Function">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="URL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Action" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Controller" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="PCIDAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="GroupToFunctions" Relationship="MenuManagerModel.FK_GroupToFunction_Function" FromRole="Function" ToRole="GroupToFunction" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Action" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Controller" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="PCIDAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="GroupToFunctions" Relationship="MenuManagerModel.FK_GroupToFunction_Group" FromRole="Group" ToRole="GroupToFunction" />
+          <NavigationProperty Name="ModuleToGroups" Relationship="MenuManagerModel.FK_ModuleToGroup_Group" FromRole="Group" ToRole="ModuleToGroup" />
+        </EntityType>
+        <EntityType Name="GroupToFunction">
+          <Key>
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="FunctionalID" />
+          </Key>
+          <Property Name="GroupID" Type="Int32" Nullable="false" />
+          <Property Name="FunctionalID" Type="Int32" Nullable="false" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="PCIDAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Function" Relationship="MenuManagerModel.FK_GroupToFunction_Function" FromRole="GroupToFunction" ToRole="Function" />
+          <NavigationProperty Name="Group" Relationship="MenuManagerModel.FK_GroupToFunction_Group" FromRole="GroupToFunction" ToRole="Group" />
+        </EntityType>
+        <EntityType Name="ListWorkLoad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeId" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="WorkingHour" Type="Double" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateWork" Type="DateTime" Precision="3" />
+          <Property Name="TotalWorking" Type="Double" />
+          <Property Name="Percen" Type="Double" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <Property Name="UserAdd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="DepartmentId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MailSupport">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Mail" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="PCIDAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DeptToModules" Relationship="MenuManagerModel.FK_DeptToModule_Module" FromRole="Module" ToRole="DeptToModule" />
+          <NavigationProperty Name="ModuleToGroups" Relationship="MenuManagerModel.FK_ModuleToGroup_Module" FromRole="Module" ToRole="ModuleToGroup" />
+        </EntityType>
+        <EntityType Name="ModuleToGroup">
+          <Key>
+            <PropertyRef Name="ModuleID" />
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="ModuleID" Type="Int32" Nullable="false" />
+          <Property Name="GroupID" Type="Int32" Nullable="false" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="PCIDAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Group" Relationship="MenuManagerModel.FK_ModuleToGroup_Group" FromRole="ModuleToGroup" ToRole="Group" />
+          <NavigationProperty Name="Module" Relationship="MenuManagerModel.FK_ModuleToGroup_Module" FromRole="ModuleToGroup" ToRole="Module" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title_EG" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Title_GR" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Title_VN" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ShortContent_EG" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ShortContent_GR" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ShortContent_VN" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Content_EG" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Content_GR" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Content_VN" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewsType" Type="Int32" />
+          <Property Name="Images" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="UserAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <Property Name="UserUpd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateUpd" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="SaturdayOffPlanning">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateOff" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PCIDAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Slider">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Images" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserUpd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateUpd" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="sys_Language">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PCIDAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="sys_Translation" Relationship="MenuManagerModel.FK_sys_Translation_sys_Language" FromRole="sys_Language" ToRole="sys_Translation" />
+        </EntityType>
+        <EntityType Name="sys_Translation">
+          <Key>
+            <PropertyRef Name="LanguageID" />
+            <PropertyRef Name="NameID" />
+            <PropertyRef Name="TableName" />
+          </Key>
+          <Property Name="LanguageID" Type="Int32" Nullable="false" />
+          <Property Name="LanguageCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="NameID" Type="Int32" Nullable="false" />
+          <Property Name="TableName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PCIDAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="sys_Language" Relationship="MenuManagerModel.FK_sys_Translation_sys_Language" FromRole="sys_Translation" ToRole="sys_Language" />
+        </EntityType>
+        <EntityType Name="UserToDept">
+          <Key>
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="DeptID" />
+          </Key>
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="DeptID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="PCIDAdd" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_DeptToModule_Department">
+          <End Type="MenuManagerModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="MenuManagerModel.DeptToModule" Role="DeptToModule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeptToModule">
+              <PropertyRef Name="DeptID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeptToModule_Module">
+          <End Type="MenuManagerModel.Module" Role="Module" Multiplicity="1" />
+          <End Type="MenuManagerModel.DeptToModule" Role="DeptToModule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeptToModule">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupToFunction_Function">
+          <End Type="MenuManagerModel.Function" Role="Function" Multiplicity="1" />
+          <End Type="MenuManagerModel.GroupToFunction" Role="GroupToFunction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Function">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GroupToFunction">
+              <PropertyRef Name="FunctionalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupToFunction_Group">
+          <End Type="MenuManagerModel.Group" Role="Group" Multiplicity="1" />
+          <End Type="MenuManagerModel.GroupToFunction" Role="GroupToFunction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GroupToFunction">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ModuleToGroup_Group">
+          <End Type="MenuManagerModel.Group" Role="Group" Multiplicity="1" />
+          <End Type="MenuManagerModel.ModuleToGroup" Role="ModuleToGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ModuleToGroup">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ModuleToGroup_Module">
+          <End Type="MenuManagerModel.Module" Role="Module" Multiplicity="1" />
+          <End Type="MenuManagerModel.ModuleToGroup" Role="ModuleToGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ModuleToGroup">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sys_Translation_sys_Language">
+          <End Type="MenuManagerModel.sys_Language" Role="sys_Language" Multiplicity="1" />
+          <End Type="MenuManagerModel.sys_Translation" Role="sys_Translation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sys_Language">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="sys_Translation">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MenuManagerModelStoreContainer" CdmEntityContainer="Entities">
+          <FunctionImportMapping FunctionName="MenuManagerModel.Store.SplitStringToTable" FunctionImportName="SplitStringToTable">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MenuManagerModel.SplitStringToTable_Result">
+                <ScalarProperty Name="data" ColumnName="data" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SearchAllTables" FunctionName="MenuManagerModel.Store.SearchAllTables" />
+          <FunctionImportMapping FunctionImportName="sp_ActionLog" FunctionName="MenuManagerModel.Store.sp_ActionLog" />
+          <FunctionImportMapping FunctionImportName="sp_BirthdayEmployeeGet" FunctionName="MenuManagerModel.Store.sp_BirthdayEmployeeGet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MenuManagerModel.sp_BirthdayEmployeeGet_Result">
+                <ScalarProperty Name="MaSoNhanVien" ColumnName="MaSoNhanVien" />
+                <ScalarProperty Name="TenNhanVien" ColumnName="TenNhanVien" />
+                <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
+                <ScalarProperty Name="TenBoPhanA" ColumnName="TenBoPhanA" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_BookingGet" FunctionName="MenuManagerModel.Store.sp_BookingGet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MenuManagerModel.sp_BookingGet_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_CheckPermissionUser" FunctionName="MenuManagerModel.Store.sp_CheckPermissionUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MenuManagerModel.sp_CheckPermissionUser_Result">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_EventList_Get" FunctionName="MenuManagerModel.Store.sp_EventList_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MenuManagerModel.sp_EventList_Get_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EventDay" ColumnName="EventDay" />
+                <ScalarProperty Name="Title1" ColumnName="Title1" />
+                <ScalarProperty Name="Title2" ColumnName="Title2" />
+                <ScalarProperty Name="Title3" ColumnName="Title3" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Function_Get" FunctionName="MenuManagerModel.Store.sp_Function_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MenuManagerModel.sp_Function_Get_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Group_Get" FunctionName="MenuManagerModel.Store.sp_Group_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MenuManagerModel.sp_Group_Get_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="ModuleCode" ColumnName="ModuleCode" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_MesListWorkLoad" FunctionName="MenuManagerModel.Store.sp_MesListWorkLoad">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MenuManagerModel.sp_MesListWorkLoad_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="TenNhanVien" ColumnName="TenNhanVien" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="TenBoPhan" ColumnName="TenBoPhan" />
+                <ScalarProperty Name="WorkingHour" ColumnName="WorkingHour" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DateWork" ColumnName="DateWork" />
+                <ScalarProperty Name="TotalWorking" ColumnName="TotalWorking" />
+                <ScalarProperty Name="Percen" ColumnName="Percen" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Module_Get" FunctionName="MenuManagerModel.Store.sp_Module_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MenuManagerModel.sp_Module_Get_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ModuleGroupGet" FunctionName="MenuManagerModel.Store.sp_ModuleGroupGet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MenuManagerModel.sp_ModuleGroupGet_Result">
+                <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_News_Get" FunctionName="MenuManagerModel.Store.sp_News_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MenuManagerModel.sp_News_Get_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Images" ColumnName="Images" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_NewsDetail_Get" FunctionName="MenuManagerModel.Store.sp_NewsDetail_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MenuManagerModel.sp_NewsDetail_Get_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ShortContent" ColumnName="ShortContent" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Images" ColumnName="Images" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_rpt_Function" FunctionName="MenuManagerModel.Store.sp_rpt_Function">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MenuManagerModel.sp_rpt_Function_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_SaturdayOffPlanning_Get" FunctionName="MenuManagerModel.Store.sp_SaturdayOffPlanning_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MenuManagerModel.sp_SaturdayOffPlanning_Get_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="TenNhanVien" ColumnName="TenNhanVien" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="TenBoPhan" ColumnName="TenBoPhan" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="DateOff" ColumnName="DateOff" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ShortNews_Get" FunctionName="MenuManagerModel.Store.sp_ShortNews_Get">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MenuManagerModel.sp_ShortNews_Get_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Images" ColumnName="Images" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_SliderImage" FunctionName="MenuManagerModel.Store.sp_SliderImage" />
+          <FunctionImportMapping FunctionImportName="sp_SliderImageDel" FunctionName="MenuManagerModel.Store.sp_SliderImageDel" />
+          <EntitySetMapping Name="Bookings">
+            <EntityTypeMapping TypeName="MenuManagerModel.Booking">
+              <MappingFragment StoreEntitySet="Booking">
+                <ScalarProperty Name="DateUpd" ColumnName="DateUpd" />
+                <ScalarProperty Name="PCIDUpd" ColumnName="PCIDUpd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="MenuManagerModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeptToModules">
+            <EntityTypeMapping TypeName="MenuManagerModel.DeptToModule">
+              <MappingFragment StoreEntitySet="DeptToModule">
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documents">
+            <EntityTypeMapping TypeName="MenuManagerModel.Document">
+              <MappingFragment StoreEntitySet="Document">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="FileUrl" ColumnName="FileUrl" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DocName" ColumnName="DocName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventLists">
+            <EntityTypeMapping TypeName="MenuManagerModel.EventList">
+              <MappingFragment StoreEntitySet="EventList">
+                <ScalarProperty Name="DateUpd" ColumnName="DateUpd" />
+                <ScalarProperty Name="UserUpd" ColumnName="UserUpd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Title3_VN" ColumnName="Title3_VN" />
+                <ScalarProperty Name="Title3_GR" ColumnName="Title3_GR" />
+                <ScalarProperty Name="Title3_EG" ColumnName="Title3_EG" />
+                <ScalarProperty Name="Title2_VN" ColumnName="Title2_VN" />
+                <ScalarProperty Name="Title2_GR" ColumnName="Title2_GR" />
+                <ScalarProperty Name="Title2_EG" ColumnName="Title2_EG" />
+                <ScalarProperty Name="Title1_VN" ColumnName="Title1_VN" />
+                <ScalarProperty Name="Title1_GR" ColumnName="Title1_GR" />
+                <ScalarProperty Name="Title1_EG" ColumnName="Title1_EG" />
+                <ScalarProperty Name="EventDay" ColumnName="EventDay" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FSComputers">
+            <EntityTypeMapping TypeName="MenuManagerModel.FSComputer">
+              <MappingFragment StoreEntitySet="FSComputer">
+                <ScalarProperty Name="TotalMark" ColumnName="TotalMark" />
+                <ScalarProperty Name="DateUpd" ColumnName="DateUpd" />
+                <ScalarProperty Name="UserUpd" ColumnName="UserUpd" />
+                <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Note15" ColumnName="Note15" />
+                <ScalarProperty Name="Factor15" ColumnName="Factor15" />
+                <ScalarProperty Name="Mark15" ColumnName="Mark15" />
+                <ScalarProperty Name="Note14" ColumnName="Note14" />
+                <ScalarProperty Name="Factor14" ColumnName="Factor14" />
+                <ScalarProperty Name="Mark14" ColumnName="Mark14" />
+                <ScalarProperty Name="Note13" ColumnName="Note13" />
+                <ScalarProperty Name="Factor13" ColumnName="Factor13" />
+                <ScalarProperty Name="Mark13" ColumnName="Mark13" />
+                <ScalarProperty Name="Note12" ColumnName="Note12" />
+                <ScalarProperty Name="Factor12" ColumnName="Factor12" />
+                <ScalarProperty Name="Mark12" ColumnName="Mark12" />
+                <ScalarProperty Name="Note11" ColumnName="Note11" />
+                <ScalarProperty Name="Factor11" ColumnName="Factor11" />
+                <ScalarProperty Name="Mark11" ColumnName="Mark11" />
+                <ScalarProperty Name="Note10" ColumnName="Note10" />
+                <ScalarProperty Name="Factor10" ColumnName="Factor10" />
+                <ScalarProperty Name="Mark10" ColumnName="Mark10" />
+                <ScalarProperty Name="Note9" ColumnName="Note9" />
+                <ScalarProperty Name="Factor9" ColumnName="Factor9" />
+                <ScalarProperty Name="Mark9" ColumnName="Mark9" />
+                <ScalarProperty Name="Note8" ColumnName="Note8" />
+                <ScalarProperty Name="Factor8" ColumnName="Factor8" />
+                <ScalarProperty Name="Mark8" ColumnName="Mark8" />
+                <ScalarProperty Name="Note7" ColumnName="Note7" />
+                <ScalarProperty Name="Factor7" ColumnName="Factor7" />
+                <ScalarProperty Name="Mark7" ColumnName="Mark7" />
+                <ScalarProperty Name="Note6" ColumnName="Note6" />
+                <ScalarProperty Name="Factor6" ColumnName="Factor6" />
+                <ScalarProperty Name="Mark6" ColumnName="Mark6" />
+                <ScalarProperty Name="Note5" ColumnName="Note5" />
+                <ScalarProperty Name="Factor5" ColumnName="Factor5" />
+                <ScalarProperty Name="Mark5" ColumnName="Mark5" />
+                <ScalarProperty Name="Note4" ColumnName="Note4" />
+                <ScalarProperty Name="Factor4" ColumnName="Factor4" />
+                <ScalarProperty Name="Mark4" ColumnName="Mark4" />
+                <ScalarProperty Name="Note3" ColumnName="Note3" />
+                <ScalarProperty Name="Factor3" ColumnName="Factor3" />
+                <ScalarProperty Name="Mark3" ColumnName="Mark3" />
+                <ScalarProperty Name="Note2" ColumnName="Note2" />
+                <ScalarProperty Name="Factor2" ColumnName="Factor2" />
+                <ScalarProperty Name="Mark2" ColumnName="Mark2" />
+                <ScalarProperty Name="Note1" ColumnName="Note1" />
+                <ScalarProperty Name="Factor1" ColumnName="Factor1" />
+                <ScalarProperty Name="Mark1" ColumnName="Mark1" />
+                <ScalarProperty Name="TotalPercent" ColumnName="TotalPercent" />
+                <ScalarProperty Name="TotalScore" ColumnName="TotalScore" />
+                <ScalarProperty Name="DateMark" ColumnName="DateMark" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Functions">
+            <EntityTypeMapping TypeName="MenuManagerModel.Function">
+              <MappingFragment StoreEntitySet="Function">
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="MenuManagerModel.Group">
+              <MappingFragment StoreEntitySet="Group">
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GroupToFunctions">
+            <EntityTypeMapping TypeName="MenuManagerModel.GroupToFunction">
+              <MappingFragment StoreEntitySet="GroupToFunction">
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="FunctionalID" ColumnName="FunctionalID" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ListWorkLoads">
+            <EntityTypeMapping TypeName="MenuManagerModel.ListWorkLoad">
+              <MappingFragment StoreEntitySet="ListWorkLoad">
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="Percen" ColumnName="Percen" />
+                <ScalarProperty Name="TotalWorking" ColumnName="TotalWorking" />
+                <ScalarProperty Name="DateWork" ColumnName="DateWork" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="WorkingHour" ColumnName="WorkingHour" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MailSupports">
+            <EntityTypeMapping TypeName="MenuManagerModel.MailSupport">
+              <MappingFragment StoreEntitySet="MailSupport">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modules">
+            <EntityTypeMapping TypeName="MenuManagerModel.Module">
+              <MappingFragment StoreEntitySet="Module">
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ModuleToGroups">
+            <EntityTypeMapping TypeName="MenuManagerModel.ModuleToGroup">
+              <MappingFragment StoreEntitySet="ModuleToGroup">
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="News">
+            <EntityTypeMapping TypeName="MenuManagerModel.News">
+              <MappingFragment StoreEntitySet="News">
+                <ScalarProperty Name="DateUpd" ColumnName="DateUpd" />
+                <ScalarProperty Name="UserUpd" ColumnName="UserUpd" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Images" ColumnName="Images" />
+                <ScalarProperty Name="NewsType" ColumnName="NewsType" />
+                <ScalarProperty Name="Content_VN" ColumnName="Content_VN" />
+                <ScalarProperty Name="Content_GR" ColumnName="Content_GR" />
+                <ScalarProperty Name="Content_EG" ColumnName="Content_EG" />
+                <ScalarProperty Name="ShortContent_VN" ColumnName="ShortContent_VN" />
+                <ScalarProperty Name="ShortContent_GR" ColumnName="ShortContent_GR" />
+                <ScalarProperty Name="ShortContent_EG" ColumnName="ShortContent_EG" />
+                <ScalarProperty Name="Title_VN" ColumnName="Title_VN" />
+                <ScalarProperty Name="Title_GR" ColumnName="Title_GR" />
+                <ScalarProperty Name="Title_EG" ColumnName="Title_EG" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaturdayOffPlannings">
+            <EntityTypeMapping TypeName="MenuManagerModel.SaturdayOffPlanning">
+              <MappingFragment StoreEntitySet="SaturdayOffPlanning">
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="DateOff" ColumnName="DateOff" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sliders">
+            <EntityTypeMapping TypeName="MenuManagerModel.Slider">
+              <MappingFragment StoreEntitySet="Slider">
+                <ScalarProperty Name="DateUpd" ColumnName="DateUpd" />
+                <ScalarProperty Name="UserUpd" ColumnName="UserUpd" />
+                <ScalarProperty Name="Images" ColumnName="Images" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_Language">
+            <EntityTypeMapping TypeName="MenuManagerModel.sys_Language">
+              <MappingFragment StoreEntitySet="sys_Language">
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_Translation">
+            <EntityTypeMapping TypeName="MenuManagerModel.sys_Translation">
+              <MappingFragment StoreEntitySet="sys_Translation">
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="NameID" ColumnName="NameID" />
+                <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserToDepts">
+            <EntityTypeMapping TypeName="MenuManagerModel.UserToDept">
+              <MappingFragment StoreEntitySet="UserToDept">
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="PCIDAdd" ColumnName="PCIDAdd" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

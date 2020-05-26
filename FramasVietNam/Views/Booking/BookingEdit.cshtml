@@ -1,0 +1,83 @@
+﻿@using FramasVietNam.Common
+@model FramasVietNam.Models.Menu.Booking
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+    window.onload = function () {
+        alert("@Html.Raw(ViewBag.Message)");
+    };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Booking","Booking")"></a>
+            @Language.label("Edit")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Booking")</a></li>
+            <li class="active">@Language.label("Edit")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    @using (Html.BeginForm("BookingEdit", "Booking", FormMethod.Post))
+                    {
+                        <ul class="todo-list">
+                            <li>
+                                @Language.label("StartDate") (*)
+                                <input name="StartDate" type='text' class="form-control" id='StartDate' placeholder="@Language.label("StartDate")" value="@Model.StartDate" />
+                            </li>
+                            <li>
+                                @Language.label("EndDate") (*)
+                                <input name="EndDate" type='text' class="form-control" id='EndDate' placeholder="@Language.label("EndDate")" value="@Model.EndDate" />
+                            </li>
+                            <li>
+                                @Language.label("Subject") (*)
+                                @Html.TextBox("Subject", Model.Subject, new { @class = "form-control", @placeholder = @Language.label("Subject") })
+                            </li>
+                            <li>
+                                @Language.label("Content") (*)
+                                @Html.TextBox("Content", Model.Content, new { @class = "form-control", @placeholder = @Language.label("Content") })
+                            </li>
+                            <li>
+                                <button class="btn btn-success btn-sm">@Language.label("Save")</button>
+                                @*@Html.ButtonRoles("Save", Language.label("Save"), new { @class = "btn btn-success btn-sm" })*@
+                            </li>
+                        </ul>
+                    }
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+@* format datetime *@
+<script type="text/javascript">
+    $(function () {
+        $('#StartDate').datetimepicker({
+            format: 'MM/DD/YYYY HH:mm a',
+        });
+    });
+    $(function () {
+        $('#EndDate').datetimepicker({
+            format: 'MM/DD/YYYY HH:mm a',
+        });
+    });
+</script>
+

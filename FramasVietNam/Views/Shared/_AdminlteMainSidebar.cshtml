@@ -1,0 +1,160 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    /**/
+
+    var ds_Module = (List<FramasVietNam.Models.Menu.sp_Module_Get_Result>)ViewBag.ds_Module;
+    var ds_Group = (List<FramasVietNam.Models.Menu.sp_Group_Get_Result>)ViewBag.ds_Group;
+    var strModuleID = ViewBag.strModuleID;
+    var strGroupID = ViewBag.strGroupID;
+}
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="~/Content/adminlte/dist/img/logo.jpg" class="img-circle" alt="@User.Identity.GetUserName()">
+            </div>
+            <div class="pull-left info">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <p>@User.Identity.GetUserName()</p>
+                }
+                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+        </div>
+        <!-- search form -->
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input readonly="readonly" type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+                    <a name="search" id="search-btn" class="btn btn-flat">
+                        <i class="fa fa-search"></i>
+                    </a>
+                </span>
+            </div>
+        </form>
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">MAIN NAVIGATION ERP</li>
+            <li class="@Html.IsSelected(controller: "Dashboard") treeview">
+                <a href="#">
+                    <i class="fa fa-external-link"></i> <span>Web link</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a target="_blank" class="buttonDefault" href="http://oee.framascorp.vn:5555"><i class="fa fa-caret-right"></i>OEE website</a></li>
+                    <li><a target="_blank" class="buttonDefault" href="http://kore.framascorp.vn:3333"><i class="fa fa-caret-right"></i>Accountting Tool</a></li>
+                    <li><a target="_blank" class="buttonDefault" href="http://color.framascorp.vn:8888"><i class="fa fa-caret-right"></i>Color Management</a></li>
+                    <li><a target="_blank" class="buttonDefault" href="http://holidayplanner.framascorp.vn:9999"><i class="fa fa-caret-right"></i>Holiday Planner</a></li>
+                    <li><a target="_blank" class="buttonDefault" href="http://192.168.180.113:8088"><i class="fa fa-caret-right"></i>5S Computer</a></li>
+                    <li><a target="_blank" class="buttonDefault" href="http://helpdesk:8023/support"><i class="fa fa-caret-right"></i>Ticket Management</a></li>
+                    <li><a target="_blank" class="buttonDefault" href="http://192.168.180.113:1133"><i class="fa fa-caret-right"></i>Sales Marketing</a></li>
+                    <li><a target="_blank" class="buttonDefault" href="http://devmanager.framas.com/Login.aspx"><i class="fa fa-caret-right"></i>Development Time</a></li>
+                    @*<li><a target="_blank" class="buttonDefault" href="http://192.168.180.113:1177/"><i class="fa fa-caret-right"></i>FICO Website</a></li>
+                        <li><a target="_blank" class="buttonDefault" href="http://192.168.180.113:2211"><i class="fa fa-caret-right"></i>Suvery Master</a></li>
+                        <li><a target="_blank" class="buttonDefault" href="http://job.framascorp.vn:8082"><i class="fa fa-caret-right"></i>Job Description</a></li>*@
+                </ul>
+            </li>
+            @if (ds_Module != null)
+            {
+                foreach (var item in ds_Module)
+                {
+                    <li class="@Html.IsSelected(controller: "Dashboard") treeview">
+                        <a href="#">
+                            <i class="@item.Image"></i> <span>@item.Title</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        @if (strModuleID == item.ID.ToString())
+                        {
+                            <ul class="treeview-menu" style="display: block;">
+                                @foreach (var item_Chilr in ds_Group)
+                                {
+                                    if (item_Chilr.ModuleID == item.ID)
+                                    {
+                                        if (strGroupID == item_Chilr.ID.ToString())
+                                        {
+                                            <li>
+                                                <button class="buttonDefault" onclick="myFunction(@item_Chilr.ModuleID,@item_Chilr.ID)">
+                                                    <i class="@item_Chilr.Image" style="color:red; margin-right:5px"></i>
+                                                    <i style="color:red"> @item_Chilr.Title</i>
+                                                </button>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <button class="buttonDefault" onclick="myFunction(@item_Chilr.ModuleID,@item_Chilr.ID)">
+                                                    <i class="@item_Chilr.Image" style="margin-right:5px"></i>
+                                                    <i> @item_Chilr.Title</i>
+                                                </button>
+                                            </li>
+                                        }
+                                        @*<li onclick="myFunction(@item_Chilr.ModuleID,@item_Chilr.ID)" class="@Html.IsSelected(controller: @item_Chilr.Controller, action: item_Chilr.Action)">
+                                                <a>
+                                                    <i class="@item_Chilr.Image"></i>
+                                                    <i>@item_Chilr.Title</i>
+                                                </a>
+                                            </li>*@
+                                        //<li class="@Html.IsSelected(controller: @item_Chilr.Controller, action: item_Chilr.Action)"><a href="@Url.Action(@item_Chilr.Action,item_Chilr.Controller)"><i class="@item_Chilr.Image"></i>@item_Chilr.Title</a></li>
+                                    }
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul class="treeview-menu" style="display: none;">
+                                @foreach (var item_Chilr in ds_Group)
+                                {
+                                    if (item_Chilr.ModuleID == item.ID)
+                                    {
+                                        <li>
+                                            <button class="buttonDefault" onclick="myFunction(@item_Chilr.ModuleID,@item_Chilr.ID)">
+                                                <i class="@item_Chilr.Image" style="margin-right:5px"></i>
+                                                <i> @item_Chilr.Title</i>
+                                            </button>
+                                        </li>
+                                        @*<li onclick="myFunction(@item_Chilr.ModuleID,@item_Chilr.ID)" class="@Html.IsSelected(controller: @item_Chilr.Controller, action: item_Chilr.Action)">
+                                                <a>
+                                                    <i class="@item_Chilr.Image"></i>
+                                                    <i>@item_Chilr.Title</i>
+                                                </a>
+                                            </li>*@
+                                        //<li class="@Html.IsSelected(controller: @item_Chilr.Controller, action: item_Chilr.Action)"><a href="@Url.Action(@item_Chilr.Action,item_Chilr.Controller)"><i class="@item_Chilr.Image"></i>@item_Chilr.Title</a></li>
+                                    }
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
+            }
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
+
+@* function set session groupID when user click group and go to new page in action, controller *@
+<script>
+function myFunction(Module, Group, action, controller)
+{
+    $.ajax({
+        type: 'Post',
+        url: '@Url.Action("Index", "Function")',
+        contenType: 'application/JSON; charset=utf-8',
+        data: { ModuleID: Module, GroupID: Group },////  public actionresult ABC(string bienso)
+        dataType: 'html',
+        beforeSend: function () {
+        },
+        complete: function () {
+            window.location.href = '@Url.Action("Index","Function")';
+        }
+    }).success(function (result) {
+        }).error(function () {
+        });
+}
+</script>

@@ -1,0 +1,89 @@
+﻿@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var lstSlider = (List<String>)ViewBag.lstSlider;
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("MenuItem","MealControlCanteen")"></a>
+            @Language.label("Upload")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Slider</a></li>
+            <li class="active">@Language.label("Upload")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="fa fa-cloud-upload"></i>
+                    <h3 class="box-title">@Language.label("Upload")</h3>
+                </div>
+                <div class="box-body">
+                    @using (Html.BeginForm("MealUploadImageAdd", "MealControlCanteen", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <ul class="todo-list">
+                            <li>
+                                <input class="btn btn-primary btn-sm" type="file" name="file" />
+                            </li>
+                            <li>
+                                <input class="btn btn-primary btn-sm" type="submit" value="@Language.label("Save")" />
+                            </li>
+                        </ul>
+                    }
+                </div>
+            </div>
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="ion ion-clipboard"></i>
+                    <h3 class="box-title">@Language.label("List")</h3>
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>@Language.label("Num")</th>
+                                <th>@Language.label("ImageAddress")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (lstSlider != null)
+                            {
+                                int i = 1;
+                                foreach (var item in lstSlider)
+                                {
+                                    <tr>
+                                        <td class="text">@i</td>
+                                        <td class="text">@item</td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>

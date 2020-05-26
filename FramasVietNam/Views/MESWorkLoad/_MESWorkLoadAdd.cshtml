@@ -1,0 +1,150 @@
+﻿
+@using FramasVietNam.Common;
+@{
+    string strUserID = mFunction.ToString(ViewBag.strUserID);
+    string strDeptID = mFunction.ToString(ViewBag.DeptId);
+    var lstDepartment = (List<FramasVietNam.Models.HumanResource.MaBoPhan>)ViewBag.AllDept;
+    DateTime dtDateSearch = mFunction.ToDateTime(ViewBag.dtDateSearch);
+    var strRole = mFunction.ToString(ViewBag.strRole);
+
+}
+<div class="modal fade" id="WorkLoadAdd">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">@Language.label("Add")</h4>
+            </div>
+            <div class="modal-body">
+                @if (strRole == ("Admin"))
+                {
+                    <div class="form-group">
+                        @Language.label("Department")<code>(*)</code>
+                        <select class="form-control select2" style="width: 100%;" id="select_DeptId" data-placeholder="Select a department">
+                            <option value=""></option>
+                            @if (ViewBag.AllDept != null)
+                            {
+                                foreach (var item in ViewBag.AllDept)
+                                {
+                                    <option value="@item.MaBoPhan1">@item.TenBoPhanA _ @item.TenBoPhan</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        @Language.label("User")<code>(*)</code>
+                        <select class="form-control select2" style="width: 100%;" id="select_UserId" data-placeholder="select a user">
+                            <option value=""></option>
+                            @if (ViewBag.AllUser != null)
+                            {
+                                foreach (var item in ViewBag.AllUser)
+                                {
+                                    <option value="@item.MaSoNhanVien">@item.MaSoNhanVien _ @item.Ho @item.Ten</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                }
+                else
+                {
+                    if (lstDepartment != null)
+                    {
+            <div class="form-group">
+                @Language.label("Department")<code>(*)</code>
+                <select class="form-control select2" style="width: 100%;" id="select_DeptId" data-placeholder="select a department" disabled>
+                    <option value=""></option>
+                    @if (ViewBag.AllDept != null)
+                    {
+                        foreach (var item in ViewBag.AllDept)
+                        {
+                            <option @(item.MaBoPhan1 == strDeptID ? "selected" : "") value="@item.MaBoPhan1">@item.TenBoPhanA _ @item.TenBoPhan</option>
+                        }
+                    }
+                </select>
+            </div>
+                    }
+                    if (strUserID != null)
+                    {
+                        <div class="form-group">
+                            @Language.label("User")<code>(*)</code>
+                            <select class="form-control select2" style="width: 100%;" id="select_UserId" data-placeholder="select a user" disabled>
+                                <option value=""></option>
+                                @if (ViewBag.AllUser != null)
+                                {
+                                    foreach (var item in ViewBag.AllUser)
+                                    {
+                                        <option @(item.MaSoNhanVien == strUserID ? "selected" : "") value="@item.MaSoNhanVien">@item.MaSoNhanVien _ @item.Ho @item.Ten</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    }
+                }
+
+
+                <div class="form-group">
+                    @Language.label("DateWork")
+                    <input type="text" name="DateWork" id="DateWork" class="form-control" value=@DateTime.Now.ToString("MM/yyyy") disabled readonly />
+                </div>
+                <div class="form-group">
+                    @Language.label("WorkingHourOnMESTopic")<code>(*)</code>
+                    <input type="number" step="any" name="workHour" id="workHour" class="form-control" placeholder="Working hour on MES topic" min="0" max="208" />
+                </div>
+
+                <div class="form-group">
+                    @Language.label("TotalWorkingHourInMonth")
+                    <input type="text" name="totalHour" id="totalHour" class="form-control" placeholder="Total working hour in month" value="208" disabled readonly />
+                </div>
+                <div class="form-group">
+                    @Language.label("Percentage")
+                    <span name="Percentage" id="Percentage" class="form-control"></span>
+                </div>
+                <div class="form-group">
+                    @Language.label("Description")
+                    <textarea class="form-control" name="desc" id="desc" maxlength="200" placeholder="Detail"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" onclick = "MESWorkLoadAdd()">
+                    @Language.label("Save")
+                </button>
+                @*@Html.ButtonRoles("Save", "MESWorkLoad", "MESWorkLoad", @Language.label("Save"), new { @class = "btn btn-success", @onclick = "MESWorkLoadAdd()" })*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        //Call select2
+        $('.select2').select2();
+
+        $('#select_DeptId.select2').on('select2:select', function () {
+            var data = $("#select_DeptId.select2 option:selected").val();
+            $("#select_UserId.select2").html("");
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Action("UserByDeptId", "MESWorkLoad"))",
+                content: "application/json; charset =utf-8",
+                dataType: "json",
+                data: {deptId:data},
+                success: function (data) {
+                    console.log(data);
+                    $.each(data, function (key, value) {
+                        $('#select_UserId.select2').append(
+                            '<option value="' + value["MaSoNhanVien"] + '">' + value["Ho"] + " " + value["Ten"] + '</option>'
+                     );
+                    });
+                  },
+                error: function (xhr, textStatus, errorThrown) {
+                   alert("@Language.label("OopsSomethingWentWrong")");
+                    return false;
+                }
+            });
+        });
+    });
+
+</script>

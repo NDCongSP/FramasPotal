@@ -1,0 +1,437 @@
+﻿
+
+@using FramasVietNam.Common
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    var _lstOverView = (List<FramasVietNam.Models.OEEMS.get_OEEMSWeekProcessByDate_Result>)ViewBag.lstOverView;
+    var _lstOverView1 = (List<FramasVietNam.Models.OEEMS.get_OEEMSWeekProcessByDate_1_Result>)ViewBag.lstOverView1;
+    string _Key = mFunction.ToString(ViewBag._Key);
+    string _dtdate = mFunction.ToString(ViewBag.dtDateSearch);
+    var _rc = mFunction.ToInt(ViewBag.rc);
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("Index","Function")"></a>
+           Weekly or Monthly OEE Overview by Process
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">Weekly or Monthly OEE Overview by Process</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        @using (Html.BeginForm(FormMethod.Post))
+        {
+            <!-- row buttom-->
+            @*<div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title"></h3>
+
+                                <input class="btn btn-primary btn" id="Weekly" type="submit" name="command" value="Weekly" />
+                                <input class="btn btn-primary btn" id="Monthly" type="submit" name="command" value="Monthly" />
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <div class="col-xs-2">
+                                <!-- Date range -->
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" class="form-control pull-right" name="datepicker" onchange="onclick();" id="datepicker" value="@ViewBag.dtDateSearch">
+                                </div>
+                                <!-- /.form group -->
+                            </div>
+                            <div class="col-xs-2">
+
+                                @if (_rc == 0)
+                                {
+                                    <label>
+                                        <input type="radio" id="r1" name="r1" value="0" class="minimal" checked>
+                                        Week
+                                    </label>
+                                    <label>
+                                        <input type="radio" id="r2" name="r1" value="1" class="minimal">
+                                        Month
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label>
+                                        <input type="radio" id="r1" name="r1" value="0" class="minimal">
+                                        Week
+                                    </label>
+                                    <label>
+                                        <input type="radio" id="r2" name="r1" value="1" class="minimal" checked>
+                                        Month
+                                    </label>
+                                }
+                            </div>
+                            <div class="col-xs-2">
+                                <button id="btn1" hidden="hidden" name="btn1">Test onclick submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row buttom-->
+
+            <!-- row chart-->
+            <div class="row" style="min-height:906px; margin:2px">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <h3 class="box-title"> @ViewBag.titleview</h3>
+                                @*<div class="box-tools">
+                                        <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
+                                            <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+                                            <div class="input-group-btn">
+                                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body table-responsive no-padding">
+                                <table id="tablecontent" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Process Name</th>                                            
+                                            <th>Plan Time</th>
+                                            <th>Real Time</th>
+                                            <th>Down Time</th>
+                                            <th>OEE</th>                             
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (_rc == 0)
+                                        {
+                                            if (_lstOverView != null)
+                                            {
+                                                int i = 0;
+                                                foreach (var item in _lstOverView)
+                                                {
+                                                    <tr>
+                                                        <td class="text"></td>
+                                                        <td class="text">@item.ProcessName</td>
+
+                                                        <td class="text" align="right">@item.PlanTime</td>
+                                                        <td class="text" align="right">@item.RealTime</td>
+                                                        <td class="text" align="right">@item.DownTime</td>
+
+                                                        @if ((@item.RealTime) > 0 && @item.PlanTime * 100 / (@item.RealTime) <= 25)
+                                                        {
+
+                                                            <td><span class="label label-warning">@item.OEE</span></td>
+                                                        }
+                                                        else if ((@item.RealTime) <= 0)
+                                                        {
+
+                                                            <td><span class="label label-danger">@item.OEE</span></td>
+                                                        }
+                                                        else if ((@item.RealTime) > 0 && (@item.PlanTime * 100 / (@item.RealTime) > 25) && (@item.PlanTime * 100 / (@item.RealTime) <= 50))
+                                                        {
+
+                                                            <td><span class="label label-info">@item.OEE</span></td>
+                                                        }
+                                                        else if ((@item.RealTime) > 0 && (@item.PlanTime * 100 / (@item.RealTime) > 50) && (@item.PlanTime * 100 / (@item.RealTime) <= 75))
+                                                        {
+
+                                                            <td><span class="label label-primary">@item.OEE</span></td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td><span class="label label-success">@item.OEE</span></td>
+                                                        }
+                                                    </tr>
+                                                    i++;
+                                                }
+                                            }
+                                        }
+                                        else if (_rc == 1)
+                                        {
+                                            if (_lstOverView1 != null)
+                                            {
+                                                int i = 0;
+                                                foreach (var item in _lstOverView1)
+                                                {
+                                                    <tr>
+                                                        <td class="text"></td>
+                                                        <td class="text">@item.ProcessName</td>
+
+                                                        <td class="text" align="right">@item.PlanTime</td>
+                                                        <td class="text" align="right">@item.RealTime</td>
+                                                        <td class="text" align="right">@item.DownTime</td>
+
+                                                        @if ((@item.RealTime) > 0 && @item.PlanTime * 100 / (@item.RealTime) <= 25)
+                                                        {
+
+                                                            <td><span class="label label-warning">@item.OEE</span></td>
+                                                        }
+                                                        else if ((@item.RealTime) <= 0)
+                                                        {
+
+                                                            <td><span class="label label-danger">@item.OEE</span></td>
+                                                        }
+                                                        else if ((@item.RealTime) > 0 && (@item.PlanTime * 100 / (@item.RealTime) > 25) && (@item.PlanTime * 100 / (@item.RealTime) <= 50))
+                                                        {
+
+                                                            <td><span class="label label-info">@item.OEE</span></td>
+                                                        }
+                                                        else if ((@item.RealTime) > 0 && (@item.PlanTime * 100 / (@item.RealTime) > 50) && (@item.PlanTime * 100 / (@item.RealTime) <= 75))
+                                                        {
+
+                                                            <td><span class="label label-primary">@item.OEE</span></td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td><span class="label label-success">@item.OEE</span></td>
+                                                        }
+                                                    </tr>
+                                                    i++;
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- col (LEFT) -->
+                    <div class="col-md-6">
+                        <!-- LINE CHART -->
+                        <div class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">OEE Chart</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div class="box-body chart-responsive">
+                                <div class="chart" id="bar-chart1" style="height: 300px;"></div>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+
+                    </div>
+                    <!-- /.col (LEFT) -->
+                    <!-- col (RIGHT) -->
+                    <div class="col-md-6">
+
+                        <!-- BAR CHART -->
+                        <div class="box box-success">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Time Chart</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div class="box-body chart-responsive">
+                                <div class="chart" id="bar-chart" style="height: 300px;"></div>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                    <!-- /.col (RIGHT) -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <script type="text/javascript">
+
+                $(document).ready(function() {
+                        if (@_rc==0)
+                        {
+                            var model =  @Html.Raw(Json.Encode(@ViewBag.lstOverView));
+                        }
+                        else
+                        {
+                            var model =  @Html.Raw(Json.Encode(@ViewBag.lstOverView1));
+                        }
+                        new Morris.Line({
+                        element: 'bar-chart1',
+                        resize: true,
+                            data: model,
+                        barColors: ['#00a65a'],
+                        xkey: 'ProcessName',
+                        ykeys: ['OEE',],
+                        labels: ['OEE',],
+                        hideHover: 'auto',
+                        parseTime: false
+                    });
+                        new Morris.Bar({
+                        element: 'bar-chart',
+                        resize: true,
+                        data: model,
+                        barColors: ['#00a65a', '#3F5AF4','#FF5733'],
+                        xkey: 'ProcessName',
+                        ykeys: ['PlanTime', 'RealTime', 'DownTime'],
+                        labels: ['PlanTime', 'RealTime', 'DownTime'],
+                        hideHover: 'auto',
+                        parseTime: false
+                    });
+
+                });
+
+            </script>
+        }
+    </section>
+    <!-- /.content -->
+</div>
+
+<script>
+    $(function () {
+        $('input').change(function () {
+            $("#btn1").click();
+        });
+        //Initialize Select2 Elements
+        $('.select2').select2()
+
+        //Datemask dd/mm/yyyy
+        $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+        //Datemask2 mm/dd/yyyy
+        $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+        //Money Euro
+        $('[data-mask]').inputmask()
+
+        //Date range picker
+        $('#reservation').daterangepicker()
+        //Date range picker with time picker
+        $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'MM/DD/YYYY hh:mm A' } })
+        //Date range as a button
+        $('#daterange-btn').daterangepicker(
+            {
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                startDate: moment().subtract(29, 'days'),
+                endDate: moment()
+            },
+            function (start, end) {
+                $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+            }
+        )
+
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        })
+
+        //iCheck for checkbox and radio inputs
+        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass: 'iradio_minimal-blue'
+        })
+
+        $('#r1').on('ifChecked', function (event) {
+            $("#btn1").click();
+        });
+
+        $('#r2').on('ifChecked', function (event) {
+            $("#btn1").click();
+        });
+
+        //Red color scheme for iCheck
+        $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+            checkboxClass: 'icheckbox_minimal-red',
+            radioClass: 'iradio_minimal-red'
+        })
+        //Flat red color scheme for iCheck
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass: 'iradio_flat-green'
+        })
+
+        //Colorpicker
+        $('.my-colorpicker1').colorpicker()
+        //color picker with addon
+        $('.my-colorpicker2').colorpicker()
+
+        //Timepicker
+        $('.timepicker').timepicker({
+            showInputs: false
+        })
+    })
+</script>
+@section Scripts{
+    <!-- DataTables -->
+    <script>
+        $(document).ready(function () {
+            // Setup - add a text input to each footer cell
+            $('#tablecontent thead tr').clone(true).appendTo('#tablecontent thead');
+            $('#tablecontent thead tr:eq(1) th').each(function (i) {
+                if (i > 0) {
+                    var title = $(this).text();
+                    if (title != "Change" && title != "OEE" && title != "Status" && title != "Real Time" && title != "Plan Time" && title != "Down Time") {
+                        $(this).html('<input type="text"/>');
+
+                        $('input', this).on('keyup change', function () {
+                            if (table.column(i).search() !== this.value) {
+                                table
+                                    .column(i)
+                                    .search(this.value)
+                                    .draw();
+                            } s
+                        });
+                    }
+                    else {
+                        $(this).html('');
+                    }
+
+                }
+            });
+
+            var table = $('#tablecontent').DataTable({
+
+                "displayLength": 25,
+                orderCellsTop: true,
+                fixedHeader: true,
+                'paging': true,
+                'lengthChange': false,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false
+            });
+
+            table.on('order.dt search.dt', function () {
+                table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+        });
+    </script>
+}

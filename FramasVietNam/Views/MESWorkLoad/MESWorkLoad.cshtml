@@ -1,0 +1,422 @@
+﻿@using FramasVietNam.Models;
+@using FramasVietNam.Common;
+@{
+    ViewData["Title"] = "FVN";
+    Layout = "~/Views/Shared/_Adminlte.cshtml";
+    string strUserID = mFunction.ToString(ViewBag.strUserID);
+    string strDeptID = mFunction.ToString(ViewBag.DeptId);
+    var lstDepartment = (List<FramasVietNam.Models.HumanResource.MaBoPhan>)ViewBag.AllDept;
+    DateTime dtDateSearch = mFunction.ToDateTime(ViewBag.dtDateSearch);
+    var strRole = mFunction.ToString(ViewBag.strRole);
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert("@Html.Raw(ViewBag.Message)");
+            };
+    </script>
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <a class="fa fa-fw fa-mail-reply" href="@Url.Action("MESWorkLoad","Function")"></a>
+            @Language.label("MESWorkLoad")
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @Language.label("Function")</a></li>
+            <li class="active">@Language.label("MESWorkLoad")</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" style="min-height:906px; margin:2px">
+            <div class="row">
+                <div class="col-md-1 col-xs-2">
+                    <div style="margin-bottom:10px">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#WorkLoadAdd">
+                            @Language.label("Add")
+                        </button>
+                        @*@Html.ButtonRoles("Add", "MESWorkLoad", "MESWorkLoad", Language.label("Add"), new { @class = "btn btn-primary", data_toggle = "modal", data_target = "#WorkLoadAdd" })*@
+                        @*@Html.ActionLinkRole("Add", "Index", "MESWorkLoad", Language.label("Add"), new { @class = "btn btn-primary", data_toggle = "modal", data_target = "#WorkLoadAdd" })*@
+                    </div>
+                </div>
+                <div class="col-md-1 col-xs-2">
+                    <div style="margin-bottom:10px">
+                    </div>
+                </div>
+            </div>
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="ion ion-clipboard"></i>
+                    <h3 class="box-title">@Language.label("ListByDepartment")</h3>
+                    <!-- /.to do something-->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    @using (Html.BeginForm("MESWorkLoad", "MESWorkLoad", FormMethod.Post))
+                    {
+
+                        <div class="col-xs-2">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @if (ViewBag.dtDateSearch != null)
+                                {
+                                    <input name="dtDateSearch" type='text' id='dtDateSearch' class="form-control" value="@(dtDateSearch.ToString("MM/dd/yyyy"))" />
+                                }
+                                else
+                                {
+                                    <input name="dtDateSearch" type='text' id='dtDateSearch' class="form-control" value="@(dtDateSearch.ToString("MM/dd/yyyy"))" />
+                                }
+                            </div>
+                        </div>
+
+                        if (strRole == ("Admin"))
+                        {
+                            <div class="col-md-2">
+                                <select name="Department" id="Department" class="form-control select2" data-placeholder="Select a deppartment">
+                                    <option value="All">All department</option>
+                                    @if (lstDepartment != null)
+                                    {
+                                        foreach (var item in lstDepartment)
+                                        {
+                                            <option @(@item.MaBoPhan1 == ViewBag.DeptId ? "selected" : "") value="@item.MaBoPhan1">@item.TenBoPhanA _ @item.TenBoPhan</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-2 hidden">
+                                <select name="Department" id="Department" class="form-control select2 colorpicker-hidden" data-placeholder="Select a deppartment">
+                                    <option value="All">All department</option>
+                                    @if (lstDepartment != null)
+                                    {
+                                        foreach (var item in lstDepartment)
+                                        {
+                                            <option @(item.MaBoPhan1 == ViewBag.DeptId ? "selected" : "") value="@item.MaBoPhan1">@item.TenBoPhanA _ @item.TenBoPhan</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        }
+
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary">
+                                @Language.label("Search")
+                            </button>
+                            @*@Html.ButtonRoles("Search", "MESWorkLoad", "MESWorkLoad", Language.label("Search"), new { @class = "btn btn-primary" })*@
+                            @*@Html.ButtonRoles("Print", "MESWorkLoadPrint", "MESWorkLoad", Language.label("Print"), new { @class = "btn btn-primary" })*@
+                            <a target="_blank" class="btn btn-primary" href="@Url.Action("MESWorkLoadPrint","MESWorkLoad",new { dtSearch = dtDateSearch, dept = ViewBag.DeptId})"> Print </a>
+                        </div>
+
+                    }
+
+                    <table id="MESWorkLoad" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th style="width:27px;">@Language.label("Num")</th>
+                                <th>@Language.label("Name")</th>
+                                <th>@Language.label("WorkingHourOnMESTopic")</th>
+                                <th style="width:200px;">@Language.label("Description")</th>
+                                <th>@Language.label("TotalWorkingHourInMonth")</th>
+                                <th>@Language.label("Percentage")</th>
+                                <th>@Language.label("DateWork")</th>
+                                <th>@Language.label("Change")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                int i = 1;
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="text">@i</td>
+                                        <td class="text">@item.EmployeeName</td>
+                                        <td class="text">@item.WorkingHour</td>
+                                        <td>
+                                            <textarea class="form-control" style="width: 100%; height: 100%; border: 1px solid #ced4da; border-radius: 0.25rem; resize: none;" readonly> @item.Description</textarea>
+                                        </td>
+                                        <td class="text">@item.TotalWorking</td>
+                                        <td class="text">@item.Percen %</td>
+                                        <td class="text">@item.DateWork.ToString("dd/MM/yyyy") </td>
+                                        <!-- General tools such as edit or delete-->
+                                        <td>
+                                            <button type="button" class="fa fa-edit btn btn-sm btn-primary" onclick="openModal(@item.ID)"></button>
+                                            <button type="button" class="fa fa-trash btn btn-sm btn-danger" onclick="WorkLoadDelete(@item.ID)"> </button>
+                                            @*@Html.ButtonRoles("Edit", "MESWorkLoad", "MESWorkLoad", "", new { @class = "fa fa-edit btn btn-sm btn-primary", @type = "button", @onclick = "openModal('" + item.ID + "')" })*@
+                                            @*@Html.ButtonRoles("Delete", "MESWorkLoad", "MESWorkLoad", "", new { @class = "fa fa-trash btn btn-sm btn-danger", @type = "button", @onclick = "WorkLoadDelete('" + item.ID + "')" })*@
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </section>
+    <!-- /.content -->
+
+</div>
+<!-- #region Edit MES WorkLoad -->
+<div id='modal-edit' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='ContentModal'></div>
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region MESWorkLoadAdd -->
+@Html.Partial("_MESWorkLoadAdd")
+<!-- #endregion -->
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            //Call js select2
+            $("select2").select2({
+            });
+            //Date picker
+            $('#dtDateSearch').datepicker({
+                autoclose: true
+            })
+             //Date range picker
+             $('#reservation').daterangepicker();
+            //Call js data table
+            $('#MESWorkLoad thead tr').clone(true).appendTo('#MESWorkLoad thead');
+            $('#MESWorkLoad thead tr:eq(1) th').each(function (i) {
+                if (i > 0) {
+                    var title = $(this).text();
+                    // Ngoài cột Num sẽ có thêm cột Status sẽ không có cột tìm kiếm
+                    if (title != "Status" && title != "Change") {
+                        $(this).html('<input type="text"/>');
+                        $('input', this).on('keyup change', function () {
+                            if (table.column(i).search() !== this.value) {
+                                table
+                                    .column(i)
+                                    .search(this.value)
+                                    .draw();
+                            }
+                        });
+                    }
+                    else {
+                        $(this).html('');
+                    }
+                }
+            });
+            var table = $('#MESWorkLoad').DataTable({
+                "displayLength": 25,
+                orderCellsTop: true,
+                fixedHeader: true,
+                'paging': true,
+                'lengthChange': false,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false
+            });
+            table.on('order.dt search.dt', function () {
+                table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+
+            //onchange event for input type=“number”
+            $(":input").bind('keyup mouseup', function () {
+                var hour = $("#workHour").val();
+            if (hour > 208) {
+                alert('Working hour on MES topic must not exceed 208 hours!');
+                return false;
+            }
+             var total = $("#totalHour").val();
+             var result = (hour * 100) / parseFloat(total);
+             var dtResult = $("#Percentage").text(Math.round(result) + "%");
+                $('#totalHour').on('input', function() {
+                 $('#Percentage').text(dtResult);
+                });
+            });
+        });
+
+        var openModal = function (id) {
+              var url = '/MESWorkLoad/MESWorkLoadEdit/' + id;
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (data) {
+                    $('#ContentModal').html(data);
+                    $('#modal-edit').modal(options);
+                    $('#modal-edit').modal('show');
+                },
+                error: function (e) {
+                    alert('@Language.label("OopsSomethingWentWrong")');
+                    return false;
+                }
+            });
+        }
+        //Delete WorkLoad
+        function WorkLoadDelete(id) {
+
+            if (confirm(' @Language.label("AreYouSure") ')) {
+                   $.ajax({
+                url: "/MESWorkLoad/MESWorkLoadDel",
+                type: "POST",
+                content: "application/json; charset=utf-8",
+                datatype: "json",
+                data: { Id: id},
+                success: function (status) {
+                 //status code
+                     if (status == -1) {
+                         alert('@Language.label("DuplicatePartCode")');
+                         return false;
+                     }
+                     else if (status == 1) {
+                         alert('@Language.label("CommandsCompletedSuccessfully")');
+                        location.reload();
+                     }
+                     else {
+                         alert('@Language.label("ErrorSave")');
+                         return false;
+                     }
+                        },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert('@Language.label("OopsSomethingWentWrong")');
+                        location.reload();
+                        return false;
+                    }
+                    });
+            }
+        }
+
+        // Udpate WorkLoad
+        function WorkLoadUpdate(id) {
+            //get data selected
+
+            var workingHour = $("#workHour").val();
+            var dataPercen= $("#Percentage").text().split("%");
+            var percen = Math.round(dataPercen[0]);
+            var desc = $("#desc").val();
+
+            if (workingHour == null || workingHour == "") {
+                alert('@Language.label("PleaseEnterWorkHour")!');
+                return false;
+            }
+            else if (percen == null || percen == "") {
+                alert('@Language.label("PleaseEnterWorkHour")!');
+                return false;
+            }
+            else {
+                var model = {
+                'Id':id,
+                'WorkingHour': workingHour,
+                'Percen': percen,
+                'Description': desc,
+                 };
+                $.ajax({
+                    type: "POST",
+                    url: "/MESWorkLoad/MESWorkLoadUpdate",
+                    content: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: model,
+                    success: function (d) {
+                        if (d) {
+                           alert('@Language.label("CommandsCompletedSuccessfully")');
+                            $('#modal-edit').modal('hide');
+                            location.reload();
+                        }
+                        else {
+                           alert('@Language.label("ErrorSave")');
+                            return false;
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert('@Language.label("OopsSomethingWentWrong")');
+                        return false;
+                    }
+                });
+            }
+        }
+
+        //Add MESWorkLoad
+        function MESWorkLoadAdd() {
+        var arrDeptName = $("#select_DeptId.select2 option:selected").text();
+        var deptName = arrDeptName.split("_")[0];
+        var deptId = $("#select_DeptId.select2 option:selected").val();
+        var employeeId = $("#select_UserId.select2 option:selected").val();
+        var employeeName =  $("#select_UserId.select2 option:selected").text();
+        var desc = $("#desc").val();
+        var workingHour = $("#workHour").val();
+        var total = $("#totalHour").val();
+        var dataPercen = $("#Percentage").text().split("%");
+        var percen = Math.round(dataPercen[0]);
+        var model = {
+        'DepartmentId':deptId,
+        'DepartmentName':deptName,
+        'EmployeeId': employeeId,
+        'EmployeeName': employeeName,
+        'WorkingHour': workingHour,
+        'TotalWorking': total,
+        'Percen': percen,
+        'Description': desc,
+        };
+        if (deptId == null || deptId == "") {
+            alert("@Language.label("PleaseChooseDept")");
+            return false;
+        }
+        else if (employeeId == null || employeeId == "") {
+            alert("@Language.label("PleaseChooseUser")");
+            return false;
+        }
+        else if (workingHour == null || workingHour == "") {
+            alert("@Language.label("PleaseEnterWorkHour")");
+            return false;
+        }
+        else if (parseFloat(total) > 208) {
+            alert("@Language.label("ErrorSave")");
+            return false;
+        }
+        else {
+            $.ajax({
+            type: "POST",
+                url: "@(Url.Action("MESWorkLoadAdd", "MESWorkLoad"))",
+             content: "application/json; charset =utf-8",
+            dataType: "json",
+            data: model,
+                success: function (data) {
+                if (data ==1) {
+                    alert("@Language.label("CommandsCompletedSuccessfully")");
+                    window.location.reload();
+                }
+                if (data ==-1) {
+                    alert("@Language.label("TotalTimeCanNotGreaterThanTheTargetTime")");
+                    window.location.reload();
+                     }
+                if  (data ==0){
+                    alert("@Language.label("ErrorSave")");
+                    return false;
+                    }
+                  },
+                error: function (xhr, textStatus, errorThrown) {
+                           alert("@Language.label("OopsSomethingWentWrong")");
+                            return false;
+                        }
+                    });
+        }
+    }
+    </script>
+}
+
